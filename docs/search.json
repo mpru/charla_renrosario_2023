@@ -7,32 +7,88 @@
     "text": "En este encuentro de R en Rosario vamos a repasar qué pasos hay que seguir para crear un paquete y pensar algunas estrategias para que pueda ser usado en más de un idioma. Además, vamos a conocer a qué se dedica la organización ROpenSci y cómo podemos ser parte.\nEn la sección Preparación y materiales vas a encontrar los materiales necesarios para seguir los ejemplos.\n\n\n\n\n\n\nPresentador\nMarcos Prunello: Soy Licenciado en Estadística (UNR) y MSc en Biomedical Informatics (Stanford University). Me dedico a la vida universitaria, trabajando en cuestiones de Estadística y Ciencia de Datos en la FCEyE-UNR y Universidad Austral.\n\n\nLicencia\n Los materiales de esta charla están bajo la licencia Creative Commons Attribution-ShareAlike 4.0 International License."
   },
   {
-    "objectID": "presentacion_ropensci.html#getting-up",
-    "href": "presentacion_ropensci.html#getting-up",
-    "title": "ROpenSci",
-    "section": "Getting up",
-    "text": "Getting up\n\nTurn off alarm\nGet out of bed"
+    "objectID": "presentacion_ropensci.html#qué-es-ropensci",
+    "href": "presentacion_ropensci.html#qué-es-ropensci",
+    "title": "Qué es rOpenSci",
+    "section": "¿Qué es rOpenSci?",
+    "text": "¿Qué es rOpenSci?\n\n\nrOpenSci = Ciencia abierta + software abierto + comunidades de práctica\nCiencia abierta. La ciencia abierta invita a quienes investigan a compartir abiertamente sus trabajos, datos y componentes de investigación para que otros puedan leerlos, reutilizarlos, reproducirlos, basarse en ellos y compartirlos.\nSoftware de código abierto. El software de código abierto es código diseñado para ser accesible al público: cualquiera puede ver, modificar y distribuir el código como mejor le parezca.\nComunidades de práctica: Grupo amplio de personas que comparten saberes y aprendizajes de un tema transversal a distintas profesiones"
   },
   {
-    "objectID": "presentacion_ropensci.html#breakfast",
-    "href": "presentacion_ropensci.html#breakfast",
-    "title": "ROpenSci",
-    "section": "Breakfast",
-    "text": "Breakfast\n\nEat eggs\nDrink coffee"
+    "objectID": "presentacion_ropensci.html#qué-hace-ropensci",
+    "href": "presentacion_ropensci.html#qué-hace-ropensci",
+    "title": "Qué es rOpenSci",
+    "section": "¿Qué hace rOpenSci?",
+    "text": "¿Qué hace rOpenSci?\n\nrOpenScie fomenta una cultura que valora la investigación abierta y reproducible utilizando datos compartidos y software reutilizable"
   },
   {
-    "objectID": "presentacion_ropensci.html#dinner",
-    "href": "presentacion_ropensci.html#dinner",
-    "title": "ROpenSci",
-    "section": "Dinner",
-    "text": "Dinner\n\nEat spaghetti\nDrink wine"
+    "objectID": "presentacion_ropensci.html#cómo-lo-hace",
+    "href": "presentacion_ropensci.html#cómo-lo-hace",
+    "title": "Qué es rOpenSci",
+    "section": "¿Cómo lo hace?",
+    "text": "¿Cómo lo hace?\n\n\nCreando una infraestructura técnica de herramientas de software R cuidadosamente revisadas que reduzcan las barreras para trabajar con fuentes de datos científicos en la web.\nHaciendo que los datos, las herramientas y las mejores prácticas sean más accesibles y fáciles de encontrar.\nCreando una infraestructura social a través de una comunidad amigable y diversa.\nPromoviendo una cultura de intercambio de datos y software reutilizable.\nDesarrollando la capacidad de las personas que usan y desarrollan software y fomentando un sentimiento de orgullo por su trabajo"
   },
   {
-    "objectID": "presentacion_ropensci.html#going-to-sleep",
-    "href": "presentacion_ropensci.html#going-to-sleep",
-    "title": "ROpenSci",
-    "section": "Going to sleep",
-    "text": "Going to sleep\n\nGet in bed\nCount sheep\n\n\n\n\nVolver a la página principal"
+    "objectID": "presentacion_ropensci.html#suite-de-paquetes-propios",
+    "href": "presentacion_ropensci.html#suite-de-paquetes-propios",
+    "title": "Qué es rOpenSci",
+    "section": "Suite de paquetes propios",
+    "text": "Suite de paquetes propios\nhttps://ropensci.org/packages/all/"
+  },
+  {
+    "objectID": "presentacion_ropensci.html#revisión-de-software-por-pares",
+    "href": "presentacion_ropensci.html#revisión-de-software-por-pares",
+    "title": "Qué es rOpenSci",
+    "section": "Revisión de software por pares",
+    "text": "Revisión de software por pares\n\n\n\nProceso de revisión de paquetes R transparente, constructivo, no conflictivo, estandarizado y abierto\nMateriales para favorecer el uso de buenas prácticas y estándares\nRevisión de pares para software\nRevisión de pares para software estadístico"
+  },
+  {
+    "objectID": "presentacion_ropensci.html#otros-proyectos",
+    "href": "presentacion_ropensci.html#otros-proyectos",
+    "title": "Qué es rOpenSci",
+    "section": "Otros proyectos",
+    "text": "Otros proyectos\n\nSistema R-Universe: Proyecto paraguas para mejorar la publicación y el descubrimiento de software de investigación en R.\nPublicaciones multilingües\nPrograma Champions: (¡enseguida les cuento más!)\nVisitar https://contributing.ropensci.org/ para ver más formas de participación."
+  },
+  {
+    "objectID": "presentacion_ropensci.html#motivación",
+    "href": "presentacion_ropensci.html#motivación",
+    "title": "Qué es rOpenSci",
+    "section": "Motivación",
+    "text": "Motivación\n\nExiste una consternadora falta de diversidad en el ecosistema de las comunidades de software de investigación y de código abierto.\nLas personas que realizan el desarrollo de software son en general blancas, hombres y de un puñado de países.\nEsta decepcionante falta de diversidad es potencialmente perjudicial para la sostenibilidad, la utilidad y la productividad de los proyectos."
+  },
+  {
+    "objectID": "presentacion_ropensci.html#objetivo",
+    "href": "presentacion_ropensci.html#objetivo",
+    "title": "Qué es rOpenSci",
+    "section": "Objetivo",
+    "text": "Objetivo\n\nEl programa busca apoyar a una cohorte:\n\ndiversa de personas,\nque colaboren en aspectos de la creación de software de investigación y\nque sean “líderes” de la comunidad,\ny que se esfuercen por transformar el ecosistema para mejor."
+  },
+  {
+    "objectID": "presentacion_ropensci.html#participantes",
+    "href": "presentacion_ropensci.html#participantes",
+    "title": "Qué es rOpenSci",
+    "section": "Participantes",
+    "text": "Participantes\n\nEstá pensando para que participen personas que pertenecen a grupos histórica y sistemáticamente excluidos\nY que están interesadas en contribuir a rOpenSci y al ecosistema más amplio de comunidades de software de código abierto y de investigación."
+  },
+  {
+    "objectID": "presentacion_ropensci.html#proyectos",
+    "href": "presentacion_ropensci.html#proyectos",
+    "title": "Qué es rOpenSci",
+    "section": "Proyectos",
+    "text": "Proyectos\n\nQuienes participan desarrollan uno de estos proyectos:\n\ncrear un nuevo paquete,\npasar por el proceso de revisión con un paquete de R que ya hayan desarrollado,\no ser un/a revisor/a del sistema de revisión por pares.\n\nal mismo tiempo que reciben capacitación… y un estipendio (USD 1000)."
+  },
+  {
+    "objectID": "presentacion_ropensci.html#metas",
+    "href": "presentacion_ropensci.html#metas",
+    "title": "Qué es rOpenSci",
+    "section": "Metas",
+    "text": "Metas\n\n\nSe busca que quienes participen puedan:\n\nAprender y practicar la organización de talleres;\nAprender y practicar habilidades de revisión y desarrollo;\nObtener información de expertes y ampliar su red profesional;\nGanar visibilidad a través de la formación, la tutoría y la creación de contenidos;\nObtener reconocimiento y mención por su trabajo;\nCo-desarrollar este programa y otros proyectos de rOpenSci compartiendo comentarios;\nConvertirse en un/a participante activa de la comunidad rOpenSci;\nCrear contenidos en el idioma de su comunidad;\nCapacitar su comunidad compartiendo lo que aprendieron;\nConvertirse en mentor de otras personas de su comunidad."
+  },
+  {
+    "objectID": "presentacion_ropensci.html#convocatoria-2023-abierta",
+    "href": "presentacion_ropensci.html#convocatoria-2023-abierta",
+    "title": "Qué es rOpenSci",
+    "section": "Convocatoria 2023 abierta",
+    "text": "Convocatoria 2023 abierta\nInscripción\n\n\n\n\n\n\n\n\nVolver a la página principal"
   },
   {
     "objectID": "about.html",
