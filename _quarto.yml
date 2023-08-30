@@ -3,16 +3,21 @@ project:
   output-dir: docs
 
 website:
-  title: "renr_sep23_paquetes_bilingues"
+  title: "R en Rosario - Charla 1/9/23"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: index.qmd
+        text: "Preparación y materiales"
+      - href: about.qmd
+        text: "Sobre ROpenSci"
+      - href: about.qmd
+        text: "Creando paquetes multilingües"
 
 format:
   html:
-    theme: cosmo
+    theme: sandstone
     css: styles.css
     toc: true
 

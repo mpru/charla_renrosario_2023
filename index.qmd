@@ -1,11 +1,23 @@
 ---
-title: "renr_sep23_paquetes_bilingues"
+title: "Cómo crear paquetes multilingües + Qué es ROpenSci"
+subtitle: "Encuentro de R en Rosario - 1/9/23"
+author: "Marcos Prunello"
 ---
 
-This is a Quarto website.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+![](images/logorombo.png){fig-align="center" width=100}
+![](images/icon_lettering_color.svg){fig-align="center" width=120}
 
-```{r}
-1 + 1
-```
+**En este encuentro de R en Rosario vamos a repasar qué pasos hay que seguir para crear un paquete y pensar algunas estrategias para que pueda ser usado en más de un idioma. Además, vamos a conocer a qué se dedica la organización ROpenSci y cómo podemos ser parte.**
+
+En la sección ["Preparación y materiales"](preparacion.html) vas a encontrar los materiales necesarios para seguir los ejemplos.
+
+![](images/flyer.jpeg){fig-align="center" width=40%}
+
+### Presentador
+
+**Marcos Prunello:** Soy Licenciado en Estadística (UNR) y MSc en Biomedical Informatics (Stanford University). Me dedico a la vida universitaria, trabajando en cuestiones de Estadística y Ciencia de Datos en la FCEyE-UNR y Universidad Austral.
+
+### Licencia
+
+<a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES"><img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" alt="Creative Commons License" style="border-width:0"/></a><br /> Los materiales de esta charla están bajo la licencia <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
