@@ -10,7 +10,7 @@ author: "Marcos Prunello"
 
 **En este encuentro de R en Rosario vamos a repasar qué pasos hay que seguir para crear un paquete y pensar algunas estrategias para que pueda ser usado en más de un idioma. Además, vamos a conocer a qué se dedica la organización ROpenSci y cómo podemos ser parte.**
 
-En la sección ["Preparación y materiales"](preparacion.html) vas a encontrar los materiales necesarios para seguir los ejemplos.
+En la sección [Preparación y materiales](preparacion.html) vas a encontrar los materiales necesarios para seguir los ejemplos.
 
 ![](images/flyer.jpeg){fig-align="center" width=40%}
 

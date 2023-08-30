@@ -1,6 +1,7 @@
-# charla_renrosario_2023
-Repo para la charla en RenRosario
+# Cómo crear paquetes multilingües + Qué es ROpenSci
 
-prueba que esté todo bien
+Repo para la charla de R en Rosario.
 
-otra vez
+Marcos Prunello
+
+1/9/23

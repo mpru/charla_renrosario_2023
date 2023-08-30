@@ -1,0 +1,31 @@
+---
+title: "ROpenSci"
+author: "Marcos Prunello"
+format: revealjs
+footer: "[Volver a la página principal](index.html)"
+logo: images/logorombo.png
+---
+
+# In the morning
+
+## Getting up
+
+- Turn off alarm
+- Get out of bed
+
+## Breakfast
+
+- Eat eggs
+- Drink coffee
+
+# In the evening
+
+## Dinner
+
+- Eat spaghetti
+- Drink wine
+
+## Going to sleep
+
+- Get in bed
+- Count sheep
