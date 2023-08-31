@@ -12,7 +12,7 @@ website:
         text: "Preparación y materiales"
       - href: presentacion_ropensci.qmd
         text: "Sobre ROpenSci"
-      - href: about.qmd
+      - href: crear_paq_multiling.qmd
         text: "Creando paquetes multilingües"
       - href: crear_paquetes.qmd
         text: "Más detalles"

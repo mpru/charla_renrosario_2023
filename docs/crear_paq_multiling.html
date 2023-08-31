@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.191">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Marcos Prunello">
+
+<title>R en Rosario - Charla 1/9/23 - Una idea para crear paquetes multilingües</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">R en Rosario - Charla 1/9/23</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./preparacion.html" rel="" target="">
+ <span class="menu-text">Preparación y materiales</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./presentacion_ropensci.html" rel="" target="">
+ <span class="menu-text">Sobre ROpenSci</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./crear_paq_multiling.html" rel="" target="" aria-current="page">
+ <span class="menu-text">Creando paquetes multilingües</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./crear_paquetes.html" rel="" target="">
+ <span class="menu-text">Más detalles</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#comencemos" id="toc-comencemos" class="nav-link active" data-scroll-target="#comencemos">Comencemos…</a>
+  <ul class="collapse">
+  <li><a href="#por-qué-podríamos-considerar-crear-un-paquete" id="toc-por-qué-podríamos-considerar-crear-un-paquete" class="nav-link" data-scroll-target="#por-qué-podríamos-considerar-crear-un-paquete">¿Por qué podríamos considerar crear un paquete?</a></li>
+  <li><a href="#la-estructura-de-un-paquete" id="toc-la-estructura-de-un-paquete" class="nav-link" data-scroll-target="#la-estructura-de-un-paquete">La estructura de un paquete</a></li>
+  </ul></li>
+  <li><a href="#nuestro-primer-paquete-bisiestos" id="toc-nuestro-primer-paquete-bisiestos" class="nav-link" data-scroll-target="#nuestro-primer-paquete-bisiestos">Nuestro primer paquete: <code>bisiestos</code></a>
+  <ul class="collapse">
+  <li><a href="#crear-el-paquete" id="toc-crear-el-paquete" class="nav-link" data-scroll-target="#crear-el-paquete">Crear el paquete</a></li>
+  <li><a href="#crear-los-archivos-de-código" id="toc-crear-los-archivos-de-código" class="nav-link" data-scroll-target="#crear-los-archivos-de-código">Crear los archivos de código</a></li>
+  <li><a href="#escribir-la-documentación" id="toc-escribir-la-documentación" class="nav-link" data-scroll-target="#escribir-la-documentación">Escribir la documentación</a></li>
+  <li><a href="#instalar-el-paquete" id="toc-instalar-el-paquete" class="nav-link" data-scroll-target="#instalar-el-paquete">Instalar el paquete</a></li>
+  <li><a href="#otras-cuestiones" id="toc-otras-cuestiones" class="nav-link" data-scroll-target="#otras-cuestiones">Otras cuestiones</a></li>
+  </ul></li>
+  <li><a href="#ahora-convertirlo-en-multilingüe" id="toc-ahora-convertirlo-en-multilingüe" class="nav-link" data-scroll-target="#ahora-convertirlo-en-multilingüe">Ahora… convertirlo en multilingüe</a>
+  <ul class="collapse">
+  <li><a href="#funciones-internas" id="toc-funciones-internas" class="nav-link" data-scroll-target="#funciones-internas">Funciones internas</a></li>
+  <li><a href="#agregar-un-idioma" id="toc-agregar-un-idioma" class="nav-link" data-scroll-target="#agregar-un-idioma">Agregar un idioma</a>
+  <ul class="collapse">
+  <li><a href="#creamos-mensajes_es.r" id="toc-creamos-mensajes_es.r" class="nav-link" data-scroll-target="#creamos-mensajes_es.r">Creamos <code>mensajes_es.R</code>:</a></li>
+  <li><a href="#creamos-funciones_es.r" id="toc-creamos-funciones_es.r" class="nav-link" data-scroll-target="#creamos-funciones_es.r">Creamos <code>funciones_es.R</code></a></li>
+  </ul></li>
+  <li><a href="#y-ahora-agregar-cualquier-otro-idioma" id="toc-y-ahora-agregar-cualquier-otro-idioma" class="nav-link" data-scroll-target="#y-ahora-agregar-cualquier-otro-idioma">Y ahora… ¡agregar cualquier otro idioma!</a>
+  <ul class="collapse">
+  <li><a href="#agregamos-inglés" id="toc-agregamos-inglés" class="nav-link" data-scroll-target="#agregamos-inglés">Agregamos inglés</a></li>
+  <li><a href="#agregamos-portugués" id="toc-agregamos-portugués" class="nav-link" data-scroll-target="#agregamos-portugués">Agregamos portugués</a></li>
+  </ul></li>
+  <li><a href="#probar-cómo-funciona" id="toc-probar-cómo-funciona" class="nav-link" data-scroll-target="#probar-cómo-funciona">Probar cómo funciona</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Una idea para crear paquetes multilingües</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Marcos Prunello </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="callout callout-style-default callout-note no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+¡Hola!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>En este taller vamos a seguir una estrategia para crear paquetes de R multilingües, es decir, que tengan funciones, documentación y mensajes disponibles en más de un idioma.</em></p>
+<p><em>La idea presentada permite agregar nuevos idiomas sin tener que cambiar la forma en que las funciones básicas del paquete están programadas, haciendo que sea una tarea escalable.</em></p>
+<p><em>A continuación implementaremos esta idea a través de un ejemplo mínimo, creando un paquete pequeño. Por eso, vamos a repasar algunas cuestiones muy básicas de la creación de paquetes, pero sólo lo que necesitamos para el ejemplo. Si querés ver más detalles, <a href="crear_paquetes.html">podés visitar esta sección</a> o, mejor aún, leer el libro <a href="https://r-pkgs.org/">R Packages de Hadley Wickham y Jennifer Bryan</a>.</em></p>
+</div>
+</div>
+<section id="comencemos" class="level1">
+<h1>Comencemos…</h1>
+<div class="callout callout-style-default callout-tip callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Qué es un paquete
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Un paquete de R es la unidad básica para la distribución de código de R, que reúne de forma estructurada funciones, datos, archivos con documentación y testeos.</strong></p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/paquetes1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<section id="por-qué-podríamos-considerar-crear-un-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-podríamos-considerar-crear-un-paquete">¿Por qué podríamos considerar crear un paquete?</h2>
+<p>Nos da la oportunidad de:</p>
+<ul>
+<li><strong>Compartir</strong> de forma sencilla y rápida el trabajo que realizamos.</li>
+<li><strong>Organizar</strong> el trabajo dentro de los equipos de trabajo o de investigación.</li>
+<li><strong>Realizar nuevas publicaciones</strong>.</li>
+<li><strong>Darnos a conocer</strong>.</li>
+</ul>
+</section>
+<section id="la-estructura-de-un-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="la-estructura-de-un-paquete">La estructura de un paquete</h2>
+<ul>
+<li>Crear un paquete no es más que seguir ciertas convenciones para organizar un conjunto de carpetas y archivos.</li>
+<li>Un paquete es una carpeta de nuestra computadora que tiene ciertos elementos obligatorios y algunos otros opcionales.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/estructura.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Ejemplo de la apariencia de un paquete de R con los elementos más comunes.</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Elementos obligatorios:</strong></p>
+<ul>
+<li>Archivo <code>Description</code>: describe el contenido del paquete y establece cómo el paquete se va a relacionar con otros.</li>
+<li>Carpeta <code>R</code>: contiene el o los archivos de código de R con las funciones del paquete.</li>
+<li>Carpeta <code>man</code>: contiene archivos con la documentación del paquete, funciones y datasets.</li>
+<li>Archivo <code>NAMESPACE</code>: declara qué funciones nuestro paquete pone a disposición de los usuarios y de qué funciones de otros paquetes hace uso el nuestro, es decir, organiza las cosas para que R pueda encontrar todo lo que necesita cuando usa nuestro paquete.</li>
+</ul>
+<p><strong>Elementos opcionales (pero algunos muy necesarios):</strong></p>
+<ul>
+<li>Carpeta <code>data</code>: contiene objetos de R (por ejemplo, <code>.Rdata</code>) que contienen datos.</li>
+<li>Carpeta <code>vignettes</code>: contiene los tutoriales que muestran ejemplos de uso del paquete, generalmente escritos en Rmarkdown.</li>
+<li>Archivo <code>NEWS</code>: lleva el registro de los cambios implementados en las sucesivas versiones de un paquete.</li>
+<li>Archivo <code>LICENSE</code>: especifica los detalles de la licencia bajo la cual se distribuye el paquete. Es obligatorio bajo ciertos tipos de licencias (como la <em>MIT</em>).</li>
+<li>Archivo <code>.Rbuildignore</code>: lista los archivos y directorios que no deben ser incluidos a la hora de construir el paquete.</li>
+<li>Carpeta <code>tests</code>: incluye código para someter al paquete a diversos controles.</li>
+<li>Carpeta <code>src</code>: incluye archivos fuente para código compilado en otro lenguaje, por ejemplo, C++.</li>
+<li>Carpeta <code>inst</code>: para guardar algunas otras cosas.</li>
+</ul>
+<!-- Qué se pone en inst: https://r-pkgs.org/inst.html -->
+</section>
+</section>
+<section id="nuestro-primer-paquete-bisiestos" class="level1">
+<h1>Nuestro primer paquete: <code>bisiestos</code></h1>
+<ul>
+<li>En esta sección vamos a crear un paquete de R con muy pocos pasos. ¡A trabajar!</li>
+<li>Para esto, vamos a recibir la ayuda de los paquetes <code>devtools</code> y <code>usethis</code>, que incluyen un montón de funciones para simplificar la tarea de la creación de un nuevo paquete.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/devtoolsusethis.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Paquetes devtools y usethis.</figcaption><p></p>
+</figure>
+</div>
+<section id="crear-el-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="crear-el-paquete">Crear el paquete</h2>
+<ul>
+<li>La forma más fácil de crear un paquete es haciendo uso de la función <code>create_package("nombre_paquete")</code>, que va a generar una carpeta con el nombre provisto en el directorio de trabajo actual.</li>
+<li>Si queremos que se genere en otro lugar, debemos indicarle la ruta hacia el mismo, por ejemplo: <code>create_package("C:/Users/Documentos/nombre_paquete")</code>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_package</span>(<span class="st">"bisiestos"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✔ Creating 'bisiestos/'
+✔ Setting active project to '/home/marcos/Documents/clases/bisiestos'
+✔ Creating 'R/'
+✔ Writing 'DESCRIPTION'
+Package: bisiestos
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R (parsed):
+    * First Last &lt;first.last@example.com&gt; [aut, cre] (YOUR-ORCID-ID)
+Description: What the package does (one paragraph).
+License: `use_mit_license()`, `use_gpl3_license()` or friends to
+    pick a license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+✔ Writing 'NAMESPACE'
+✔ Writing 'bisiestos.Rproj'
+✔ Adding '^bisiestos\\.Rproj$' to '.Rbuildignore'
+✔ Adding '.Rproj.user' to '.gitignore'
+✔ Adding '^\\.Rproj\\.user$' to '.Rbuildignore'
+✔ Opening '/home/marcos/Documents/clases/bisiestos/' in new RStudio session
+✔ Setting active project to '&lt;no active project&gt;'</code></pre>
+<ul>
+<li>Además de crear esta carpeta, se crea un <strong>proyecto</strong> de RStudio alojado allí, con el mismo nombre.</li>
+<li>Si estamos trabajando en RStudio, luego de correr <code>create_package()</code> se abre dicho proyecto en una nueva sesión.</li>
+<li>Esto es útil, porque al reconocer que nuestro proyecto trata del desarrollo de un paquete, RStudio provee algunas opciones especiales, como la pestaña <code>Build</code> en el panel de arriba a la derecha.</li>
+<li>Asegurate de adjuntar los paquetes <code>devtools</code> y <code>usethis</code> en esta nueva sesión (<code>devtools</code> adjunta también a <code>usethis</code>):</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: usethis</code></pre>
+</div>
+</div>
+<ul>
+<li>Podemos ver la existencia de la nueva carpeta <code>bisiestos</code> con los archivos recientemente creados en el panel <code>Files</code> (hay algunos componentes que se crean en esta carpeta y que por ahora podemos ignorar; recordá que <a href="crear_paquetes.html">acá hay más info</a>):</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/crear.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Resultado de la creación del paquete.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="crear-los-archivos-de-código" class="level2">
+<h2 class="anchored" data-anchor-id="crear-los-archivos-de-código">Crear los archivos de código</h2>
+<ul>
+<li>Las funciones que programemos tienen que ir en archivos <code>.R</code> dentro de la carpeta <code>R</code>.</li>
+<li>Esto se hace automáticamente con la función <code>use_r()</code>, en la cual especificamos el nombre del archivo de código:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_r</span>(<span class="st">"funciones"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>● Modify 'R/funciones.R'</code></pre>
+<ul>
+<li>Vamos a agregar en este archivo el código para la creación de una función que nos determina si un año provisto es bisiesto o no.</li>
+<li>Para repasar acerca de la escritura de funciones, podés visitar estos capítulos de los libros <a href="https://r4ds.had.co.nz/functions.html">R for Data Science</a> o <a href="https://adv-r.hadley.nz/functions.html">Advanced R</a>.</li>
+<li>Copiá y guardá esto en el archivo recién creado:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bisiesto <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">x =</span> <span class="fu">as.integer</span>(<span class="fu">format</span>(<span class="fu">Sys.Date</span>(), <span class="st">"%Y"</span>))) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Chequear argumento</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"El valor provisto para x no es numerico."</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(x)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Determinar si es bisiesto (TRUE/FALSE)</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> ((x <span class="sc">%%</span> <span class="dv">4</span> <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">&amp;</span> (x <span class="sc">%%</span> <span class="dv">100</span> <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">|</span> (x <span class="sc">%%</span> <span class="dv">400</span> <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  mensaje <span class="ot">&lt;-</span> <span class="fu">paste</span>(x, <span class="fu">ifelse</span>(res, <span class="st">"es un año bisiesto."</span>, <span class="st">"no es un año bisiesto."</span>), <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(mensaje)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/codigo2.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Escritura del código.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>Seguramente nos interese ir probando nuestra función a medida que la estamos desarrollando o cuando creemos que la hemos finalizado.</li>
+<li>Es decir, nos interesa tenerla disponible en nuestro ambiente de trabajo para poder usarla.</li>
+<li>La idea natural sería correr el código anterior, o hacer <code>source(R/funciones.R)</code>.</li>
+<li>Sin embargo, <code>devtools</code> nos provee otro enfoque más adecuado para cargar todo el contenido del paquete que estamos desarrollando.</li>
+<li>Se trata de la función <code>load_all()</code>, o su atajo <code>ctrl + shift + l</code>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load_all</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>Loading bisiestos</code></pre>
+<ul>
+<li>Como resultado, todas las funciones definidas están listas para ser usadas (aunque no las veamos en el <em>global environment</em>) y podemos probarlas:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/cargar_probar.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Cargar las funciones creadas.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="escribir-la-documentación" class="level2">
+<h2 class="anchored" data-anchor-id="escribir-la-documentación">Escribir la documentación</h2>
+<ul>
+<li><p>A la hora de armar un paquete (y de crear cualquier función en general) es importante dedicarle unos minutos a la creación de la documentación, es decir, describir cómo se usa cada función, para qué sirven los argumentos, aclarar qué tipo de resultado devuelve, proveer ejemplos para el uso, etc.</p></li>
+<li><p>Esto es particularmente importante si pretendemos compartir el paquete con otras personas, pero también nos ayuda a nosotros para que no nos olvidamos en el futuro qué quisimos hacer y evitemos perder tiempo tratando de descifrar cómo andan las funciones que escribimos en el pasado.</p></li>
+<li><p>Específicamente, documentar el paquete y sus funciones significa crear todas las páginas que vemos cuando exploramos el manual de ayuda.</p></li>
+<li><p>Por suerte, armarlo no es tan complicado como uno lo podría imaginar, ya que contamos con la ayuda del <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html">paquete <code>roxygen2</code></a> (lo difícil es escribir ayuda que sea entendible y útil para otros…).</p></li>
+<li><p>Este paquete provee pautas para escribir comentarios con un formato especial que incluyan toda la información requerida justo antes de la definición de la función.</p></li>
+<li><p>Esto hace que tomemos la costumbre de escribir la documentación al mismo tiempo que creamos la función, sin que se vuelva una carga pesada para más adelante.</p></li>
+<li><p>Estando parados sobre la definición de la función, vamos al menú <code>Code</code> y elegimos <code>Insert Roxygen Skeleton</code>.</p></li>
+<li><p>Veremos cómo automáticamente se monta un <em>esqueleto</em> para que completemos donde corresponda.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/doc.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Esqueleto para la documentación.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>No reniegues, reemplazá ese esqueleto por estas líneas de documentación, juntos vamos a ver a qué apunta cada componente:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' La función bisiesto</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' Esta función analiza si el año o los años provistos son bisiestos o no. Los</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' años bisiestos ocurren cada 4 años, excepto los terminados en 00, los cuales</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' son bisiestos sólo si son divisibles por 400. Es decir, los años como 1600,</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' 1700, 1800 son bisiestos si son divisibles por 400. Por ejemplo, el año 1900</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' no fue bisiesto a pesar de ser divisible por 4, pero el año 2000 sí lo fue</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' por ser divisible por 400. Entonces, para que un año dado sea bisiesto, se</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' debe cumplir una de las siguientes condiciones: el año es divisible por 4</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#' pero no divisible por 100, o el año es divisible por 400.</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param x vector numérico de largo mayor o igual a 1 con los años a evaluar.</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#'   Por default, toma el año actual.</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return la función imprime mensajes en la consola para indicar si los años</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#'   provistos son o no bisiestos. Devuelve un valor NULL invisible.</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#' @details Si `x` contiene valores no enteros, se toma su parte entera. Esta</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#'   función sirve para los años antes de Cristo, si se los considera bajo la</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#'   numeración astronómica de los años (incluye un año 0 y luego cuenta en</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#'   negativo, por ejemplo, el año 0 es 1 AC o el año -1 es 2 AC.).</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co">#' @seealso \url{https://es.wikipedia.org/wiki/Año_bisiesto}</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co">#' bisiesto(2019)</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co">#' bisiesto(2020)</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co">#' bisiesto(2020:2025)</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Una vez que hemos documentado la o las funciones, se tienen que generar los archivos <code>.Rd</code> que compondrán el manual y que deben ir guardados en la carpeta <code>man</code>.</p></li>
+<li><p>Además, hay que modificar el archivo <code>NAMESPACE</code> del paquete para especificar qué funciones van a estar disponibles para los usuarios, según lo que hayamos indicado con las etiquetas <code>@export</code>.</p></li>
+<li><p>Otra vez, por suerte todo esto se puede hacer automáticamente, al correr la función <code>document()</code> o su atajo <code>ctrl + shift + d</code>:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>==&gt; devtools::document(roclets=c('rd', 'collate', 'namespace'))
+
+Updating bisiestos documentation
+Updating roxygen version in /home/marcos/GitProjects/bisiestos/DESCRIPTION
+Writing NAMESPACE
+Loading bisiestos
+Documentation completed</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/doc2.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Resultado de correr document().</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>Las funciones que no se exportan, son de uso interno del paquete y son todas aquellas que no tienen la etiqueta <code>@export</code>. Será útil recordar esto en un rato.</li>
+</ul>
+</section>
+<section id="instalar-el-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="instalar-el-paquete">Instalar el paquete</h2>
+<ul>
+<li><p>Aunque no lo creas, ¡ya hemos terminado la primera versión de nuestro paquete y estamos en condiciones de instalarlo!</p></li>
+<li><p>Esto lo podemos hacer de varias formas:</p>
+<ul>
+<li>Corriendo <code>install()</code></li>
+<li>Usando el atajo <code>ctrl + shift + b</code></li>
+<li>Haciendo clic en <code>Install and restart</code> de la pestaña <code>Build</code>.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>── R CMD build ───────────────────────────────────────────────────────────────────
+✔  checking for file ‘/home/marcos/Documents/clases/bisiestos/DESCRIPTION’ ...
+─  preparing ‘bisiestos’:
+✔  checking DESCRIPTION meta-information ...
+─  checking for LF line-endings in source and make files and shell scripts
+─  checking for empty or unneeded directories
+─  building ‘bisiestos_0.0.0.9000.tar.gz’
+   
+Running /usr/lib/R/bin/R CMD INSTALL \
+  /tmp/RtmpZLHGHD/bisiestos_0.0.0.9000.tar.gz --install-tests 
+* installing to library ‘/home/marcos/R/x86_64-pc-linux-gnu-library/4.2’
+* installing *source* package ‘bisiestos’ ...
+** using staged installation
+** R
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (bisiestos)</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/instalar2.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Resultado de la instalación.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>Ya podés visitar la Ayuda sobre tu función… ¿se siento lindo, no?</li>
+<li>Este proceso finaliza con la carga del paquete a través de <code>library(bisiestos)</code>, indicando que está listo para ser usado, como cualquier otro paquete, no solamente ahora, si no que ya podemos cerrar R y volver a emplearlo en cualquier otro momento.</li>
+<li>¡Felicitaciones! ¡Acabás de crear tu primer paquete de R! Si tenés ganas podés iniciar una nueva sesión, correr <code>library(bisiestos)</code> y usar la función <code>es_bisiesto()</code>.</li>
+</ul>
+<div class="callout callout-style-default callout-note no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Descargá esta versión del paquete
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En lugar de hacer todos los pasos anteriores, podés descargar <a href="https://drive.google.com/file/d/1cnKdypPgOjTfI_6U8VKmispE2Ef5htE5/view?usp=sharing">esta carpeta</a> con todos los archivos que conforman esta versión original del paquete y explorar desde allí.</p>
+</div>
+</div>
+</section>
+<section id="otras-cuestiones" class="level2">
+<h2 class="anchored" data-anchor-id="otras-cuestiones">Otras cuestiones</h2>
+<ul>
+<li><p>Con lo anterior ya tenemos un paquete andando. Para dejarlo más completito, tendríamos que presetarle atención a otras cuestiones como:</p>
+<ul>
+<li>Editar el archivo <code>DESCRIPTION</code>.</li>
+<li>Enteder y revisar las dependencias con otros paquetes.</li>
+<li>Someter el paquete a prueba: <code>R CMD check</code>.</li>
+<li>Establecer una licencia de uso.</li>
+<li>Agregar testeos.</li>
+<li>Escribir un <code>README</code> (y añadir <em>badges</em>).</li>
+<li>Escribir el archivo <code>NEWS</code>.</li>
+<li>Escribir viñetas.</li>
+<li>Agregar datasets.</li>
+<li>Diseñar un logo.</li>
+<li>Crear una página web.</li>
+<li>Agregar un sistema de control de versiones como <code>git</code> y publicarlo en <em>GitHub</em>.</li>
+<li>Subir el paquete a algún repositorio.</li>
+</ul></li>
+<li><p>Recordá que <a href="crear_paquetes.html">acá hay más info</a>.</p></li>
+</ul>
+</section>
+</section>
+<section id="ahora-convertirlo-en-multilingüe" class="level1">
+<h1>Ahora… convertirlo en multilingüe</h1>
+<ul>
+<li><p>La función que escribimos recién está en español (su nombre, sus mensajes) y así como está sería difícil implementarla en otros idiomas.</p></li>
+<li><p>Vamos a seguir la siguiente estrategia:</p>
+<ol type="1">
+<li><strong>Crear funciones internas que hagan el trabajo sucio</strong>.</li>
+</ol>
+<ul>
+<li>Estas funciones implementarán todo el código necesario, no serán accesibles para los usuarios del paquete y tendrán un argumento extra para indicar con qué <code>idioma</code> se está usando el paquete (por ejemplo: <code>"en"</code>, <code>"es"</code>).</li>
+<li>Dependiendo del <code>idioma</code>, se elegirían los mensajes para mostrar.</li>
+</ul>
+<ol start="2" type="1">
+<li><strong>Crear una lista como objeto global para guardar todos los mensajes, independiente de la defición de las funciones internas</strong>.</li>
+</ol>
+<ul>
+<li>Llamaremos esta lista <code>mensajes</code>.</li>
+<li>Contiene, a su vez, otras listas, una por cada idioma a implementar, con los mensajes escritos en ese idioma.</li>
+<li>Inicialmente dejamos vacía a la lista <code>mensajes</code>. Cada vez que alguien agregue un idioma, le irá agregando un elemento más.</li>
+</ul>
+<ol start="3" type="1">
+<li><strong>Por cada idioma a agregar, creamos dos nuevos scripts de R,</strong> <code>funciones_*.R</code> <strong>y</strong> <code>mensajes_*.R</code>.</li>
+</ol>
+<ul>
+<li><code>funciones_*.R</code> (ejemplo: <code>funciones_es.R</code>, <code>funciones_en.R</code>): definimos las funciones a exportar, dándoles un nombre en el idioma en cuestion. Estas funciones sólo son un <em>wrapper</em> a las funciones internas definidas antes, que al llamarlas le pasan el argumento <code>idioma</code> con el valor adecuado según el idioma que se esté usando (<code>"en"</code>, <code>"es"</code>).</li>
+<li><code>mensajes_*.R</code> (ejemplo: <code>mensajes_es.R</code>, <code>mensajes_en.R</code>): agregan a la lista global <code>mensajes</code> una sublista, cuyo nombre es el valor que usamos para el argumento <code>idioma</code> (<code>"en"</code>, <code>"es"</code>). Esta sublista tiene todos los mensajes que usaremos, escritos en el idioma correspondiente.</li>
+<li>Todo esto podría estar en un mismo script, pero si el paquete es grande, vamos a tener muchos <em>wrappers</em> a funciones internas, y muchos mensajes a escribir en cada idioma, por lo cual es más ordenado y conveniente mantener estas cosas por separado.</li>
+</ul></li>
+<li><p>Es más claro si lo hacemos…</p></li>
+</ul>
+<section id="funciones-internas" class="level2">
+<h2 class="anchored" data-anchor-id="funciones-internas">Funciones internas</h2>
+<ul>
+<li>Borremos todo el contenido de nuestro script <code>funciones.R</code> para poner allí la definición de la lista global de <code>mensajes</code> y la definición de la función interna que se encarga de ver si un año es o no bisiesto:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable global para guardar los mensajes, arranca vacía y se va llenando al </span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># definir nuevos idiomas</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>mensajes <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' Definición de la función interna (queda propuesto: documentarla)</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @keywords internal</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>.bisiesto <span class="ot">&lt;-</span> <span class="cf">function</span>(x, idioma) {</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Chequear argumento</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(mensajes[[idioma]]<span class="sc">$</span>x_no_numerico)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(x)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Determinar si es bisiesto (TRUE/FALSE)</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> ((x <span class="sc">%%</span> <span class="dv">4</span> <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">&amp;</span> (x <span class="sc">%%</span> <span class="dv">100</span> <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">|</span> (x <span class="sc">%%</span> <span class="dv">400</span> <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  mensaje <span class="ot">&lt;-</span> <span class="fu">paste</span>(x, <span class="fu">ifelse</span>(res, mensajes[[idioma]]<span class="sc">$</span>es_bisiesto, mensajes[[idioma]]<span class="sc">$</span>no_es_bisiesto), <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(mensaje)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Notemos la incorporación del argumento <code>idioma</code> y que de él depende la escritura de mensajes.</li>
+<li>Por ejemplo, antes teníamos <code>"El valor provisto para x no es numerico."</code> y ahora <code>mensajes[[idioma]]$x_no_numerico</code>.</li>
+<li>La lista global de <code>mensajes</code> tendrá que tener una sublista llamada con <code>idioma</code>, la cual contiene un <em>string</em> bajo el nombre de <code>x_no_numerico</code>.</li>
+<li>Ese string es el que estará escrito en distintos idiomas.</li>
+<li>Ocurre lo mismo para los otros mensajes a emitir.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/multi1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</section>
+<section id="agregar-un-idioma" class="level2">
+<h2 class="anchored" data-anchor-id="agregar-un-idioma">Agregar un idioma</h2>
+<ul>
+<li>Ahora estamos en condiciones de agregar distintos idiomas con los que se pueda usar este paquete.</li>
+<li>Empecemos agregando al Español.</li>
+</ul>
+<section id="creamos-mensajes_es.r" class="level3">
+<h3 class="anchored" data-anchor-id="creamos-mensajes_es.r">Creamos <code>mensajes_es.R</code>:</h3>
+<ul>
+<li>Creamos un archivo con todos los mensajes en Español:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_r</span>(<span class="st">"mensajes_es.R"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>A la lista global <code>mensajes</code> le agregamos una sublista llamada <code>"es"</code>, con los tres mensajes que emite nuestro paquete, escritos en español:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mensajes[[<span class="st">"es"</span>]] <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_no_numerico =</span> <span class="st">"El valor provisto para x no es numérico."</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">es_bisiesto =</span> <span class="st">"es un año bisiesto."</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">no_es_bisiesto =</span> <span class="st">"no es un año bisiesto."</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/multi2.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</section>
+<section id="creamos-funciones_es.r" class="level3">
+<h3 class="anchored" data-anchor-id="creamos-funciones_es.r">Creamos <code>funciones_es.R</code></h3>
+<ul>
+<li>Creamos un archivo para guardar todos los <em>wrapers</em> en Español que llaman a las funciones internas:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_r</span>(<span class="st">"funciones_es.R"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Implementamos el <em>wraper</em>, usando el argumento <code>idioma = "es"</code>.</li>
+<li>Le agregamos acá una linda documentación escrita en español:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' La función bisiesto</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' Esta función analiza si el año o los años provistos son bisiestos o no. Los</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' años bisiestos ocurren cada 4 años, excepto los terminados en 00, los cuales</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' son bisiestos sólo si son divisibles por 400. Es decir, los años como 1600,</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' 1700, 1800 son bisiestos si son divisibles por 400. Por ejemplo, el año 1900</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' no fue bisiesto a pesar de ser divisible por 4, pero el año 2000 sí lo fue</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' por ser divisible por 400. Entonces, para que un año dado sea bisiesto, se</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' debe cumplir una de las siguientes condiciones: el año es divisible por 4</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#' pero no divisible por 100, o el año es divisible por 400.</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param x vector numérico de largo mayor o igual a 1 con los años a evaluar.</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co">#'   Por default, toma el año actual.</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return la función imprime mensajes en la consola para indicar si los años</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">#'   provistos son o no bisiestos. Devuelve un valor NULL invisible.</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co">#' @details Si `x` contiene valores no enteros, se toma su parte entera. Esta</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co">#'   función sirve para los años antes de Cristo, si se los considera bajo la</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="co">#'   numeración astronómica de los años (incluye un año 0 y luego cuenta en</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="co">#'   negativo, por ejemplo, el año 0 es 1 AC o el año -1 es 2 AC.).</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="co">#' @seealso \url{https://es.wikipedia.org/wiki/Año_bisiesto}</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="co">#' bisiesto(2019)</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="co">#' bisiesto(2020)</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="co">#' bisiesto(2020:2025)</span></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>bisiesto <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">x =</span> <span class="fu">as.integer</span>(<span class="fu">format</span>(<span class="fu">Sys.Date</span>(), <span class="st">"%Y"</span>))) {</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.bisiesto</span>(x, <span class="at">idioma =</span> <span class="st">"es"</span>)</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/multi3.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<ul>
+<li><strong>¡Listo!</strong></li>
+<li>Carguemos la nueva versión de nuestro paquete y probemos cómo lo usamos en Español:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load_all</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/multi4.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="y-ahora-agregar-cualquier-otro-idioma" class="level2">
+<h2 class="anchored" data-anchor-id="y-ahora-agregar-cualquier-otro-idioma">Y ahora… ¡agregar cualquier otro idioma!</h2>
+<ul>
+<li>Podemos repetir esta estructura fácilmente con más idiomas.</li>
+</ul>
+<section id="agregamos-inglés" class="level3">
+<h3 class="anchored" data-anchor-id="agregamos-inglés">Agregamos inglés</h3>
+<ul>
+<li>Archivo <code>mensajes_en.R</code> y su contenido:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_r</span>(<span class="st">"mensajes_en.R"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mensajes[[<span class="st">"en"</span>]] <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_no_numerico =</span> <span class="st">"The value provided for x is not numeric."</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">es_bisiesto =</span> <span class="st">"is a leap year."</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">no_es_bisiesto =</span> <span class="st">"is not a leap year."</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Archivo <code>funciones_en.R</code> y su contenido (¡falta la documentación!):</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_r</span>(<span class="st">"funciones_en.R"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>leap_year <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">x =</span> <span class="fu">as.integer</span>(<span class="fu">format</span>(<span class="fu">Sys.Date</span>(), <span class="st">"%Y"</span>))) {</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.bisiesto</span>(x, <span class="at">idioma =</span> <span class="st">"en"</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="agregamos-portugués" class="level3">
+<h3 class="anchored" data-anchor-id="agregamos-portugués">Agregamos portugués</h3>
+<ul>
+<li>Archivo <code>mensajes_pt.R</code> y su contenido:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_r</span>(<span class="st">"mensajes_pt.R"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mensajes[[<span class="st">"pt"</span>]] <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_no_numerico =</span> <span class="st">"O valor fornecido para x não é numérico."</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">es_bisiesto =</span> <span class="st">"é um ano bissexto."</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">no_es_bisiesto =</span> <span class="st">"não é um ano bissexto."</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Archivo <code>funciones_pt.R</code> y su contenido (¡falta la documentación!):</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_r</span>(<span class="st">"funciones_pt.R"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>bissexto <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">x =</span> <span class="fu">as.integer</span>(<span class="fu">format</span>(<span class="fu">Sys.Date</span>(), <span class="st">"%Y"</span>))) {</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.bisiesto</span>(x, <span class="at">idioma =</span> <span class="st">"pt"</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="probar-cómo-funciona" class="level2">
+<h2 class="anchored" data-anchor-id="probar-cómo-funciona">Probar cómo funciona</h2>
+<ul>
+<li>Carguemos una vez más nuestro paquete multilingüe y comprobemos que efectivamente lo podemos usar en varios idiomas.</li>
+<li>Tanto los nombres de las funciones, como los mensajes emitidos y las páginas de ayuda están disponibles en los lenguajes implementados<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load_all</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/multi5.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Descargá la versión multilingüe del paquete
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La versión definitiva de este paquete de ejemplo está disponible <a href="https://drive.google.com/file/d/1YhHE0Y6t3FlAvB4meJwv7-ZluQgpp2ng/view?usp=sharing">acá</a>.</p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Notas</h2>
+
+<ol>
+<li id="fn1"><p>Para ver las páginas de ayuda, tenemos que completar las documentaciones que dejamos pendiente y hacer una instalación de nuestro paquete en desarrollo con <code>install()</code><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

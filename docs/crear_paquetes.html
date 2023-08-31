@@ -156,7 +156,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="menu-text">Sobre ROpenSci</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
+    <a class="nav-link" href="./crear_paq_multiling.html" rel="" target="">
  <span class="menu-text">Creando paquetes multilingües</span></a>
   </li>  
   <li class="nav-item">
@@ -249,8 +249,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="callout-info">
+<div class="callout callout-style-default callout-note no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p><em>Esta guía cubre de forma más extensa los pasos de la creación de un paquete. Podés ver los materiales consultados al final de la página.</em></p>
+</div>
 </div>
 <section id="comencemos" class="level1">
 <h1>Comencemos…</h1>
@@ -260,7 +270,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Tip
+Qué es un paquete
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -342,7 +352,7 @@ Tip
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(<span class="fu">installed.packages</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 648</code></pre>
+<pre><code>[1] 649</code></pre>
 </div>
 </div>
 <p>La instalación de R trae 14 paquetes <em>base</em> y 15 <em>recomendados</em>. Al resto, los vamos instalando nosotros:</p>
@@ -471,14 +481,14 @@ Attaching package: 'dplyr'</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(available)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">available</span>(<span class="st">"bisiestos"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></li>
-</ul>
+</div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/paquetes/nombre.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <p></p><figcaption class="figure-caption">Chequear disponibilidad del nombre.</figcaption><p></p>
 </figure>
-</div>
+</div></li>
+</ul>
 </section>
 <section id="crear-el-paquete" class="level2">
 <h2 class="anchored" data-anchor-id="crear-el-paquete">Crear el paquete</h2>
@@ -598,6 +608,7 @@ RoxygenNote: 7.1.1
 <ul>
 <li>Más adelante vamos a hablar más sobre este archivo y, si bien hay una sugerencia que nos dice que no lo editemos <em>a mano</em>, por ahora no le vamos a hacer caso y vamos a agregar la siguiente línea para establecer que la función <code>es_bisiesto()</code> tiene que estar disponible para su uso luego de que alguien corra <code>library(bisiestos)</code>:</li>
 </ul>
+<!-- -->
 <pre><code>export(es_bisiesto)</code></pre>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -812,8 +823,8 @@ Documentation completed</code></pre>
 <li><p>Entonces, tenemos la siguiente clasificación para las funciones que escribimos:</p>
 <table class="table">
 <colgroup>
-<col style="width: 39%">
-<col style="width: 60%">
+<col style="width: 40%">
+<col style="width: 59%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -855,6 +866,7 @@ Documentation completed</code></pre>
 <li>Si se incluyen datasets en el paquete, también se los debe documentar, para lo cual hay que agregar comentarios <em>roxygen2</em> en algún script de la carpeta <code>R</code>. Podemos crear un script por dataset a incluir, un único script para poner la documentación de todos los datasets juntos, o agregarla en otro script ya existente (aunque esto sería más desprolijo).</li>
 <li>A continuación se muestra cómo está escrita la documentación en <em>roxygen2</em> para el dataset <code>diamonds</code> del paquete <code>ggplot2</code>:</li>
 </ul>
+<!-- -->
 <pre><code>#' Prices of 50,000 round cut diamonds
 #'
 #' A dataset containing the prices and other attributes of almost 54,000
@@ -1014,7 +1026,7 @@ Suggests:
 <table class="table">
 <colgroup>
 <col style="width: 26%">
-<col style="width: 32%">
+<col style="width: 31%">
 <col style="width: 41%">
 </colgroup>
 <thead>
@@ -1124,6 +1136,7 @@ Usamos un caracter que no forma parte del código ASCII en el código (la ñ del
 <ul>
 <li>El campo <code>LICENSE</code> en <code>DESCRIPTION</code> también podría usarse para establecer que el paquete no puede ser utilizado por fuera de alguna organización:</li>
 </ul>
+<!-- -->
 <pre><code>LICENSE: Proprietary: do not distribute outside of Universidad Nacional de Rosario.</code></pre>
 </section>
 <section id="agregar-testeos" class="level2">

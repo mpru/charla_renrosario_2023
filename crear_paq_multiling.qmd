@@ -1,0 +1,534 @@
+---
+title: "Una idea para crear paquetes multilingües"
+author: "Marcos Prunello"
+lang: es
+---
+
+::: {.callout-note icon="false"}
+## ¡Hola!
+
+*En este taller vamos a seguir una estrategia para crear paquetes de R multilingües, es decir, que tengan funciones, documentación y mensajes disponibles en más de un idioma.*
+
+*La idea presentada permite agregar nuevos idiomas sin tener que cambiar la forma en que las funciones básicas del paquete están programadas, haciendo que sea una tarea escalable.*
+
+*A continuación implementaremos esta idea a través de un ejemplo mínimo, creando un paquete pequeño. Por eso, vamos a repasar algunas cuestiones muy básicas de la creación de paquetes, pero sólo lo que necesitamos para el ejemplo. Si querés ver más detalles, [podés visitar esta sección](crear_paquetes.html) o, mejor aún, leer el libro [R Packages de Hadley Wickham y Jennifer Bryan](https://r-pkgs.org/).*
+:::
+
+# Comencemos...
+
+::: callout-tip
+## Qué es un paquete
+
+**Un paquete de R es la unidad básica para la distribución de código de R, que reúne de forma estructurada funciones, datos, archivos con documentación y testeos.**
+:::
+
+![](images/paquetes/paquetes1.png){fig-align="center" width="50%"}
+
+## ¿Por qué podríamos considerar crear un paquete?
+
+Nos da la oportunidad de:
+
+-   **Compartir** de forma sencilla y rápida el trabajo que realizamos.
+-   **Organizar** el trabajo dentro de los equipos de trabajo o de investigación.
+-   **Realizar nuevas publicaciones**.
+-   **Darnos a conocer**.
+
+## La estructura de un paquete
+
+-   Crear un paquete no es más que seguir ciertas convenciones para organizar un conjunto de carpetas y archivos.
+-   Un paquete es una carpeta de nuestra computadora que tiene ciertos elementos obligatorios y algunos otros opcionales.
+
+![Ejemplo de la apariencia de un paquete de R con los elementos más comunes.](images/paquetes/estructura.png){fig-align="center" width="50%"}
+
+**Elementos obligatorios:**
+
+-   Archivo `Description`: describe el contenido del paquete y establece cómo el paquete se va a relacionar con otros.
+-   Carpeta `R`: contiene el o los archivos de código de R con las funciones del paquete.
+-   Carpeta `man`: contiene archivos con la documentación del paquete, funciones y datasets.
+-   Archivo `NAMESPACE`: declara qué funciones nuestro paquete pone a disposición de los usuarios y de qué funciones de otros paquetes hace uso el nuestro, es decir, organiza las cosas para que R pueda encontrar todo lo que necesita cuando usa nuestro paquete.
+
+**Elementos opcionales (pero algunos muy necesarios):**
+
+-   Carpeta `data`: contiene objetos de R (por ejemplo, `.Rdata`) que contienen datos.
+-   Carpeta `vignettes`: contiene los tutoriales que muestran ejemplos de uso del paquete, generalmente escritos en Rmarkdown.
+-   Archivo `NEWS`: lleva el registro de los cambios implementados en las sucesivas versiones de un paquete.
+-   Archivo `LICENSE`: especifica los detalles de la licencia bajo la cual se distribuye el paquete. Es obligatorio bajo ciertos tipos de licencias (como la *MIT*).
+-   Archivo `.Rbuildignore`: lista los archivos y directorios que no deben ser incluidos a la hora de construir el paquete.
+-   Carpeta `tests`: incluye código para someter al paquete a diversos controles.
+-   Carpeta `src`: incluye archivos fuente para código compilado en otro lenguaje, por ejemplo, C++.
+-   Carpeta `inst`: para guardar algunas otras cosas.
+
+<!-- Qué se pone en inst: https://r-pkgs.org/inst.html -->
+
+# Nuestro primer paquete: `bisiestos`
+
+-   En esta sección vamos a crear un paquete de R con muy pocos pasos. ¡A trabajar!
+-   Para esto, vamos a recibir la ayuda de los paquetes `devtools` y `usethis`, que incluyen un montón de funciones para simplificar la tarea de la creación de un nuevo paquete.
+
+![Paquetes devtools y usethis.](images/paquetes/devtoolsusethis.png){fig-align="center" width="50%"}
+
+## Crear el paquete
+
+-   La forma más fácil de crear un paquete es haciendo uso de la función `create_package("nombre_paquete")`, que va a generar una carpeta con el nombre provisto en el directorio de trabajo actual.
+-   Si queremos que se genere en otro lugar, debemos indicarle la ruta hacia el mismo, por ejemplo: `create_package("C:/Users/Documentos/nombre_paquete")`:
+
+```{r, eval=F}
+usethis::create_package("bisiestos")
+```
+
+    ✔ Creating 'bisiestos/'
+    ✔ Setting active project to '/home/marcos/Documents/clases/bisiestos'
+    ✔ Creating 'R/'
+    ✔ Writing 'DESCRIPTION'
+    Package: bisiestos
+    Title: What the Package Does (One Line, Title Case)
+    Version: 0.0.0.9000
+    Authors@R (parsed):
+        * First Last <first.last@example.com> [aut, cre] (YOUR-ORCID-ID)
+    Description: What the package does (one paragraph).
+    License: `use_mit_license()`, `use_gpl3_license()` or friends to
+        pick a license
+    Encoding: UTF-8
+    Roxygen: list(markdown = TRUE)
+    RoxygenNote: 7.2.3
+    ✔ Writing 'NAMESPACE'
+    ✔ Writing 'bisiestos.Rproj'
+    ✔ Adding '^bisiestos\\.Rproj$' to '.Rbuildignore'
+    ✔ Adding '.Rproj.user' to '.gitignore'
+    ✔ Adding '^\\.Rproj\\.user$' to '.Rbuildignore'
+    ✔ Opening '/home/marcos/Documents/clases/bisiestos/' in new RStudio session
+    ✔ Setting active project to '<no active project>'
+
+-   Además de crear esta carpeta, se crea un **proyecto** de RStudio alojado allí, con el mismo nombre.
+-   Si estamos trabajando en RStudio, luego de correr `create_package()` se abre dicho proyecto en una nueva sesión.
+-   Esto es útil, porque al reconocer que nuestro proyecto trata del desarrollo de un paquete, RStudio provee algunas opciones especiales, como la pestaña `Build` en el panel de arriba a la derecha.
+-   Asegurate de adjuntar los paquetes `devtools` y `usethis` en esta nueva sesión (`devtools` adjunta también a `usethis`):
+
+```{r}
+library(devtools)
+```
+
+-   Podemos ver la existencia de la nueva carpeta `bisiestos` con los archivos recientemente creados en el panel `Files` (hay algunos componentes que se crean en esta carpeta y que por ahora podemos ignorar; recordá que [acá hay más info](crear_paquetes.html)):
+
+![Resultado de la creación del paquete.](images/paquetes/crear.png){fig-align="center" width="70%"}
+
+## Crear los archivos de código
+
+-   Las funciones que programemos tienen que ir en archivos `.R` dentro de la carpeta `R`.
+-   Esto se hace automáticamente con la función `use_r()`, en la cual especificamos el nombre del archivo de código:
+
+```{r, eval=FALSE}
+use_r("funciones")
+```
+
+    ● Modify 'R/funciones.R'
+
+-   Vamos a agregar en este archivo el código para la creación de una función que nos determina si un año provisto es bisiesto o no.
+-   Para repasar acerca de la escritura de funciones, podés visitar estos capítulos de los libros [R for Data Science](https://r4ds.had.co.nz/functions.html) o [Advanced R](https://adv-r.hadley.nz/functions.html).
+-   Copiá y guardá esto en el archivo recién creado:
+
+```{r, eval=F}
+bisiesto <- function(x = as.integer(format(Sys.Date(), "%Y"))) {
+
+  # Chequear argumento
+  if (!is.numeric(x)) {
+    stop("El valor provisto para x no es numerico.")
+  }
+  x <- as.integer(x)
+
+  # Determinar si es bisiesto (TRUE/FALSE)
+  res <- ((x %% 4 == 0) & (x %% 100 != 0)) | (x %% 400 == 0)
+
+  mensaje <- paste(x, ifelse(res, "es un año bisiesto.", "no es un año bisiesto."), collapse = "\n")
+  cat(mensaje)
+}
+```
+
+![Escritura del código.](images/paquetes/codigo2.png){fig-align="center" width="80%"}
+
+-   Seguramente nos interese ir probando nuestra función a medida que la estamos desarrollando o cuando creemos que la hemos finalizado.
+-   Es decir, nos interesa tenerla disponible en nuestro ambiente de trabajo para poder usarla.
+-   La idea natural sería correr el código anterior, o hacer `source(R/funciones.R)`.
+-   Sin embargo, `devtools` nos provee otro enfoque más adecuado para cargar todo el contenido del paquete que estamos desarrollando.
+-   Se trata de la función `load_all()`, o su atajo `ctrl + shift + l`:
+
+```{r, eval=FALSE}
+load_all()
+```
+
+    Loading bisiestos
+
+-   Como resultado, todas las funciones definidas están listas para ser usadas (aunque no las veamos en el *global environment*) y podemos probarlas:
+
+![Cargar las funciones creadas.](images/paquetes/cargar_probar.png){fig-align="center" width="80%"}
+
+## Escribir la documentación
+
+-   A la hora de armar un paquete (y de crear cualquier función en general) es importante dedicarle unos minutos a la creación de la documentación, es decir, describir cómo se usa cada función, para qué sirven los argumentos, aclarar qué tipo de resultado devuelve, proveer ejemplos para el uso, etc.
+
+-   Esto es particularmente importante si pretendemos compartir el paquete con otras personas, pero también nos ayuda a nosotros para que no nos olvidamos en el futuro qué quisimos hacer y evitemos perder tiempo tratando de descifrar cómo andan las funciones que escribimos en el pasado.
+
+-   Específicamente, documentar el paquete y sus funciones significa crear todas las páginas que vemos cuando exploramos el manual de ayuda.
+
+-   Por suerte, armarlo no es tan complicado como uno lo podría imaginar, ya que contamos con la ayuda del [paquete `roxygen2`](https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html) (lo difícil es escribir ayuda que sea entendible y útil para otros...).
+
+-   Este paquete provee pautas para escribir comentarios con un formato especial que incluyan toda la información requerida justo antes de la definición de la función.
+
+-   Esto hace que tomemos la costumbre de escribir la documentación al mismo tiempo que creamos la función, sin que se vuelva una carga pesada para más adelante.
+
+-   Estando parados sobre la definición de la función, vamos al menú `Code` y elegimos `Insert Roxygen Skeleton`.
+
+-   Veremos cómo automáticamente se monta un *esqueleto* para que completemos donde corresponda.
+
+![Esqueleto para la documentación.](images/paquetes/doc.png){fig-align="center" width="80%"}
+
+-   No reniegues, reemplazá ese esqueleto por estas líneas de documentación, juntos vamos a ver a qué apunta cada componente:
+
+```{r}
+#' La función bisiesto
+#'
+#' Esta función analiza si el año o los años provistos son bisiestos o no. Los
+#' años bisiestos ocurren cada 4 años, excepto los terminados en 00, los cuales
+#' son bisiestos sólo si son divisibles por 400. Es decir, los años como 1600,
+#' 1700, 1800 son bisiestos si son divisibles por 400. Por ejemplo, el año 1900
+#' no fue bisiesto a pesar de ser divisible por 4, pero el año 2000 sí lo fue
+#' por ser divisible por 400. Entonces, para que un año dado sea bisiesto, se
+#' debe cumplir una de las siguientes condiciones: el año es divisible por 4
+#' pero no divisible por 100, o el año es divisible por 400.
+#'
+#' @param x vector numérico de largo mayor o igual a 1 con los años a evaluar.
+#'   Por default, toma el año actual.
+#'
+#' @return la función imprime mensajes en la consola para indicar si los años
+#'   provistos son o no bisiestos. Devuelve un valor NULL invisible.
+#'
+#' @details Si `x` contiene valores no enteros, se toma su parte entera. Esta
+#'   función sirve para los años antes de Cristo, si se los considera bajo la
+#'   numeración astronómica de los años (incluye un año 0 y luego cuenta en
+#'   negativo, por ejemplo, el año 0 es 1 AC o el año -1 es 2 AC.).
+#'
+#' @seealso \url{https://es.wikipedia.org/wiki/Año_bisiesto}
+#'
+#' @examples
+#' bisiesto(2019)
+#' bisiesto(2020)
+#' bisiesto(2020:2025)
+#'
+#' @export
+```
+
+-   Una vez que hemos documentado la o las funciones, se tienen que generar los archivos `.Rd` que compondrán el manual y que deben ir guardados en la carpeta `man`.
+
+-   Además, hay que modificar el archivo `NAMESPACE` del paquete para especificar qué funciones van a estar disponibles para los usuarios, según lo que hayamos indicado con las etiquetas `@export`.
+
+-   Otra vez, por suerte todo esto se puede hacer automáticamente, al correr la función `document()` o su atajo `ctrl + shift + d`:
+
+```{r, eval=F}
+document()
+```
+
+    ==> devtools::document(roclets=c('rd', 'collate', 'namespace'))
+
+    Updating bisiestos documentation
+    Updating roxygen version in /home/marcos/GitProjects/bisiestos/DESCRIPTION
+    Writing NAMESPACE
+    Loading bisiestos
+    Documentation completed
+
+![Resultado de correr document().](images/paquetes/doc2.png){fig-align="center" width="80%"}
+
+-   Las funciones que no se exportan, son de uso interno del paquete y son todas aquellas que no tienen la etiqueta `@export`. Será útil recordar esto en un rato.
+
+## Instalar el paquete
+
+-   Aunque no lo creas, ¡ya hemos terminado la primera versión de nuestro paquete y estamos en condiciones de instalarlo!
+
+-   Esto lo podemos hacer de varias formas:
+
+    -   Corriendo `install()`
+    -   Usando el atajo `ctrl + shift + b`
+    -   Haciendo clic en `Install and restart` de la pestaña `Build`.
+
+```{r, eval=FALSE}
+install()
+```
+
+    ── R CMD build ───────────────────────────────────────────────────────────────────
+    ✔  checking for file ‘/home/marcos/Documents/clases/bisiestos/DESCRIPTION’ ...
+    ─  preparing ‘bisiestos’:
+    ✔  checking DESCRIPTION meta-information ...
+    ─  checking for LF line-endings in source and make files and shell scripts
+    ─  checking for empty or unneeded directories
+    ─  building ‘bisiestos_0.0.0.9000.tar.gz’
+       
+    Running /usr/lib/R/bin/R CMD INSTALL \
+      /tmp/RtmpZLHGHD/bisiestos_0.0.0.9000.tar.gz --install-tests 
+    * installing to library ‘/home/marcos/R/x86_64-pc-linux-gnu-library/4.2’
+    * installing *source* package ‘bisiestos’ ...
+    ** using staged installation
+    ** R
+    ** byte-compile and prepare package for lazy loading
+    ** help
+    *** installing help indices
+    ** building package indices
+    ** testing if installed package can be loaded from temporary location
+    ** testing if installed package can be loaded from final location
+    ** testing if installed package keeps a record of temporary installation path
+    * DONE (bisiestos)
+
+![Resultado de la instalación.](images/paquetes/instalar2.png){fig-align="center" width="80%"}
+
+-   Ya podés visitar la Ayuda sobre tu función... ¿se siento lindo, no?
+-   Este proceso finaliza con la carga del paquete a través de `library(bisiestos)`, indicando que está listo para ser usado, como cualquier otro paquete, no solamente ahora, si no que ya podemos cerrar R y volver a emplearlo en cualquier otro momento.
+-   ¡Felicitaciones! ¡Acabás de crear tu primer paquete de R! Si tenés ganas podés iniciar una nueva sesión, correr `library(bisiestos)` y usar la función `es_bisiesto()`.
+
+::: {.callout-note icon="false"}
+## Descargá esta versión del paquete
+
+En lugar de hacer todos los pasos anteriores, podés descargar [esta carpeta](https://drive.google.com/file/d/1cnKdypPgOjTfI_6U8VKmispE2Ef5htE5/view?usp=sharing) con todos los archivos que conforman esta versión original del paquete y explorar desde allí.
+:::
+
+
+## Otras cuestiones
+
+-   Con lo anterior ya tenemos un paquete andando. Para dejarlo más completito, tendríamos que presetarle atención a otras cuestiones como:
+
+    -   Editar el archivo `DESCRIPTION`.
+    -   Enteder y revisar las dependencias con otros paquetes.
+    -   Someter el paquete a prueba: `R CMD check`.
+    -   Establecer una licencia de uso.
+    -   Agregar testeos.
+    -   Escribir un `README` (y añadir *badges*).
+    -   Escribir el archivo `NEWS`.
+    -   Escribir viñetas.
+    -   Agregar datasets.
+    -   Diseñar un logo.
+    -   Crear una página web.
+    -   Agregar un sistema de control de versiones como `git` y publicarlo en *GitHub*.
+    -   Subir el paquete a algún repositorio.
+
+-   Recordá que [acá hay más info](crear_paquetes.html).
+
+# Ahora... convertirlo en multilingüe
+
+- La función que escribimos recién está en español (su nombre, sus mensajes) y así como está sería difícil implementarla en otros idiomas.
+- Vamos a seguir la siguiente estrategia:
+
+  1. **Crear funciones internas que hagan el trabajo sucio**. 
+    
+    - Estas funciones implementarán todo el código necesario, no serán accesibles para los usuarios del paquete y tendrán un argumento extra para indicar con qué `idioma` se está usando el paquete (por ejemplo: `"en"`, `"es"`). 
+    - Dependiendo del `idioma`, se elegirían los mensajes para mostrar.
+    
+  2. **Crear una lista como objeto global para guardar todos los mensajes, independiente de la defición de las funciones internas**.
+  
+    - Llamaremos esta lista `mensajes`.
+    - Contiene, a su vez, otras listas, una por cada idioma a implementar, con los mensajes escritos en ese idioma.
+    - Inicialmente dejamos vacía a la lista `mensajes`. Cada vez que alguien agregue un idioma, le irá agregando un elemento más.
+    
+  3. **Por cada idioma a agregar, creamos dos nuevos scripts de R,** `funciones_*.R` **y** `mensajes_*.R`.
+  
+    - `funciones_*.R` (ejemplo: `funciones_es.R`, `funciones_en.R`): definimos las funciones a exportar, dándoles un nombre en el idioma en cuestion. Estas funciones sólo son un *wrapper* a las funciones internas definidas antes, que al llamarlas le pasan el argumento `idioma` con el valor adecuado según el idioma que se esté usando (`"en"`, `"es"`).
+    - `mensajes_*.R` (ejemplo: `mensajes_es.R`, `mensajes_en.R`): agregan a la lista global `mensajes` una sublista, cuyo nombre es el valor que usamos para el argumento `idioma` (`"en"`, `"es"`). Esta sublista tiene todos los mensajes que usaremos, escritos en el idioma correspondiente.
+    - Todo esto podría estar en un mismo script, pero si el paquete es grande, vamos a tener muchos *wrappers* a funciones internas, y muchos mensajes a escribir en cada idioma, por lo cual es más ordenado y conveniente mantener estas cosas por separado.
+  
+- Es más claro si lo hacemos...
+
+## Funciones internas
+
+- Borremos todo el contenido de nuestro script `funciones.R` para poner allí la definición de la lista global de `mensajes` y la definición de la función interna que se encarga de ver si un año es o no bisiesto:
+
+```{r, eval=FALSE}
+# Variable global para guardar los mensajes, arranca vacía y se va llenando al 
+# definir nuevos idiomas
+mensajes <- list()
+
+#' Definición de la función interna (queda propuesto: documentarla)
+#' @keywords internal
+#' 
+.bisiesto <- function(x, idioma) {
+  
+  # Chequear argumento
+  if (!is.numeric(x)) {
+    stop(mensajes[[idioma]]$x_no_numerico)
+  }
+  x <- as.integer(x)
+  
+  # Determinar si es bisiesto (TRUE/FALSE)
+  res <- ((x %% 4 == 0) & (x %% 100 != 0)) | (x %% 400 == 0)
+  
+  mensaje <- paste(x, ifelse(res, mensajes[[idioma]]$es_bisiesto, mensajes[[idioma]]$no_es_bisiesto), collapse = "\n")
+  cat(mensaje)
+}
+```
+
+- Notemos la incorporación del argumento `idioma` y que de él depende la escritura de mensajes.
+- Por ejemplo, antes teníamos `"El valor provisto para x no es numerico."` y ahora `mensajes[[idioma]]$x_no_numerico`.
+- La lista global de `mensajes` tendrá que tener una sublista llamada con `idioma`, la cual contiene un *string* bajo el nombre de `x_no_numerico`.
+- Ese string es el que estará escrito en distintos idiomas.
+- Ocurre lo mismo para los otros mensajes a emitir.
+
+![](images/paquetes/multi1.png){fig-align="center" width="100%"}
+
+## Agregar un idioma
+
+- Ahora estamos en condiciones de agregar distintos idiomas con los que se pueda usar este paquete.
+- Empecemos agregando al Español.
+
+### Creamos `mensajes_es.R`:
+
+- Creamos un archivo con todos los mensajes en Español:
+
+```{r, eval=FALSE}
+use_r("mensajes_es.R")
+```
+
+- A la lista global `mensajes` le agregamos una sublista llamada `"es"`, con los tres mensajes que emite nuestro paquete, escritos en español:
+
+```{r, eval=FALSE}
+mensajes[["es"]] <- list(
+  x_no_numerico = "El valor provisto para x no es numérico.",
+  es_bisiesto = "es un año bisiesto.",
+  no_es_bisiesto = "no es un año bisiesto."
+)
+```
+
+![](images/paquetes/multi2.png){fig-align="center" width="100%"}
+
+### Creamos `funciones_es.R`
+
+- Creamos un archivo para guardar todos los *wrapers* en Español que llaman a las funciones internas:
+
+```{r, eval=FALSE}
+use_r("funciones_es.R")
+```
+
+- Implementamos el *wraper*, usando el argumento `idioma = "es"`.
+- Le agregamos acá una linda documentación escrita en español:
+
+```{r, eval=FALSE}
+#' La función bisiesto
+#'
+#' Esta función analiza si el año o los años provistos son bisiestos o no. Los
+#' años bisiestos ocurren cada 4 años, excepto los terminados en 00, los cuales
+#' son bisiestos sólo si son divisibles por 400. Es decir, los años como 1600,
+#' 1700, 1800 son bisiestos si son divisibles por 400. Por ejemplo, el año 1900
+#' no fue bisiesto a pesar de ser divisible por 4, pero el año 2000 sí lo fue
+#' por ser divisible por 400. Entonces, para que un año dado sea bisiesto, se
+#' debe cumplir una de las siguientes condiciones: el año es divisible por 4
+#' pero no divisible por 100, o el año es divisible por 400.
+#'
+#' @param x vector numérico de largo mayor o igual a 1 con los años a evaluar.
+#'   Por default, toma el año actual.
+#'
+#' @return la función imprime mensajes en la consola para indicar si los años
+#'   provistos son o no bisiestos. Devuelve un valor NULL invisible.
+#'
+#' @details Si `x` contiene valores no enteros, se toma su parte entera. Esta
+#'   función sirve para los años antes de Cristo, si se los considera bajo la
+#'   numeración astronómica de los años (incluye un año 0 y luego cuenta en
+#'   negativo, por ejemplo, el año 0 es 1 AC o el año -1 es 2 AC.).
+#'
+#' @seealso \url{https://es.wikipedia.org/wiki/Año_bisiesto}
+#'
+#' @examples
+#' bisiesto(2019)
+#' bisiesto(2020)
+#' bisiesto(2020:2025)
+#'
+#' @export
+#' 
+bisiesto <- function(x = as.integer(format(Sys.Date(), "%Y"))) {
+  .bisiesto(x, idioma = "es")
+}
+```
+
+![](images/paquetes/multi3.png){fig-align="center" width="100%"}
+
+- **¡Listo!**
+- Carguemos la nueva versión de nuestro paquete y probemos cómo lo usamos en Español:
+
+```{r, eval=FALSE}
+load_all()
+```
+
+
+![](images/paquetes/multi4.png){fig-align="center" width="100%"}
+
+## Y ahora... ¡agregar cualquier otro idioma!
+
+- Podemos repetir esta estructura fácilmente con más idiomas.
+
+### Agregamos inglés
+
+- Archivo `mensajes_en.R` y su contenido:
+
+```{r, eval=FALSE}
+use_r("mensajes_en.R")
+```
+
+```{r, eval=FALSE}
+mensajes[["en"]] <- list(
+  x_no_numerico = "The value provided for x is not numeric.",
+  es_bisiesto = "is a leap year.",
+  no_es_bisiesto = "is not a leap year."
+)
+```
+
+- Archivo `funciones_en.R` y su contenido (¡falta la documentación!):
+
+```{r, eval=FALSE}
+use_r("funciones_en.R")
+```
+
+```{r, eval=FALSE}
+#' @export
+leap_year <- function(x = as.integer(format(Sys.Date(), "%Y"))) {
+  .bisiesto(x, idioma = "en")
+}
+```
+
+### Agregamos portugués
+
+- Archivo `mensajes_pt.R` y su contenido:
+
+```{r, eval=FALSE}
+use_r("mensajes_pt.R")
+```
+
+```{r, eval=FALSE}
+mensajes[["pt"]] <- list(
+  x_no_numerico = "O valor fornecido para x não é numérico.",
+  es_bisiesto = "é um ano bissexto.",
+  no_es_bisiesto = "não é um ano bissexto."
+)
+```
+
+- Archivo `funciones_pt.R` y su contenido (¡falta la documentación!):
+
+```{r, eval=FALSE}
+use_r("funciones_pt.R")
+```
+
+```{r, eval=FALSE}
+#' @export
+bissexto <- function(x = as.integer(format(Sys.Date(), "%Y"))) {
+  .bisiesto(x, idioma = "pt")
+}
+```
+
+## Probar cómo funciona
+
+- Carguemos una vez más nuestro paquete multilingüe y comprobemos que efectivamente lo podemos usar en varios idiomas.
+- Tanto los nombres de las funciones, como los mensajes emitidos y las páginas de ayuda están disponibles en los lenguajes implementados^[Para ver las páginas de ayuda, tenemos que completar las documentaciones que dejamos pendiente y hacer una instalación de nuestro paquete en desarrollo con `install()`].
+
+```{r, eval=FALSE}
+load_all()
+```
+
+![](images/paquetes/multi5.png){fig-align="center" width="100%"}
+
+::: {.callout-note icon="false"}
+## Descargá la versión multilingüe del paquete
+
+La versión definitiva de este paquete de ejemplo está disponible [acá](https://drive.google.com/file/d/1YhHE0Y6t3FlAvB4meJwv7-ZluQgpp2ng/view?usp=sharing).
+:::

@@ -8,7 +8,7 @@ logo: images/logorombo.png
 lang: es
 ---
 
-# rOpenSci
+# rOpenSci {background="#43464B"}
 
 ## ¿Qué es rOpenSci?
 
@@ -63,7 +63,7 @@ lang: es
 -   [Programa Champions](https://ropensci.org/champions/): (¡enseguida les cuento más!)
 -   Visitar <https://contributing.ropensci.org/> para ver más formas de participación.
 
-# Programa Champions
+# Programa Champions {background="#43464B"}
 
 ## Motivación
 
