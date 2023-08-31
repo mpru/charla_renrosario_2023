@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="es"><head>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/tabby.min.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.2.335">
+  <meta name="generator" content="quarto-1.3.191">
 
   <meta name="author" content="Marcos Prunello">
   <title>R en Rosario - Charla 1/9/23 - Qué es rOpenSci</title>
@@ -373,7 +374,7 @@ Marcos Prunello
 </section>
 <section id="suite-de-paquetes-propios" class="slide level2">
 <h2>Suite de paquetes propios</h2>
-<p><a href="https://ropensci.org/packages/all/">https://ropensci.org/packages/all/</a></p>
+<p><a href="https://ropensci.org/packages/all/" class="uri">https://ropensci.org/packages/all/</a></p>
 
 <img data-src="images/paquetes.png" class="r-stretch quarto-figure-center"></section>
 <section id="revisión-de-software-por-pares" class="slide level2">
@@ -401,7 +402,7 @@ Marcos Prunello
 <li><a href="https://r-universe.dev/search/"><strong>Sistema R-Universe</strong></a>: Proyecto paraguas para mejorar la publicación y el descubrimiento de software de investigación en R.</li>
 <li><a href="https://ropensci.org/multilingual-publishing/"><strong>Publicaciones multilingües</strong></a></li>
 <li><a href="https://ropensci.org/champions/">Programa Champions</a>: (¡enseguida les cuento más!)</li>
-<li>Visitar <a href="https://contributing.ropensci.org/">https://contributing.ropensci.org/</a> para ver más formas de participación.</li>
+<li>Visitar <a href="https://contributing.ropensci.org/" class="uri">https://contributing.ropensci.org/</a> para ver más formas de participación.</li>
 </ul>
 </section></section>
 <section>
@@ -730,12 +731,12 @@ Marcos Prunello
         // flash "checked"
         button.classList.add('code-copy-button-checked');
         var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
+        button.setAttribute("title", "Copiado");
         let tooltip;
         if (window.bootstrap) {
           button.setAttribute("data-bs-toggle", "tooltip");
           button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
+          button.setAttribute("data-bs-title", "Copiado");
           tooltip = new bootstrap.Tooltip(button, 
             { trigger: "manual", 
               customClass: "code-copy-button-tooltip",
@@ -767,7 +768,7 @@ Marcos Prunello
           },
           interactive: true,
           interactiveBorder: 10,
-          theme: 'quarto-reveal',
+          theme: 'light-border',
           placement: 'bottom-start'
         };
           config['offset'] = [0,0];

@@ -2,17 +2,16 @@
 title: "Cómo crear paquetes multilingües + Qué es ROpenSci"
 subtitle: "Encuentro de R en Rosario - 1/9/23"
 author: "Marcos Prunello"
+lang: es
 ---
 
-
-![](images/logorombo.png){fig-align="center" width=100}
-![](images/icon_lettering_color.svg){fig-align="center" width=120}
+![](images/logorombo.png){fig-align="center" width="100"} ![](images/icon_lettering_color.svg){fig-align="center" width="120"}
 
 **En este encuentro de R en Rosario vamos a repasar qué pasos hay que seguir para crear un paquete y pensar algunas estrategias para que pueda ser usado en más de un idioma. Además, vamos a conocer a qué se dedica la organización ROpenSci y cómo podemos ser parte.**
 
 En la sección [Preparación y materiales](preparacion.html) vas a encontrar los materiales necesarios para seguir los ejemplos.
 
-![](images/flyer.jpeg){fig-align="center" width=40%}
+![](images/flyer.jpeg){fig-align="center" width="40%"}
 
 ### Presentador
 

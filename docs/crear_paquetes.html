@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.191">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Marcos Prunello">
+
+<title>R en Rosario - Charla 1/9/23 - Creación de paquetes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">R en Rosario - Charla 1/9/23</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./preparacion.html" rel="" target="">
+ <span class="menu-text">Preparación y materiales</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./presentacion_ropensci.html" rel="" target="">
+ <span class="menu-text">Sobre ROpenSci</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html" rel="" target="">
+ <span class="menu-text">Creando paquetes multilingües</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./crear_paquetes.html" rel="" target="" aria-current="page">
+ <span class="menu-text">Más detalles</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#comencemos" id="toc-comencemos" class="nav-link active" data-scroll-target="#comencemos">Comencemos…</a>
+  <ul class="collapse">
+  <li><a href="#preparativos" id="toc-preparativos" class="nav-link" data-scroll-target="#preparativos">Preparativos</a></li>
+  <li><a href="#por-qué-podríamos-considerar-crear-un-paquete" id="toc-por-qué-podríamos-considerar-crear-un-paquete" class="nav-link" data-scroll-target="#por-qué-podríamos-considerar-crear-un-paquete">¿Por qué podríamos considerar crear un paquete?</a></li>
+  <li><a href="#repositorios-de-paquetes" id="toc-repositorios-de-paquetes" class="nav-link" data-scroll-target="#repositorios-de-paquetes">Repositorios de paquetes</a></li>
+  <li><a href="#a-ver-qué-sabemos-sobre-paquetes" id="toc-a-ver-qué-sabemos-sobre-paquetes" class="nav-link" data-scroll-target="#a-ver-qué-sabemos-sobre-paquetes">A ver qué sabemos sobre paquetes…</a></li>
+  <li><a href="#la-estructura-de-un-paquete" id="toc-la-estructura-de-un-paquete" class="nav-link" data-scroll-target="#la-estructura-de-un-paquete">La estructura de un paquete</a></li>
+  </ul></li>
+  <li><a href="#lo-básico" id="toc-lo-básico" class="nav-link" data-scroll-target="#lo-básico">Lo básico</a>
+  <ul class="collapse">
+  <li><a href="#elegir-el-nombre" id="toc-elegir-el-nombre" class="nav-link" data-scroll-target="#elegir-el-nombre">Elegir el nombre</a></li>
+  <li><a href="#crear-el-paquete" id="toc-crear-el-paquete" class="nav-link" data-scroll-target="#crear-el-paquete">Crear el paquete</a></li>
+  <li><a href="#crear-los-archivos-de-código" id="toc-crear-los-archivos-de-código" class="nav-link" data-scroll-target="#crear-los-archivos-de-código">Crear los archivos de código</a></li>
+  <li><a href="#instalar-el-paquete" id="toc-instalar-el-paquete" class="nav-link" data-scroll-target="#instalar-el-paquete">Instalar el paquete</a></li>
+  </ul></li>
+  <li><a href="#lo-importante" id="toc-lo-importante" class="nav-link" data-scroll-target="#lo-importante">Lo importante</a>
+  <ul class="collapse">
+  <li><a href="#escribir-la-documentación" id="toc-escribir-la-documentación" class="nav-link" data-scroll-target="#escribir-la-documentación">Escribir la documentación</a></li>
+  <li><a href="#editar-el-archivo-description" id="toc-editar-el-archivo-description" class="nav-link" data-scroll-target="#editar-el-archivo-description">Editar el archivo <code>DESCRIPTION</code></a></li>
+  <li><a href="#entender-las-dependencias" id="toc-entender-las-dependencias" class="nav-link" data-scroll-target="#entender-las-dependencias">Entender las dependencias</a></li>
+  <li><a href="#someter-el-paquete-a-prueba-r-cmd-check" id="toc-someter-el-paquete-a-prueba-r-cmd-check" class="nav-link" data-scroll-target="#someter-el-paquete-a-prueba-r-cmd-check">Someter el paquete a prueba: R CMD check</a></li>
+  <li><a href="#establecer-una-licencia-de-uso" id="toc-establecer-una-licencia-de-uso" class="nav-link" data-scroll-target="#establecer-una-licencia-de-uso">Establecer una licencia de uso</a></li>
+  <li><a href="#agregar-testeos" id="toc-agregar-testeos" class="nav-link" data-scroll-target="#agregar-testeos">Agregar testeos</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen">Resumen</a></li>
+  </ul></li>
+  <li><a href="#lo-complementario" id="toc-lo-complementario" class="nav-link" data-scroll-target="#lo-complementario">Lo complementario</a>
+  <ul class="collapse">
+  <li><a href="#escribir-un-readme" id="toc-escribir-un-readme" class="nav-link" data-scroll-target="#escribir-un-readme">Escribir un <code>README</code></a></li>
+  <li><a href="#escribir-el-archivo-news" id="toc-escribir-el-archivo-news" class="nav-link" data-scroll-target="#escribir-el-archivo-news">Escribir el archivo <code>NEWS</code></a></li>
+  <li><a href="#escribir-viñetas" id="toc-escribir-viñetas" class="nav-link" data-scroll-target="#escribir-viñetas">Escribir viñetas</a></li>
+  <li><a href="#agregar-datasets" id="toc-agregar-datasets" class="nav-link" data-scroll-target="#agregar-datasets">Agregar datasets</a></li>
+  </ul></li>
+  <li><a href="#lo-que-marca-la-diferencia" id="toc-lo-que-marca-la-diferencia" class="nav-link" data-scroll-target="#lo-que-marca-la-diferencia">Lo que marca la diferencia</a>
+  <ul class="collapse">
+  <li><a href="#añadir-badges" id="toc-añadir-badges" class="nav-link" data-scroll-target="#añadir-badges">Añadir <em>badges</em></a></li>
+  <li><a href="#diseñar-un-logo" id="toc-diseñar-un-logo" class="nav-link" data-scroll-target="#diseñar-un-logo">Diseñar un logo</a></li>
+  <li><a href="#crear-una-página-web" id="toc-crear-una-página-web" class="nav-link" data-scroll-target="#crear-una-página-web">Crear una página web</a></li>
+  <li><a href="#agregar-un-git-repo" id="toc-agregar-un-git-repo" class="nav-link" data-scroll-target="#agregar-un-git-repo">Agregar un git repo</a></li>
+  <li><a href="#subir-el-paquete-a-algún-repositorio" id="toc-subir-el-paquete-a-algún-repositorio" class="nav-link" data-scroll-target="#subir-el-paquete-a-algún-repositorio">Subir el paquete a algún repositorio</a></li>
+  </ul></li>
+  <li><a href="#material-consultado" id="toc-material-consultado" class="nav-link" data-scroll-target="#material-consultado">Material consultado</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Creación de paquetes</h1>
+<p class="subtitle lead">Guía detallada</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Marcos Prunello </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="callout-info">
+<p><em>Esta guía cubre de forma más extensa los pasos de la creación de un paquete. Podés ver los materiales consultados al final de la página.</em></p>
+</div>
+<section id="comencemos" class="level1">
+<h1>Comencemos…</h1>
+<div class="callout callout-style-default callout-tip callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Un paquete de R es la unidad básica para la distribución de código de R, que reúne de forma estructurada funciones, datos, archivos con documentación y testeos.</strong></p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/paquetes1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<section id="preparativos" class="level2">
+<h2 class="anchored" data-anchor-id="preparativos">Preparativos</h2>
+<ul>
+<li><p>Para poder seguir este tutorial, necesitás tener instalados los siguientes paquetes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"devtools"</span>, <span class="st">"usethis"</span>, <span class="st">"roxygen2"</span>, <span class="st">"dplyr"</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"testthat"</span>, <span class="st">"knitr"</span>, <span class="st">"available"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Además, si usás Windows necesitás descargar el programa Rtools desde <a href="https://cran.r-project.org/bin/windows/Rtools/">este link</a> e instalarlo en tu computadora.</p></li>
+</ul>
+</section>
+<section id="por-qué-podríamos-considerar-crear-un-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-podríamos-considerar-crear-un-paquete">¿Por qué podríamos considerar crear un paquete?</h2>
+<p>Nos da la oportunidad de:</p>
+<ul>
+<li><p><strong>Compartir</strong> de forma sencilla y rápida el trabajo que realizamos y que muchas veces queda sin difusión, aportándole visibilidad. Esto incluye:</p>
+<ul>
+<li>Metodología nueva o código desarrollado en tesinas y tesis.</li>
+<li>Código para realizar tareas dentro del equipo de trabajo.</li>
+<li>Código que acompañe a los trabajos de investigación publicados.</li>
+<li>Material didáctico creado para dar clases o estudiar.</li>
+</ul></li>
+<li><p><strong>Organizar</strong> el trabajo dentro de los equipos de trabajo o de investigación. Un paquete puede ser una buena manera de cerrar una tesina o publicación, dejando código organizado, entendible y que pueda servir de punto de partida para otros estudiantes o para nosotros cuando continuemos en el futuro. De la misma forma, encerrar en un paquete rutinas de trabajo puede servir para estandarizar protocolos de trabajo en empresas.</p></li>
+<li><p><strong>Realizar nuevas publicaciones</strong>. Los paquetes se pueden publicar en revistas como Journal of Statistical Software o Bioconductor. También sirven como antecedentes en los sistemas nacionales de registro de actividades académicas (CVAR, Sigeva, etc.)</p></li>
+<li><p><strong>Darnos a conocer</strong> en el ambiente regional de la Estadística y “ciencia de datos”, ya que implica una presencia en la virtualidad, teniendo hoy en día muchos intercambios que se originan a partir de la difusión en redes sociales.</p></li>
+</ul>
+</section>
+<section id="repositorios-de-paquetes" class="level2">
+<h2 class="anchored" data-anchor-id="repositorios-de-paquetes">Repositorios de paquetes</h2>
+<ul>
+<li><p>Un <strong>repositorio</strong> es un lugar en el cual se alojan los paquetes para que la gente pueda acceder a ellos e instalarlos en sus propios sistemas.</p></li>
+<li><p>Los cuatro repositorios más populares son:</p>
+<ol type="1">
+<li><a href="http://mirror.fcaglp.unlp.edu.ar/CRAN/"><strong>CRAN</strong></a> (<em>Comprehensive R Archive Network</em>): es el repositorio oficial compuesto por una serie de servidores coordinados por la <em>R Foundation</em>. Para que un paquete pueda ser publicado acá tiene que pasar varios testeos y regirse según la <a href="https://cran.r-project.org/web/packages/policies.html">política de la organización</a>.</li>
+<li><a href="http://bioconductor.org/"><strong>Bioconductor</strong></a>: es un repositorio específico para paquetes relacionados a la Bioinformática y al análisis de datos biológicos. Tiene un sistema propio de revisión.</li>
+<li><a href="https://ropensci.org/blog/2015/08/04/a-drat-repository-for-ropensci/"><strong>rOpenSci</strong></a>: es una organización que promueve las buenas prácticas en la ciencia de datos y la investigación reproducible y ha creado su propio repositorio de paquetes.</li>
+<li><a href="https://github.com/"><strong>GitHub</strong></a>: no es exclusivo de R, pero es un repositorio que aloja muchísimos proyectos de código abierto y que provee un contexto muy bueno para el desarrollo colaborativo de software al estar asociado al sistema de control de versiones <em>git</em>. Suele ser la plataforma de lanzamiento de paquetes que finalmente se publican en otros repositorios. No tiene un proceso de revisión.</li>
+</ol></li>
+</ul>
+</section>
+<section id="a-ver-qué-sabemos-sobre-paquetes" class="level2">
+<h2 class="anchored" data-anchor-id="a-ver-qué-sabemos-sobre-paquetes">A ver qué sabemos sobre paquetes…</h2>
+<p><strong>Tratá de responder las siguientes preguntas:</strong></p>
+<ol type="a">
+<li>¿Cómo se instala un paquete desde CRAN?</li>
+<li>¿Cómo se instala un paquete desde GitHub?</li>
+<li>¿Qué sucede en la computadora cuando <em>instalamos</em> un paquete?</li>
+<li>¿Qué es una librería (<em>library</em>)?</li>
+<li>¿Dónde está la librería que se usa por default en tu computadora? ¿En qué librerías se buscan los paquetes cuando los querés <em>cargar</em>?</li>
+<li>¿Cuántos paquetes tenés instalados?</li>
+<li>¿Cómo <em>adjuntás</em> un paquete? ¿Qué significa esto?</li>
+</ol>
+<p><strong>Respuestas:</strong></p>
+<ol type="a">
+<li><code>install.packages("nombre_paquete")</code></li>
+<li><code>devtools::install_github("nombre_usuario/nombre_paquete")</code></li>
+<li>Instalar un paquete es descargar ciertos archivos a una carpeta en particular de la computadora.</li>
+<li>Una <em>librería</em> es una colección de paquetes, es decir, es la ubicación (carpeta) donde se alojan los paquetes. Podemos tener múltiples librerías en el disco duro. Una <em>library</em> es como una biblioteca y un <em>package</em> vendría a ser uno de sus libros.</li>
+<li></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.libPaths</span>()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">"/home/marcos/R/x86_64-pc-linux-gnu-library/3.6"</span> <span class="st">"/usr/lib/R/library"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="6" type="a">
+<li>Vemos los paquetes instalados con:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(<span class="fu">installed.packages</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 648</code></pre>
+</div>
+</div>
+<p>La instalación de R trae 14 paquetes <em>base</em> y 15 <em>recomendados</em>. Al resto, los vamos instalando nosotros:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">installed.packages</span>() <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Priority <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"base"</span>, <span class="st">"recommended"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Package)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 29 × 1
+   Package  
+   &lt;chr&gt;    
+ 1 base     
+ 2 boot     
+ 3 class    
+ 4 cluster  
+ 5 codetools
+ 6 compiler 
+ 7 datasets 
+ 8 foreign  
+ 9 graphics 
+10 grDevices
+# ℹ 19 more rows</code></pre>
+</div>
+</div>
+<ol start="7" type="a">
+<li><p>Para <em>adjuntar</em> (<em>attach</em>) un paquete se usa la función <code>library()</code>, por ejemplo, <code>library(ggplot2)</code> (tal vez estemos más acostumbrados a decir <em>cargar</em> un paquete, pero en la jerga de R <em>load</em> es en realidad otra cosa)</p>
+<p>Cuando adjuntamos un paquete, hacemos que sus funciones puedan usarse. Recordando que una <em>library</em> es como una biblioteca y un <em>package</em> como uno de sus libros, se puede decir que usamos la función <code>library()</code> para sacar un libro de la biblioteca.</p>
+<p>Técnicamente, <em>adjuntar</em> un paquete significa poner todas sus funciones en el camino de búsqueda de R (<em>search path</em>). Para hacer uso de una función, R primero necesita encontrarla, y para esto primero busca en el <em>ambiente global</em>. Si no la encuentra, empieza a buscar en orden en una serie de lugares definidos en el <em>search path</em>, recorriendo todos los paquetes que se habían adjuntado con <code>library()</code>. Podemos ver el listado de los lugares donde R va a buscar con:</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vemos los paquetes adjuntados</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">search</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] ".GlobalEnv"        "package:dplyr"     "tools:quarto"     
+ [4] "tools:quarto"      "package:stats"     "package:graphics" 
+ [7] "package:grDevices" "package:utils"     "package:datasets" 
+[10] "package:methods"   "Autoloads"         "package:base"     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vemos de qué librerías provienen</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">searchpaths</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] ".GlobalEnv"                                          
+ [2] "/home/marcos/R/x86_64-pc-linux-gnu-library/4.2/dplyr"
+ [3] "tools:quarto"                                        
+ [4] "tools:quarto"                                        
+ [5] "/usr/lib/R/library/stats"                            
+ [6] "/usr/lib/R/library/graphics"                         
+ [7] "/usr/lib/R/library/grDevices"                        
+ [8] "/usr/lib/R/library/utils"                            
+ [9] "/usr/lib/R/library/datasets"                         
+[10] "/usr/lib/R/library/methods"                          
+[11] "Autoloads"                                           
+[12] "/usr/lib/R/library/base"                             </code></pre>
+</div>
+</div>
+<p>Hay 7 paquetes que siempre están adjuntados: <code>rstats</code>, <code>graphics</code>, <code>methods</code>, <code>base</code>, <code>datasets</code>, <code>utils</code> y <code>grDevices</code>.</p>
+<!-- Diferencia entre load y attach: https://r-pkgs.org/namespace.html#search-path -->
+</section>
+<section id="la-estructura-de-un-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="la-estructura-de-un-paquete">La estructura de un paquete</h2>
+<ul>
+<li>Crear un paquete no es más que seguir ciertas convenciones para organizar un conjunto de carpetas y archivos.</li>
+<li>Un paquete es una carpeta de nuestra computadora que tiene ciertos elementos obligatorios y algunos otros opcionales.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/estructura.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Ejemplo de la apariencia de un paquete de R con los elementos más comunes.</figcaption><p></p>
+</figure>
+</div>
+<p>Elementos obligatorios:</p>
+<ul>
+<li>Archivo <code>Description</code>: describe el contenido del paquete y establece cómo el paquete se va a relacionar con otros.</li>
+<li>Carpeta <code>R</code>: contiene el o los archivos de código de R con las funciones del paquete.</li>
+<li>Carpeta <code>man</code>: contiene archivos con la documentación del paquete, funciones y datasets.</li>
+<li>Archivo <code>NAMESPACE</code>: declara qué funciones nuestro paquete pone a disposición de los usuarios y de qué funciones de otros paquetes hace uso el nuestro, es decir, organiza las cosas para que R pueda encontrar todo lo que necesita cuando usa nuestro paquete.</li>
+</ul>
+<p>Elementos opcionales:</p>
+<ul>
+<li>Carpeta <code>data</code>: contiene objetos de R (por ejemplo, <code>.Rdata</code>) que contienen datos.</li>
+<li>Carpeta <code>vignettes</code>: contiene los tutoriales que muestran ejemplos de uso del paquete, generalmente escritos en Rmarkdown.</li>
+<li>Archivo <code>NEWS</code>: lleva el registro de los cambios implementados en las sucesivas versiones de un paquete.</li>
+<li>Archivo <code>LICENSE</code>: especifica los detalles de la licencia bajo la cual se distribuye el paquete. Es obligatorio bajo ciertos tipos de licencias (como la <em>MIT</em>).</li>
+<li>Archivo <code>.Rbuildignore</code>: lista los archivos y directorios que no deben ser incluidos a la hora de construir el paquete.</li>
+<li>Carpeta <code>tests</code>: incluye código para someter al paquete a diversos controles.</li>
+<li>Carpeta <code>src</code>: incluye archivos fuente para código compilado en otro lenguaje, por ejemplo, C++.</li>
+<li>Carpeta <code>inst</code>: para guardar algunas otras cosas.</li>
+</ul>
+<!-- Qué se pone en inst: https://r-pkgs.org/inst.html -->
+</section>
+</section>
+<section id="lo-básico" class="level1">
+<h1>Lo básico</h1>
+<p>En esta sección vamos a crear un paquete de R con muy pocos pasos. ¡A trabajar!</p>
+<section id="elegir-el-nombre" class="level2">
+<h2 class="anchored" data-anchor-id="elegir-el-nombre">Elegir el nombre</h2>
+<ul>
+<li><p>El primer paso para crear un paquete tal vez sea uno de los más complicados: elegir un nombre.</p></li>
+<li><p>Esto puede tener poca importancia si estamos haciendo un paquete de uso personal, pero si pensamos en compartirlo, entonces hay que dedicarle algo de tiempo.</p></li>
+<li><p>Las reglas para elegir un nombre son:</p>
+<ul>
+<li>Sólo puede contener letras, números o puntos.</li>
+<li>Tener al menos dos caracteres.</li>
+<li>Empezar con una letra y no terminar con punto.</li>
+</ul></li>
+<li><p>Algunas sugerencias incluyen elegir un nombre que sea fácil de googlear y de recordar, que tenga todas mayúsculas o minúsculas, que tal vez surja de agregarle una <em>R</em> a una palabra que existe para generar un nombre único.</p></li>
+<li><p>Para practicar vamos a crear un paquete con una única función que determina si un año es o no bisiesto, por eso lo vamos a llamar <code>bisiestos</code> (no, no se nos ocurrió otro nombre más original!).</p></li>
+<li><p>Con el paquete <code>available</code> se puede chequear si este nombre está disponible en los repositorios mencionados anteriormente.</p></li>
+<li><p>Además, este paquete nos avisa si el nombre elegido tiene algún significado especial del cual podemos no estar al tanto (revisa las webs de Wikipedia, Wiktionary y Urban Dictionary)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(available)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">available</span>(<span class="st">"bisiestos"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/nombre.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Chequear disponibilidad del nombre.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="crear-el-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="crear-el-paquete">Crear el paquete</h2>
+<ul>
+<li><p>¡Basta de cháchara y manos a la masa! Vamos a crear nuestro paquete.</p></li>
+<li><p>Para esto, vamos a recibir la ayuda de los paquetes <code>devtools</code> y <code>usethis</code>, que incluyen un montón de funciones para simplificar la tarea de la creación de un nuevo paquete (alcanza con adjuntar <code>devtools</code> porque este a su vez adjunta a <code>usethis</code>).</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/devtoolsusethis.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Paquetes devtools y usethis.</figcaption><p></p>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>La forma más fácil de crear un paquete es haciendo uso de la función <code>create_package("nombre_paquete")</code>, que va a generar una carpeta con el nombre provisto en el directorio de trabajo actual. Si queremos que se genere en otro lugar, debemos indicarle la ruta hacia el mismo, por ejemplo: <code>create_package("C:/Users/Documentos/nombre_paquete")</code>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_package</span>(<span class="st">"bisiestos"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✓ Creating '/home/marcos/Documents/Clases/bisiestos/'
+✓ Setting active project to '/home/marcos/Documents/Clases/bisiestos'
+✓ Creating 'R/'
+✓ Writing 'DESCRIPTION'
+Package: bisiestos
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R (parsed):
+    * First Last &lt;first.last@example.com&gt; [aut, cre] (YOUR-ORCID-ID)
+Description: What the package does (one paragraph).
+License: `use_mit_license()`, `use_gpl3_license()` or friends to
+    pick a license
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+✓ Writing 'NAMESPACE'
+✓ Writing 'bisiestos.Rproj'
+✓ Adding '^bisiestos\\.Rproj$' to '.Rbuildignore'
+✓ Adding '.Rproj.user' to '.gitignore'
+✓ Adding '^\\.Rproj\\.user$' to '.Rbuildignore'
+✓ Opening '/home/marcos/Documents/Clases/bisiestos/' in new RStudio session
+✓ Setting active project to '&lt;no active project&gt;'</code></pre>
+<ul>
+<li>Además de crear esta carpeta, se crea un <strong>proyecto</strong> de RStudio alojado allí, con el mismo nombre.</li>
+<li>Si estamos trabajando en RStudio, luego de correr <code>create_package()</code> se abre dicho proyecto en una nueva sesión.</li>
+<li>Esto es útil, porque al reconocer que nuestro proyecto trata del desarrollo de un paquete, RStudio provee algunas opciones especiales, como la pestaña <code>Build</code> en el panel de arriba a la derecha.</li>
+<li>Asegurate de cargar los paquetes <code>devtools</code> y <code>usethis</code> en esta nueva sesión.</li>
+<li>Podemos ver la existencia de la nueva carpeta <code>bisiestos</code> con los archivos recientemente creados en el panel <code>Files</code>:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/crear.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Resultado de la creación del paquete.</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Comentarios adicionales</strong>: hay algunos componentes que se crean en esta carpeta y que, si bien podemos ignorar, acá comentamos de qué se tratan:</p>
+<ul>
+<li><code>bisiestos.Rproj</code>: guarda las opciones de configuración elegidas para el proyecto y sirve para abrirlo directamente desde el explorador de archivos de la compu.</li>
+<li><code>.Rproj.user</code>: carpeta oculta usada internamente por RStudio para guardar archivos temporarios.</li>
+<li><code>.gitignore</code>: archivo oculto que lista todos los archivos de R y RStudio que no deberían ser rastreados por el sistema de control de versiones, si el mismo fuese utilizado. No hace nada si no usamos git.</li>
+</ul>
+</section>
+<section id="crear-los-archivos-de-código" class="level2">
+<h2 class="anchored" data-anchor-id="crear-los-archivos-de-código">Crear los archivos de código</h2>
+<ul>
+<li><p>Para definir una función para nuestro paquete, abrimos un script de R y la escribimos como haríamos usualmente, con la excepción de que tenemos que tener en cuenta estas dos cosas:</p>
+<ul>
+<li>Hay que guardar el script en la carpeta <code>R</code>.</li>
+<li>Si usamos funciones de otros paquetes, las invocamos escribiendo <code>paquete::funcion()</code>, por ejemplo <code>dplyr::mutate()</code> (se podría evitar, pero es una buena práctica).</li>
+</ul></li>
+<li><p>Ni siquiera tenemos que molestarnos por crear el archivo en la carpeta correcta, eso se hace automáticamente con la función <code>use_r()</code>, en la cual especificamos el nombre del archivo de código:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_r</span>(<span class="st">"funciones"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>● Modify 'R/funciones.R'</code></pre>
+<ul>
+<li><code>use_r()</code> entonces se encarga de agregar un archivo <code>.R</code> en la carpeta <code>R</code> del paquete, para que nosotros escribamos nuestras funciones allí.</li>
+<li>Vamos a agregar el código para la creación de una función que nos determina si un año provisto es bisiesto o no.</li>
+<li>Para repasar acerca de la escritura de funciones, podés volver a ver el material de nuestra clase sobre este tema o visitar estos capítulos de los libros <a href="https://r4ds.had.co.nz/functions.html">R for Data Science</a> o <a href="https://adv-r.hadley.nz/functions.html">Advanced R</a>.</li>
+<li>Copiá y guardá esto en el archivo recién creado:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>es_bisiesto <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">x =</span> <span class="fu">as.integer</span>(<span class="fu">format</span>(<span class="fu">Sys.Date</span>(), <span class="st">"%Y"</span>))) {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Chequear argumento</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stopifnot</span>(<span class="fu">is.numeric</span>(x))</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(x)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Determinar si es bisiesto</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    rtdo <span class="ot">&lt;-</span> ((x <span class="sc">%%</span> <span class="dv">4</span> <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">&amp;</span> (x <span class="sc">%%</span> <span class="dv">100</span> <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">|</span> (x <span class="sc">%%</span> <span class="dv">400</span> <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(rtdo) <span class="ot">&lt;-</span> x</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Devolver años bisiestos</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(rtdo)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/codigo.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Escritura del código.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>Un paquete siempre tiene funciones que están pensadas para ser utilizadas por los usuarios luego de lo carguen con el famosos <code>library(...)</code>, es decir, son funciones que se deben <strong>exportar</strong> para que estén disponibles. Sin embargo, hay veces que definimos funciones auxiliares, que sólo son de uso interno del paquete, y que no es necesario que estén al alcance de los usuarios del paquete.</li>
+<li>Para avisar cuáles son las funciones que se deben exportar hay que editar el archivo <code>NAMESPACE</code>, que inicialmente luce así:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/namespace_blanco.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Archivo NAMESPACE.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>Más adelante vamos a hablar más sobre este archivo y, si bien hay una sugerencia que nos dice que no lo editemos <em>a mano</em>, por ahora no le vamos a hacer caso y vamos a agregar la siguiente línea para establecer que la función <code>es_bisiesto()</code> tiene que estar disponible para su uso luego de que alguien corra <code>library(bisiestos)</code>:</li>
+</ul>
+<pre><code>export(es_bisiesto)</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/namespace_escrito.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Archivo NAMESPACE.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>Seguramente nos interese ir probando nuestra función a medida que la estamos desarrollando o cuando creemos que la hemos finalizado.</li>
+<li>Es decir, nos interesa tenerla disponible en nuestro ambiente de trabajo para poder usarla.</li>
+<li>La idea natural sería correr el código anterior, o hacer <code>source(R/funciones.R)</code>.</li>
+<li>Sin embargo, <code>devtools</code> nos provee otro enfoque más adecuado para cargar todo el contenido del paquete que estamos desarrollando.</li>
+<li>Se trata de la función <code>load_all()</code>, o su atajo <code>ctrl + shift + l</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load_all</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>Loading bisiestos</code></pre>
+<ul>
+<li>Como resultado, todas las funciones definidas están listas para ser usadas (aunque no las veamos en el <em>global environment</em>):</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">es_bisiesto</span>(<span class="dv">2019</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> 2019 
+FALSE </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">es_bisiesto</span>(<span class="dv">2020</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2020 
+TRUE </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>rtdo <span class="ot">&lt;-</span> <span class="fu">es_bisiesto</span>(<span class="dv">2020</span><span class="sc">:</span><span class="dv">2025</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>rtdo</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> 2020  2021  2022  2023  2024  2025 
+ TRUE FALSE FALSE FALSE  TRUE FALSE </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">es_bisiesto</span>(<span class="dv">0</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   0 
+TRUE </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">es_bisiesto</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:-</span><span class="dv">5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   -1    -2    -3    -4    -5 
+FALSE FALSE FALSE  TRUE FALSE </code></pre>
+</div>
+</div>
+<ul>
+<li><code>load_all()</code> simula el proceso de construir, instalar y adjuntar el paquete.</li>
+<li>A medida que el mismo va creciendo, con funciones internas y otras que se exportan, con funciones que se llaman unas a otras, con funciones que dependen de otros paquetes, probar nuestras funciones de esta forma nos da una idea más certera de cómo está quedando todo en el paquete.</li>
+<li>Entonces, se puede definir el siguiente flujo de trabajo (<em>workflow</em>) para la escritura del código:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/flujo1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Flujo de trabajo.</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Comentarios adicionales</strong>:</p>
+<ul>
+<li>Podés agregar tantos archivos de código como desees en la carpeta <code>R</code>.</li>
+<li>Generalmente, hay que pensar y diseñar un poco cómo vamos a guardar todo el código.</li>
+<li>Se sugiere agrupar funciones que tengan algo en común en un mismo archivo.</li>
+<li>Un archivo para cada función o todas las funciones en un mismo archivo son los puntos extremos que, generalmente, deberían evitarse.</li>
+</ul>
+</section>
+<section id="instalar-el-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="instalar-el-paquete">Instalar el paquete</h2>
+<ul>
+<li><p>Aunque no lo creas, ¡ya hemos terminado la primera versión de nuestro paquete y estamos en condiciones de instalarlo!</p></li>
+<li><p>Esto lo podemos hacer de varias formas:</p>
+<ul>
+<li>Corriendo <code>install()</code></li>
+<li>Usando el atajo <code>ctrl + shift + b</code></li>
+<li>Haciendo clic en <code>Install and restart</code> de la pestaña <code>Build</code>.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>==&gt; R CMD INSTALL --no-multiarch --with-keep.source bisiestos
+
+* installing to library ‘/home/marcos/R/x86_64-pc-linux-gnu-library/3.6’
+* installing *source* package ‘bisiestos’ ...
+** using staged installation
+** R
+** byte-compile and prepare package for lazy loading
+No man pages found in package  ‘bisiestos’ 
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (bisiestos)</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/instalar.png" class="img-fluid figure-img" style="width:0.0%"></p>
+<p></p><figcaption class="figure-caption">Resultado de la instalación.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>Este proceso finaliza con la carga del paquete a través de <code>library(bisiestos)</code>, indicando que está listo para ser usado, como cualquier otro paquete, no solamente ahora, si no que ya podemos cerrar R y volver a emplearlo en cualquier otro momento.</li>
+<li>¡Felicitaciones! ¡Acabás de crear tu primer paquete de R! Si tenés ganas podés iniciar una nueva sesión, correr <code>library(bisiestos)</code> y usar la función <code>es_bisiesto()</code>.</li>
+</ul>
+<p><strong>Comentario adicionales</strong>:</p>
+<ul>
+<li><p>Ahora ya puedo ver mi nuevo paquete en la <em>library</em> que usa mi compu. Sin embargo, si chusmeo esta carpeta, no tiene exactamente el mismo aspecto que la carpeta en la cual estoy desarrollando el paquete. ¿Por qué?</p></li>
+<li><p>Respuesta: porque al desarrollar un paquete estamos interactuando con su versión <em>source</em> (<em>source package</em>), la cual constituye uno de los 5 estados en los cuales podemos encontrar un paquete:</p>
+<ul>
+<li><em>paquete source</em>: es una carpeta con archivos guardados respetando cierta estructura (la carpeta que hemos creado con <code>create_package()</code>)</li>
+<li><em>paquete bundled</em>: es un source paquete que fue comprimido a un único archivo (tiene extensión <code>.tar.gz</code>), es independiente del sistema operativo que se use y resulta cómodo para enviar el paquete de un lado a otro. Si se lo descomprime luce casi igual que un source package.</li>
+<li><em>paquete binary</em>: también es un paquete comprimido a un único archivo, pero depende de cada sistema operativo, es lo que necesita alguien que quiera instalar un paquete pero no tenga herramientas para el desarrollo de los mismos que le permitan instalarlo (como Rtools). Hay binary packages para Windows y para macOS (Linux siempre instala desde el bundled). Si se lo descomprime, luce bastante distinto al source o al bundled package.</li>
+<li><em>paquete instalado</em>: un bundled o binary package que fue descomprimido en una librería.</li>
+<li><em>paquete en memoria</em>: paquete que fue adjuntado en la sesión de R mediante <code>library()</code> y forma parte del <em>searchpath</em>.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="lo-importante" class="level1">
+<h1>Lo importante</h1>
+<section id="escribir-la-documentación" class="level2">
+<h2 class="anchored" data-anchor-id="escribir-la-documentación">Escribir la documentación</h2>
+<ul>
+<li><p>A la hora de armar un paquete (y de crear cualquier función en general) es importante dedicarle unos minutos a la creación de la documentación, es decir, describir cómo se usa cada función, para qué sirven los argumentos, aclarar qué tipo de resultado devuelve, proveer ejemplos para el uso, etc.</p></li>
+<li><p>Esto es particularmente importante si pretendemos compartir el paquete con otras personas, pero también nos ayuda a nosotros para que no nos olvidamos en el futuro qué quisimos hacer y evitemos perder tiempo tratando de descifrar cómo andan las funciones que escribimos en el pasado.</p></li>
+<li><p>Específicamente, documentar el paquete y sus funciones significa crear todas las páginas que vemos cuando exploramos el manual de ayuda.</p></li>
+<li><p>Por suerte, armarlo no es tan complicado como uno lo podría imaginar, ya que contamos con la ayuda del <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html">paquete <code>roxygen2</code></a> (lo difícil es escribir ayuda que sea entendible y útil para otros…).</p></li>
+<li><p>Este paquete provee pautas para escribir comentarios con un formato especial que incluyan toda la información requerida justo antes de la definición de la función.</p></li>
+<li><p>Esto hace que tomemos la costumbre de escribir la documentación al mismo tiempo que creamos la función, sin que se vuelva una carga pesada para más adelante.</p></li>
+<li><p>De la siguiente forma podemos documentar nuestra función <code>es_bisiesto()</code>:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' La función es_bisiesto</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' Esta función analiza si el año o los años provistos son bisiestos o no. Los</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' años bisiestos ocurren cada 4 años, excepto los terminados en 00, los cuales</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' son bisiestos sólo si son divisibles por 400. Es decir, los años como 1600,</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' 1700, 1800 son bisiestos si son divisibles por 400. Por ejemplo, el año 1900</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' no fue bisiesto a pesar de ser divisible por 4, pero el año 2000 sí lo fue</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' por ser divisible por 400. Entonces, para que un año dado sea bisiesto, se</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' debe cumplir una de las siguientes condiciones: el año es divisible por 4</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co">#' pero no divisible por 100, o el año es divisible por 400.</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param x vector numérico de largo mayor o igual a 1 con los años a evaluar.</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="co">#'   Por default, toma el año actual.</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return vector lógico de igual largo que `x` y nombrado con los elementos de</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="co">#' `x`, con valor `TRUE` en cada si el correspondiente año indicado en `x` es</span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="co">#' bisiesto y `FALSE` en caso contrario.</span></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="co">#' @details Si `x` contiene valores no enteros, se toma su parte entera. Esta</span></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="co">#'   función sirve para los años antes de Cristo, si se los considera bajo la</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a><span class="co">#'   numeración astronómica de los años (incluye un año 0 y luego cuenta en</span></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="co">#'   negativo, por ejemplo, el año 0 es 1 AC o el año -1 es 2 AC.).</span></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a><span class="co">#'   </span></span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="co">#' @seealso \url{https://es.wikipedia.org/wiki/Año_bisiesto}</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a><span class="co">#' es_bisiesto(2019)</span></span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a><span class="co">#' es_bisiesto(2020)</span></span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a><span class="co">#' rtdo &lt;- es_bisiesto(2020:2025)</span></span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a><span class="co">#' rtdo</span></span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a><span class="co">#' es_bisiesto(0)</span></span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a><span class="co">#' es_bisiesto(-1:-5)</span></span>
+<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Algunas pautas generales para entender la estructura de los comentarios <em>Roxygen</em>:</p>
+<ul>
+<li><p>Cada línea comienza con <code>#'</code>.</p></li>
+<li><p>La primera línea es el título de la función (no tiene que coincidir con su nombre).</p></li>
+<li><p>A continuación sigue un párrafo con la descripción de la función.</p></li>
+<li><p>Luego se especifican los distintos campos de la documentación, haciendo uso de <em>etiquetas</em> (<em>tags</em>) que comienzan con <code>@</code>.</p></li>
+<li><p>Algunas de las etiquetas más importantes a incluir son:</p>
+<ul>
+<li><code>@param</code>: se detalla para qué sirve cada parámetro de la función.</li>
+<li><code>@inheritParam</code>: si se trata del mismo parámetro usado en otra función, donde ya lo documenté, puedo usar esto para “heredarlo” y no tener que repetirlo.</li>
+<li><code>@return</code>: para explicar qué objeto devuelve la función.</li>
+<li><code>@details</code>: para agregar cualquier aclaración que se considere necesaria.</li>
+<li><code>@examples</code>: para incluir ejemplos de uso de la función.</li>
+<li><code>@export</code>: para indicar que esta función tiene que estar disponible cuando alguien cargue el paquete con <code>library()</code>. No es necesario <em>exportar</em> funciones auxiliares de utilidad interna.</li>
+</ul></li>
+</ul></li>
+<li><p>Por suerte ni tenemos que escribir toda esta estructura. Si estando parados sobre la definición de la función vamos al menú <code>Code</code> y elegimos <code>Insert Roxygen Skeleton</code>, veremos cómo automáticamente se monta un <em>esqueleto</em> para que completemos donde corresponda. Probalo ahora.</p></li>
+<li><p>Una vez que hemos documentado la o las funciones, se tienen que generar los archivos <code>.Rd</code> que compondrán el manual y que deben ir guardados en la carpeta <code>man</code>.</p></li>
+<li><p>Además, hay que modificar el archivo <code>NAMESPACE</code> del paquete para especificar qué funciones van a estar disponibles para los usuarios, según lo que hayamos indicado con las etiquetas <code>@export</code>.</p></li>
+<li><p>Otra vez, por suerte todo esto se puede hacer automáticamente, al correr la función <code>devtools::document()</code> o su atajo <code>ctrl + shift + d</code>:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>==&gt; devtools::document(roclets=c('rd', 'collate', 'namespace'))
+
+Updating bisiestos documentation
+Updating roxygen version in /home/marcos/GitProjects/bisiestos/DESCRIPTION
+Writing NAMESPACE
+Loading bisiestos
+Documentation completed</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/document.png" class="img-fluid figure-img" style="width:0.0%"></p>
+<p></p><figcaption class="figure-caption">Resultado de correr document().</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p><strong>Importante</strong>: la función <code>document()</code> se encarga de editar automáticamente el archivo <code>NAMESPACE</code>, de modo que no necesitamos hacerlo a mano (por eso la recomendación de no hacerlo, sería muy fácil cometer algún error). Antes lo hicimos para poder probar el paquete enseguidita y ver que todo andaba, pero es mejor que primero escribas la documentación, incluyendo la etiqueta <code>@export</code>, luego ejecutes <code>document()</code> y automáticamente se escriba el archivo <code>NAMESPACE</code> solito y sin errores.</p></li>
+<li><p>Las funciones que no se exportan, son de uso interno del paquete y son todas aquellas que no tienen la etiqueta <code>@export</code> (y que por eso nunca van a figurar en el <code>NAMESPACE</code>. Cuando alguien cargue nuestro paquete con <code>library()</code>, no las va a poder usar (o sí, si sabe el secreto de poner tres veces, dos puntos: <code>nombrepaq:::funcion_interna()</code>).</p></li>
+<li><p>Entonces, tenemos la siguiente clasificación para las funciones que escribimos:</p>
+<table class="table">
+<colgroup>
+<col style="width: 39%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Función interna</th>
+<th style="text-align: center;">Función externa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Para uso exclusivo dentro del paquete</td>
+<td style="text-align: center;">Para que la usen los demás</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">La documentación es opcional</td>
+<td style="text-align: center;">La documentación es obligatoria</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Podemos modificarla todo lo que queramos</td>
+<td style="text-align: center;">Modificarla podría romper el código de los usuarios del paquete</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Ahora podemos volver a instalar el paquete con <code>ctrl + shift + b</code> y pispear cómo se ve la ayuda que creamos:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>?es_bisiesto</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/help.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Página de ayuda creada.</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Comentarios adicionales</strong>:</p>
+<ul>
+<li>Nosotros escribimos los comentarios, <code>roxygen2</code> se encarga de crear los archivos <code>.Rd</code> (podemos ignorarlos) y finalmente R cuando construye el paquete escribe las correspondientes páginas en formato html.</li>
+<li>Podríamos escribir “a mano” los <code>.Rd</code> e independizarnos de <code>roxygen2</code>, así como editar a mano el <code>NAMESPACE</code>, pero es recomendable no tocarlos para no hacer lío y dejar que se encargue la función <code>document()</code>.</li>
+<li>Es una buena práctica no escribir líneas muy largas de comentarios, sino que lo ideal es que se pueda leer sin tener que mover las barras desplazadoras del editor de código. Suele recomendarse que no se escriban más de 80 caracteres por línea. Para que podamos escribir como queramos sin preocuparnos por esto, podemos seleccionar el texto escrito y hacer <code>ctrl + shift + /</code> y automáticamente se reconfigurará para seguir esta recomendación.</li>
+<li>Si se incluyen datasets en el paquete, también se los debe documentar, para lo cual hay que agregar comentarios <em>roxygen2</em> en algún script de la carpeta <code>R</code>. Podemos crear un script por dataset a incluir, un único script para poner la documentación de todos los datasets juntos, o agregarla en otro script ya existente (aunque esto sería más desprolijo).</li>
+<li>A continuación se muestra cómo está escrita la documentación en <em>roxygen2</em> para el dataset <code>diamonds</code> del paquete <code>ggplot2</code>:</li>
+</ul>
+<pre><code>#' Prices of 50,000 round cut diamonds
+#'
+#' A dataset containing the prices and other attributes of almost 54,000
+#'  diamonds. The variables are as follows:
+#'
+#' \itemize{
+#'   \item price. price in US dollars (\$326--\$18,823)
+#'   \item carat. weight of the diamond (0.2--5.01)
+#'   \item cut. quality of the cut (Fair, Good, Very Good, Premium, Ideal)
+#'   \item colour. diamond colour, from J (worst) to D (best)
+#'   \item clarity. a measurement of how clear the diamond is (I1 (worst), SI1, SI2, VS1, VS2, VVS1, VVS2, IF (best))
+#'   \item x. length in mm (0--10.74)
+#'   \item y. width in mm (0--58.9)
+#'   \item z. depth in mm (0--31.8)
+#'   \item depth. total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)
+#'   \item table. width of top of diamond relative to widest point (43--95)
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @usage data(diamonds)
+#' @format A data frame with 53940 rows and 10 variables
+"diamonds"</code></pre>
+</section>
+<section id="editar-el-archivo-description" class="level2">
+<h2 class="anchored" data-anchor-id="editar-el-archivo-description">Editar el archivo <code>DESCRIPTION</code></h2>
+<ul>
+<li>El archivo <code>DESCRIPTION</code> provee toda la <em>metadata</em> sobre el paquete que estamos creando.</li>
+<li>Así se ve cómo es la primera versión del mismo, creada automáticamente por la función <code>create_package()</code>:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/description.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Archivo DESCRIPTION.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p>En este archivo hay algunos campos que tienen que estar presentes de forma obligatoria y otros que son opcionales. Acá mencionamos a los más importantes:</p>
+<ul>
+<li><p><strong>Elementos obligatorios</strong>:</p>
+<ul>
+<li><em>Package</em>: nombre del paquete</li>
+<li><em>Title</em>: título del paquete (hasta 65 caracteres, <em>Escrito De Esta Forma</em>).</li>
+<li><em>Version</em>: número de la versión actual del paquete (por ejemplo, 0.2.1)</li>
+<li><em>Author</em>, <em>Maintainer</em> o <em>Authors@R</em>: quiénes han participado en el paquete.</li>
+<li><em>Description</em>: un párrafo que describa el paquete.</li>
+<li><em>License</em>: nombre de la licencia bajo la cual se distribuye el paquete.</li>
+</ul></li>
+<li><p><strong>Elementos no obligatorios</strong>:</p>
+<ul>
+<li><em>Date</em>: fecha de publicación de esta versión del paquete.</li>
+<li><em>Imports</em>, <em>Depends</em>, <em>Suggests</em>: ver detalles en la siguiente sección.</li>
+<li><em>URL</em>: dirección de la página web del paquete.</li>
+<li><em>BugReports</em>: dirección donde los usuarios puedan enviar avisos con los problemas que encuentren (muchas veces la página de <em>Issues</em> de GitHub).</li>
+</ul></li>
+</ul></li>
+<li><p>En cuanto a los autores, una misma persona puede cumplir varios roles y puede haber varias personas en el mismo rol.</p></li>
+<li><p>Los roles de uso más común son:</p>
+<ul>
+<li>Autor (<em>author</em>): autor del paquete, se indica con la etiqueta <em>aut</em></li>
+<li>Mantenedor (<em>maintainer</em>): persona a cargo de arreglar los problemas que puedan surgir en CRAN, recibe notificaciones sobre errores por parte de los usuarios, etc. Sólo puede haber un <em>maintainer</em>. Se indica con la etiqueta <em>cre</em>.</li>
+<li>Contribuyente (<em>contributor</em>): alguien que hizo un aporte menor, se indica con <em>ctb</em>.</li>
+</ul></li>
+<li><p>Después de algunos agregados, nuestro DESCRIPTION luce así:</p>
+<pre><code>Package: bisiestos
+Title: Determinación de años bisiestos
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Marcos",
+             family = "Prunello",
+             role = c("aut", "cre"),
+             email = "marcosprunello@gmail.com"),
+      person(given = "Diego",
+             family = "Marfetán Molina",
+             role = "aut",
+             email = "diego.marfetan@gmail.com"))
+Description: Este paquete permite determinar si un año es bisiesto o no, 
+      proveyendo una solución definitiva a un problema de tediosa solución.
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2</code></pre></li>
+</ul>
+</section>
+<section id="entender-las-dependencias" class="level2">
+<h2 class="anchored" data-anchor-id="entender-las-dependencias">Entender las dependencias</h2>
+<ul>
+<li><p>Es muy común que nuestras funciones necesiten hacer uso de otras que pertenecen a otros paquetes.</p></li>
+<li><p>Cuando estamos haciendo algún análisis, cargamos esos otros paquetes con <code>library()</code>, pero dentro del código de nuestro paquete, nunca debemos incluir una llamada a <code>library()</code>.</p></li>
+<li><p>Si correr ciertas funciones de nuestro paquete modifica el <em>search path</em> del usuario, podríamos estar produciendo efectos colaterales no deseados.</p></li>
+<li><p>En su lugar, necesitamos avisar qué cosas necesita nuestro paquete a través de los campos <em>Imports</em>, <em>Depends</em> y <em>Suggests</em> del archivo <code>DESCRIPTION</code>.</p></li>
+<li><p>Si en mi <code>DESCRIPTION</code> pongo:</p>
+<pre><code>Imports:
+    lubridate (&gt;= 1.0.0),
+    purrr
+Depends: 
+    R (&gt;= 3.6)
+Suggests:
+    ggplot2</code></pre>
+<p>voy estar diciendo que mi paquete necesita sí o sí de los paquetes <code>lubridate</code> (versión igual o superior a la 1.0.0) y <code>purrr</code> (sin restricciones sobre la versión). También estoy diciendo que sólo se puede usar en versiones de R iguales o superiores a la 3.6 y que podría hacer uso del paquete <code>ggplot2</code> para, por ejemplo, correr ejemplos o ver las viñetas, aunque el mismo no es indispensable.</p></li>
+<li><p>Los tres tipos de dependencias, entonces, son:</p>
+<ul>
+<li><strong>Imports</strong>: nuestro paquete lo requiere, se instala automáticamente.</li>
+<li><strong>Suggests</strong>: es opcional (se usa sólo para ejemplos o en la viñeta), no se instala automáticamente.</li>
+<li><strong>Depends</strong>: también se pueden poner paquetes acá, pero es una práctica que ya no se acostumbra. Hay una diferencia muy sutil entre poner un paquete en <em>Imports</em> o en <em>Depends</em>, que no es importante en la mayoría de los casos. Por eso, sólo se usa para indicar la versión de R (si es que se usa).</li>
+</ul></li>
+<li><p>No hace falta que editemos <code>DESCRIPTION</code> a mano, la función <code>usethis::use_package()</code> lo hace por nosotros:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Agregar en Imports</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"purrr"</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Agregar en Suggests</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"ggplot2"</span>, <span class="at">type =</span> <span class="st">"suggests"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/description2.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Archivo DESCRIPTION modificado.</figcaption><p></p>
+</figure>
+</div></li>
+<li><p>Una vez que hemos agregado los paquetes que necesitamos en <code>DESCRIPTION</code>, debemos acceder a sus funciones con el operador <code>::</code> cada vez que las necesitemos en nuestro código. Por ejemplo, hacemos uso de la función <code>map()</code> del paquete <code>purrr</code> con:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>mi_funcion <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, rnorm, <span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Es posible que haya una función de otro paquete que usamos demasiado y nos moleste tener que escribir siempre el formato <code>nombrepaq::funcion_importada()</code>.</p></li>
+<li><p>En ese caso podemos agregar el siguiente comentario <em>roxygen</em> en cualquier parte de nuestra documentación (o tal vez en un script especial para esto):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom purrr map</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Para luego sencillamente usarla haciendo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>mi_funcion <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, rnorm, <span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Si usamos la etiqueta <code>@importFrom</code>, al correr <code>document()</code> se modifica el archivo <code>NAMESPACE</code>, importando la función pedida a nuestro <em>espacio de nombres</em>, de manera que R la va a poder encontrar sin problemas cuando la necesite.</p></li>
+<li><p>Podríamos importar todas las funciones de un paquete y listo, con:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @import purrr</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Sin embargo esto es peligroso, ya que no sabemos si en un futuro habrá nuevas funciones en el paquete <code>purrr</code> cuyos nombres introduzcan algún tipo de conflicto por ser iguales a los nombres de nuestras funciones o las de otros paquetes que necesitamos usar.</p></li>
+<li><p>Para usar uno de los paquetes de <em>Suggests</em>, deberíamos primero chequear si la persona lo tiene instalado o no, posiblemente con algo como:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"nombrepaq"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)){</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">warning</span>(<span class="st">"nombrepaq debe estar instalado para poder usar esta función,</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="st">          se devuelve NULL."</span>)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Resumiendo, para poder usar otro paquete hay que modificar <code>DESCRIPTION</code> sí o sí, y opcionalmente también <code>NAMESPACE</code>:</p></li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 32%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Archivo:</th>
+<th style="text-align: center;"><code>DESCRIPTION</code></th>
+<th style="text-align: center;"><code>NAMESPACE</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Qué logra:</td>
+<td style="text-align: center;">Que el paquete esté disponible</td>
+<td style="text-align: center;">Que una función esté disponible</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Modificación:</td>
+<td style="text-align: center;">Obligatoria</td>
+<td style="text-align: center;">Opcional (se puede usar :: en su lugar)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Código para modificarlo:</td>
+<td style="text-align: center;">use_package()</td>
+<td style="text-align: center;">#’ <span class="citation" data-cites="importFrom">@importFrom</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="someter-el-paquete-a-prueba-r-cmd-check" class="level2">
+<h2 class="anchored" data-anchor-id="someter-el-paquete-a-prueba-r-cmd-check">Someter el paquete a prueba: R CMD check</h2>
+<ul>
+<li>Por más de que seamos cuidadosos a la hora de desarrollar nuestro paquete, hay detalles que se nos escapan, y que tarde o temprano podrían generar errores.</li>
+<li>Por suerte, R tiene diseñado un sistema muy exigente para identificar errores, al menos aquellos de carácter técnico.</li>
+<li>Este sistema se conoce como <code>CMD Check</code>.</li>
+<li>Para poder subir un paquete a CRAN, es obligatorio pasar por estos controles sin tener ningún <em>error</em>, <em>nota</em> o <em>warning</em>, los tres tipos de resultados que se pueden obtener.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/cmdcheck.gif" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">CRAN recibiendo nuestro paquete y evaluándolo con CMD Check</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p>Aunque no queramos compartir el paquete con nadie, es útil pasar por este chequeo para asegurarnos de que ande bien.</p></li>
+<li><p>Además, tratar de solucionar los errores encontrados resulta en un gran aprendizaje sobre cuestiones de R o de programación.</p></li>
+<li><p>No hay que esperar a terminar el paquete para correr CMD Check, al contrario, se sugiere hacerlo con frecuencia para ir solucionando los problemas desde temprano.</p></li>
+<li><p>Desde RStudio, se corre haciendo <code>devtools::check()</code> o con su atajo <code>ctrl + shift + e</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Como estarás observando, la salida es bastante larga, pero acá ponemos los resultados finales de la evaluación del paquete:</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/check.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Resultados de check()</figcaption><p></p>
+</figure>
+</div>
+<!--
+Nos falta declarar una licencia, eso lo veremos en la sección siguiente.
+Usamos un caracter que no forma parte del código ASCII en el código (la ñ del mensaje). No habría problema si hay caracteres especiales en otras partes pero no en el código. Una forma de solucionarlo es poner la representación ASCII de la ñ en su lugar
+> stringi::stri_escape_unicode("ñ")
+[1] "\\u00f1"
+-->
+<ul>
+<li><p>Se recomienda: chequear desde temprano, chequear seguido, ponerlo a andar y mantenerlo andando.</p></li>
+<li><p><strong>Nota</strong>: el gold standard para controlar el paquete es correr <code>R CMD check</code> desde la consola, pero <code>check()</code> es una buena forma de hacerlo sin abandonar la sesión de RStudio. No sustituye por completo a <code>R CMD check</code>.</p></li>
+</ul>
+</section>
+<section id="establecer-una-licencia-de-uso" class="level2">
+<h2 class="anchored" data-anchor-id="establecer-una-licencia-de-uso">Establecer una licencia de uso</h2>
+<ul>
+<li><p>Como pudimos ver recién, el control se quejó porque no establecimos todavía una licencia de uso para el paquete.</p></li>
+<li><p>Como los paquetes están pensados para ser distribuidos, tenemos que explicitar sí o sí qué se puede y qué no se puede hacer con el mismo.</p></li>
+<li><p>Si la idea es que cualquiera lo pueda usar, podemos recurrir a una de los tipos más comunes de licencia para código abierto:</p>
+<ul>
+<li><strong>CC0</strong>: de dominio público, generalmente para paquetes que distribuyen datos.</li>
+<li><strong>MIT</strong>: cualquiera tiene la libertad de hacer con el paquete lo que quiera.</li>
+<li><strong>GPL</strong>: cambios y derivados también tienen que ser GPL.</li>
+</ul></li>
+<li><p>Con el paquete <code>usethis</code> podemos optar por cualquiera de ellas:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_cc0_license</span>()</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_mit_license</span>()</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_gpl_license</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Por ejemplo:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_mit_license</span>(<span class="st">"Marcos Prunello"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✔ Setting License field in DESCRIPTION to 'MIT + file LICENSE'
+✔ Writing 'LICENSE.md'
+✔ Adding '^LICENSE\\.md$' to '.Rbuildignore'
+✔ Writing 'LICENSE'</code></pre>
+<ul>
+<li>El <code>DESCRIPTION</code> fue modificado para dar cuenta de esta licencia (andá a mirarlo) y, además, se agregó un archivo <code>LICENSE</code> al directorio del paquete.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/licencia.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Resultado de emplear la licencia MIT.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>El campo <code>LICENSE</code> en <code>DESCRIPTION</code> también podría usarse para establecer que el paquete no puede ser utilizado por fuera de alguna organización:</li>
+</ul>
+<pre><code>LICENSE: Proprietary: do not distribute outside of Universidad Nacional de Rosario.</code></pre>
+</section>
+<section id="agregar-testeos" class="level2">
+<h2 class="anchored" data-anchor-id="agregar-testeos">Agregar testeos</h2>
+<ul>
+<li>Si bien anteriormente estuvimos probando el uso de nuestra función <code>es_bisiesto()</code>, es posible formalizar y automatizar una serie de testeos para todas las funciones del paquete.</li>
+<li>Esto implica expresar cuál es el comportamiento esperado de cada función frente a distintos tipos de inputs y contrastar con los resultados verdaderamente obtenidos.</li>
+<li>Estos controles reciben el nombre de unidades de testeo o <em>unit tests</em>.</li>
+<li>Hay varios sistemas para escribir y correr unidades de testeo; acá vamos a presentar al paquete <code>testthat</code>, integrante del <code>tidyverse</code> tal como el resto de los paquetes que estamos empleando.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/testthatlogo.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<p></p><figcaption class="figure-caption">Paquete testthat.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p>Primero corremos <code>use_testthat()</code>, que va a tener los siguientes efectos:</p>
+<ul>
+<li>Agrega <code>testthat</code> a <em>Suggests</em> en <code>DESCRIPTION</code>.</li>
+<li>Crea la carpeta <code>tests</code> (para alojar cualquier tipo de unidad de testeo).</li>
+<li>Crea la subcarpeta <code>testthat</code> (para alojar los testeos escritos bajo este sistema).</li>
+<li>Crea el archivo <code>testthat.R</code> (no necesitamos modificarlo, es el que dispara la ejecución de todos los testeos).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_testthat</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✔ Adding 'testthat' to Suggests field in DESCRIPTION
+✔ Creating 'tests/testthat/'
+✔ Writing 'tests/testthat.R'
+● Call `use_test()` to initialize a basic test file and open it for editing.</code></pre></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/testcarpeta.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Creación de la carpeta tests.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p>Ahora hay que escribir los testeos, los cuales se organizan en 3 niveles:</p>
+<ul>
+<li>Archivo de tests: uno por cada archivo <code>.R</code> en la carpeta <code>R/</code>.</li>
+<li>Test: conjunto de evaluaciones vinculadas por tener un tema en común. Hay varios tests por cada archivo de tests.</li>
+<li><em>Expectation</em>: es el nivel más desagregado, corre cierto código y se compara el resultado obtenido con el esperado.</li>
+</ul></li>
+<li><p>Los archivos de tests van en la carpeta <code>tests\testthat</code>. Sus nombres tienen que ser <code>test-nombre_archivo_de_codigo.R</code>.</p></li>
+<li><p>Creamos estos archivos a mano o con:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_test</span>(<span class="st">"test-funciones.R"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✔ Writing 'tests/testthat/test-test-funciones.R'
+● Modify 'tests/testthat/test-test-funciones.R'</code></pre></li>
+<li><p>El archivo <code>test-test-funciones.R</code> se genera con un ejemplo sobre el uso de los tests:</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/testplantilla.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Plantilla para un archivo de tests.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p>El siguiente ejemplo muestra cómo se pueden estructurar los tests y sus expectations en este archivo:</p>
+<pre><code>test_that("se detectan correctamente argumentos no numéricos", {
+  expect_error(es_bisiesto("hola"), regexp = 'is.numeric(x) is not TRUE', fixed = TRUE)
+  expect_error(es_bisiesto(TRUE), regexp = 'is.numeric(x) is not TRUE', fixed = TRUE)
+})
+
+test_that("se detecta correctamente años bisiestos o comunes", {
+  expect_true(es_bisiesto(2020))
+  expect_false(es_bisiesto(2021))
+})</code></pre></li>
+<li><p>Una vez escritos estos archivos, podemos evaluar los resultados de los testeos con <code>devtools::test()</code> o su atajo <code>ctrl + shift + t</code>.</p></li>
+<li><p>Ante cada error encontrado, nos detenemos para corregirlo y repetimos este proceso hasta que todas las <em>unit tests</em> pasen la prueba.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/testresultados.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Resultado de correr los tests</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>Si hacés nuevamente un <em>check</em>, vas a ver que ahora también incluye la evaluación de estos tests.</li>
+<li>No es lo mismo hacer <code>R CMD check</code> que correr las <em>unit tests</em>. Lo segundo apunta a evaluar si las funciones que escribimos hacen lo que esperamos.</li>
+<li><code>R CMD check</code> incluye a los tests, quejándose si alguno no se verifica, además de sumar toda la verificación técnica por la cual tiene que pasar un paquete.</li>
+<li><code>R CMD check</code> es común para cualquier paquete, las <em>unit tests</em> son específicas para mi paquete.</li>
+<li>Combinando todo esto, podemos delinear un nuevo flujo de trabajo para desarrollar el paquete (le copio la figura a Hadley porque está muy linda):</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/flujo2.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Resultado de correr los tests</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>Una medida de la calidad de un paquete está dada por el porcentaje de su código que es evaluado durante los testeos.</li>
+<li>El paquete <code>covr</code> permite hacer ese cálculo, además de mostrar interactivamente qué partes del código fueron evaluadas y cuáles no.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluar cobertura del archivo abierto actualmente</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">test_coverage_file</span>()</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluar cobertura de todo el paquete</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">test_coverage</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/coverage.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Análisis de cobertura de los tests.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<ul>
+<li>Las siguientes funciones resumen los aspectos más importantes para crear un paquete:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_package</span>()</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_r</span>()</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_test</span>()</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">test</span>()</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="lo-complementario" class="level1">
+<h1>Lo complementario</h1>
+<section id="escribir-un-readme" class="level2">
+<h2 class="anchored" data-anchor-id="escribir-un-readme">Escribir un <code>README</code></h2>
+<ul>
+<li><p>Un archivo <em>README</em> contiene información acerca de otros archivos en una carpeta.</p></li>
+<li><p>Es una forma de documentación de software, usualmente en un archivo de texto plano.</p></li>
+<li><p>En el contexto de un paquete de R, es una muy buena práctica contar un <em>README</em> para describir brevemente por qué y para qué alguien tendría que usarlo, a la vez que indicar cómo conseguirlo o instalarlo.</p></li>
+<li><p>Una idea para estructurar el contenido de un <em>README</em> es:</p>
+<ol type="1">
+<li>Un párrafo para describir el propósito del paquete.</li>
+<li>Instrucciones para su instalación, que se puedan copiar y correr en R.</li>
+<li>Un ejemplo de cómo se usa para resolver algo sencillo.</li>
+<li>Links a las viñetas para mostrar el paquete con más detalle.</li>
+</ol></li>
+<li><p>Como nos pasó con otros aspectos en la construcción del paquete, podemos crear el archivo <em>a mano</em> o con la función <code>usethis::use_readme_rmd()</code>:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_readme_rmd</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✔ Writing 'README.Rmd'
+✔ Adding '^README\\.Rmd$' to '.Rbuildignore'
+● Modify 'README.Rmd'</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/readme.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Plantilla generada para crear el archivo README.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>Esto genera un archivo de Rmarkdown con una plantilla para que empecemos a escribir nuestro <code>README</code>.</li>
+<li>Luego, al compilarlo con <code>knitr</code> vamos a obtener un archivo <code>README.md</code>, que será la cara visible de nuestro paquete si, por ejemplo, lo subimos a GitHub donde los <code>README</code> vienen a tener el rol de <em>portada</em> en cierta forma.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/readmedplyr.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Comienzo del archivo README del paquete dplyr.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>Hay que recordar volver a compilar el <code>README.Rmd</code> cada vez que lo modificamos. No hay que editar a mano el <code>README.md</code>.</li>
+</ul>
+</section>
+<section id="escribir-el-archivo-news" class="level2">
+<h2 class="anchored" data-anchor-id="escribir-el-archivo-news">Escribir el archivo <code>NEWS</code></h2>
+<ul>
+<li>Mientras que el <code>README</code> apunta a ser leído por nuevos usuarios, el archivo <code>NEWS</code> es para la gente que ya usa el paquete.</li>
+<li>Este archivo se encarga de contar qué tenemos en cada versión nueva del paquete que publicamos: lo nuevo, lo que cambió y lo que se eliminó.</li>
+<li>Se sugiere usar markdown para escribir este archivo y colocar un título principal para cada versión, seguido por títulos secundarios que describen lo realizado (cambios principales, bugs arreglados, etc.).</li>
+<li>Si se trata de cambios impulsados por otras personas, por ejemplo, a través de sugerencias hechas en GitHub, se los menciona.</li>
+<li>Una buena práctica es ir escribiendo este archivo cada vez que se realiza algo nuevo en el paquete.</li>
+<li>La función que nos permite crear este archivo automáticamente es <code>usethis::use_news_md()</code>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_news_md</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✔ Writing 'NEWS.md'
+● Modify 'NEWS.md'</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/news.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Archivo NEWS creado por default.</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/newsdplyr.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Archivo NEWS del paquete dplyr.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="escribir-viñetas" class="level2">
+<h2 class="anchored" data-anchor-id="escribir-viñetas">Escribir viñetas</h2>
+<ul>
+<li>Las viñetas son un tipo especial de documentación que puede agregarse al paquete para dar más detalles y ejemplos sobre el uso del mismo.</li>
+<li>Generalmente, son tutoriales que se escriben con Rmarkdown.</li>
+<li>Se diferencian de las páginas de ayuda en que su adición es opcional y no sigue una estructura fija, dándole la libertad al autor de enseñar de la forma que más le guste cómo usar su paquete.</li>
+<li>Se diferencian del archivo <code>README</code> porque cubren tópicos más generales, mientras que este sólo presenta una descripción breve del paquete.</li>
+<li>Suelen combinar texto, código, resultados, figuras, etc. En algunos casos, se convierten en verdaderos materiales de estudio.</li>
+<li>Los archivos <code>.Rmd</code> con las viñetas deben colocarse dentro de la carpeta <code>vignettes</code>.</li>
+<li>La función <code>usethis::use_vignette()</code> se encarga de esto, sólo tenemos que darle como argumento el nombre de la viñeta para que nos genere un esqueleto que nos sirva de punto de partida:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_vignette</span>(<span class="st">"tutorial_del_paquete"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✔ Adding 'knitr' to Suggests field in DESCRIPTION
+✔ Setting VignetteBuilder field in DESCRIPTION to 'knitr'
+✔ Adding 'inst/doc' to '.gitignore'
+✔ Creating 'vignettes/'
+✔ Adding '*.html', '*.R' to 'vignettes/.gitignore'
+✔ Adding 'rmarkdown' to Suggests field in DESCRIPTION
+✔ Writing 'vignettes/tutorial_del_paquete.Rmd'
+● Modify 'vignettes/tutorial_del_paquete.Rmd'</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/vignette.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Plantilla generada para escribir la viñeta con Rmarkdown.</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/vigdplyr.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Una de las viñetas del paquete dplyr.</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Comentarios adicionales</strong>:</p>
+<ul>
+<li>Esta función se encarga de agregar algunas cosas en el archivo <code>DESCRIPTION</code>.</li>
+<li>Si estás haciendo control de versiones, se recomienda agregar <code>inst/doc</code> a <code>.gitignore</code> para no hacer rastreo de cambios de archivos compilados.</li>
+</ul>
+</section>
+<section id="agregar-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="agregar-datasets">Agregar datasets</h2>
+<ul>
+<li>En muchos casos puede ser útil incorporar conjuntos de datos en un paquete, ya sea para que puedan usarse como ejemplos, o porque elegimos crear un paquete como un medio de distribución de datos.</li>
+<li>Hay tres formas principales de guardar datos en un paquete</li>
+<li>La ubicación más común para guardar datos es la carpeta <code>data</code>.</li>
+<li>Todos los archivos de la misma tienen que ser <code>.Rdata</code> (<code>.rda</code>), cada uno con un único objeto de R, llamado con el mismo nombre del archivo.</li>
+<li>Para que esto no sea confuso, se puede usar la función <code>usethis::use_data()</code>. Por ejemplo:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1900</span><span class="sc">:</span><span class="dv">2000</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">use_data</span>(x, y)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✔ Saving 'x', 'y' to 'data/x.rda', 'data/y.rda'</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/data.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Contenido de la carpeta data luego de correr use_data().</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>Si en <code>DESCRIPTION</code> dejamos la opción <code>LazyData: true</code>, los datos no ocuparán memoria a menos que los usemos específicamente.</li>
+<li>Si el dataset es el resultado de algún proceso que hayamos hecho en R, se recomienda agregar el código para esto en la carpeta <code>data-raw</code>, para garantizar que todo sea completamente reproducible (esta carpeta se puede agregar a <code>.Rbuidignore</code>.).</li>
+<li>Los objetos en la carpeta <code>data</code> siempre se exportan, por lo cual hay que agregar documentación para los mismos.</li>
+<li>Esto se puede hacer con <em>roxygen</em> en cualquier Rscript de la carpeta <code>R</code>, aunque se acostumbra juntar toda la documentación para todos los datasets en un único archivo llamado <code>data.R</code>.</li>
+</ul>
+</section>
+</section>
+<section id="lo-que-marca-la-diferencia" class="level1">
+<h1>Lo que marca la diferencia</h1>
+<section id="añadir-badges" class="level2">
+<h2 class="anchored" data-anchor-id="añadir-badges">Añadir <em>badges</em></h2>
+<ul>
+<li>Las insignias o <em>badges</em> son unos íconos que señalan distintas características del paquete, como su nivel de maduración, el nivel de cobertura en el testeo, cantidad de descargas, número de versión, resultado de los controles de CRAN, etc.</li>
+<li>Son visualmente muy atractivas y se colocan el en archivo <code>README</code>, como podemos ver en el ejemplo del paquete <code>dplyr</code> más arriba.</li>
+<li>El paquete <code>usethis</code> trae un conjunto de funciones que generan automáticamente el código a incluir en el <code>README.Rmd</code> para agregar los badges:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_badge</span>(badge_name, href, src)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">use_cran_badge</span>()</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="fu">use_bioc_badge</span>()</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="fu">use_lifecycle_badge</span>(stage)</span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a><span class="fu">use_binder_badge</span>(<span class="at">urlpath =</span> <span class="cn">NULL</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Por ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_cran_badge</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✔ Adding CRAN status badge to 'README.Rmd'
+● Re-knit 'README.Rmd'</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/readmebadge.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Líneas agregadas por use_cran_badge en README para incorporar un badge.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>Otra herramienta para agregar badges es el <a href="https://github.com/GuangchuangYu/badger">paquete <code>badger</code></a>.</li>
+</ul>
+</section>
+<section id="diseñar-un-logo" class="level2">
+<h2 class="anchored" data-anchor-id="diseñar-un-logo">Diseñar un logo</h2>
+<ul>
+<li>Seguramente has notado la costumbre de que cada paquete de R tenga su logo con forma hexagonal, que generalmente termina en forma de sticker: los <code>hexStickers</code>.</li>
+<li>Bueno, para terminar de darle identidad a tu paquete y hacerlo más vistoso, podés diseñar tu logo.</li>
+<li>Por suerte, también hay un paquete que permite hacerlo sin demasiadas complicaciones: el <a href="https://github.com/GuangchuangYu/hexSticker">paquete <code>HexSticker</code></a>.</li>
+<li>Una vez creado el logo, le podemos pasar su ubicación a la función <code>use_logo()</code>, que se encargará de darle el tamaño adecuado, guardarlo en la carpeta <code>man</code> del paquete y producir el código html para que lo peguemos en el <code>README</code>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/stickers.jpeg" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">HexStickers</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="crear-una-página-web" class="level2">
+<h2 class="anchored" data-anchor-id="crear-una-página-web">Crear una página web</h2>
+<ul>
+<li>Si llegaste hasta acá siguiendo todos los pasos anteriores, tenés en tu haber un montón de material muy bueno sobre tu paquete: páginas de ayuda, ejemplos, tutoriales, novedades sobre los cambios, logo, insignias, etc.</li>
+<li>Suficiente como para crear una página web y que tu paquete tenga presencia real en el más allá.</li>
+<li>No sé cuántas veces dije “por suerte” en este material, pero lo voy a decir una vez más.</li>
+<li>Por suerte existe un paquete que se encarga de tomar todo el material hecho anteriormente y convertirlo en una página web <strong>AUTOMÁTICAMENTE</strong>.</li>
+<li>Sumado a que GitHub nos da lugar para hospedar nuestras páginas de manera libre y gratuita, no hay excusas para no hacerlo.</li>
+<li>Claro que cuanto más quieras personalizar tu web, más vas a tener que explorar algunas opciones e incluso toquetear algo de código de html, pero esto no es necesario, ya que el aspecto logrado por default es muy satisfactorio.</li>
+<li>El paquete responsable de esto es <code>pkgdown</code> y lo único que hay que hacer es correr <code>pkgdown::build_site()</code> desde el directorio de nuestro paquete cada vez que publiquemos una nueva versión.</li>
+<li>Más información y detalles en <a href="https://pkgdown.r-lib.org/index.html" class="uri">https://pkgdown.r-lib.org/index.html</a>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/pkgdown.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">La web del paquete pkgdown, creada con pkgdown.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="agregar-un-git-repo" class="level2">
+<h2 class="anchored" data-anchor-id="agregar-un-git-repo">Agregar un git repo</h2>
+<ul>
+<li><em>git</em> es un sistema de control de versiones que nos permite llevar un registro de todo el código que creamos y modificamos, así como también compartirlo con otros e integrar el trabajo realizado.</li>
+<li>Si ya tenemos git instalado y andando en la computadora, podemos agregar un <em>git repo</em> con <code>usethis::use_git()</code>.</li>
+</ul>
+</section>
+<section id="subir-el-paquete-a-algún-repositorio" class="level2">
+<h2 class="anchored" data-anchor-id="subir-el-paquete-a-algún-repositorio">Subir el paquete a algún repositorio</h2>
+<ul>
+<li>Compartir un paquete que hemos creado con otras personas es muy bueno. Le da visibilidad a nuestro trabajo y también respaldo: todos pueden ver qué y cómo hacemos lo que hacemos.</li>
+<li>Al mismo tiempo, da la posibilidad de generar intercambios enriquecedores con otras personas que se interesen en nuestro trabajo y tengan contribuciones o comentarios para hacer.</li>
+<li>No hay que olvidar, además, que un paquete puede dar lugar a una publicación.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/enviarpaquete.gif" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Enviando el paquete.</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Subirlo a GitHub</strong></p>
+<ul>
+<li>Como mencionamos antes, GitHub es un repositorio que nos permite de manera muy fácil compartir con otras personas nuestros paquetes.</li>
+<li>Si los subimos allí, cualquiera puede instalarlos en su computadoras con <code>install_github()</code>.</li>
+</ul>
+<p><strong>Subirlo a CRAN</strong></p>
+<ul>
+<li>Subir el paquete al repositorio oficial de CRAN es el toque final.</li>
+<li>No vamos a entrar en detalle en esta parte, pero podés visitar los links al final de este documento para leer un poco más.</li>
+<li>Algo que no hay que dejar de hacer es leer el <a href="https://cran.r-project.org/web/packages/submission_checklist.html"><em>checklist</em> de CRAN</a> antes de enviar el paquete, que incluye sugerencias para probar el paquete en distintos sistemas operativos.</li>
+<li>Las funciones de <code>devtools</code> que ayudan en este proceso son <code>release()</code> y <code>submit_cran()</code>.</li>
+<li>Se puede enviar el paquete sin siquiera salir de R.</li>
+</ul>
+<!-- 
+La parte del final de este link esta buena sobre mandar a CRAN
+https://forwards.github.io/edu/workshops/full_day_pkg_dev/6_share/index.html#33
+-->
+</section>
+</section>
+<section id="material-consultado" class="level1">
+<h1>Material consultado</h1>
+<ul>
+<li><p>Este material fue escrito consultando diversas fuentes:</p>
+<ul>
+<li><a href="https://r-pkgs.org/">Link 1</a></li>
+<li><a href="https://rstudio.com/wp-content/uploads/2015/06/devtools-cheatsheet.pdf">Link 2</a></li>
+<li><a href="https://geanders.github.io/RProgrammingForResearch/reproducible-research-3.html#overview-of-r-packages">Link 3</a></li>
+<li><a href="https://r-mageddon.netlify.app/post/writing-an-r-package-from-scratch/">Link 4</a></li>
+<li><a href="https://masalmon.eu/2017/12/11/goodrpackages/">Link 5</a></li>
+<li><a href="https://www.datacamp.com/community/tutorials/r-packages-guide">Link 6</a></li>
+<li><a href="https://forwards.github.io/edu/workshops/full_day_pkg_dev/">Link 7</a></li>
+</ul></li>
+<li><p>Las imágenes fueron tomadas de esas fuentes o son de elaboración propia.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

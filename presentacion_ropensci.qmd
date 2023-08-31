@@ -5,6 +5,7 @@ author: "Marcos Prunello"
 format: revealjs
 footer: "[Volver a la página principal](index.html)"
 logo: images/logorombo.png
+lang: es
 ---
 
 # rOpenSci
@@ -12,105 +13,103 @@ logo: images/logorombo.png
 ## ¿Qué es rOpenSci?
 
 ::: {style="font-size: .8em"}
-- [**rOpenSci**](https://ropensci.org/) = Ciencia abierta + software abierto + comunidades de práctica
-- **Ciencia abierta**. La ciencia abierta invita a quienes investigan a compartir abiertamente sus trabajos, datos y componentes de investigación para que otros puedan leerlos, reutilizarlos, reproducirlos, basarse en ellos y compartirlos.
-- **Software de código abierto**. El software de código abierto es código diseñado para ser accesible al público: cualquiera puede ver, modificar y distribuir el código como mejor le parezca.
-- **Comunidades de práctica**: Grupo amplio de personas que comparten saberes y aprendizajes de un tema transversal a distintas profesiones
+-   [**rOpenSci**](https://ropensci.org/) = Ciencia abierta + software abierto + comunidades de práctica
+-   **Ciencia abierta**. La ciencia abierta invita a quienes investigan a compartir abiertamente sus trabajos, datos y componentes de investigación para que otros puedan leerlos, reutilizarlos, reproducirlos, basarse en ellos y compartirlos.
+-   **Software de código abierto**. El software de código abierto es código diseñado para ser accesible al público: cualquiera puede ver, modificar y distribuir el código como mejor le parezca.
+-   **Comunidades de práctica**: Grupo amplio de personas que comparten saberes y aprendizajes de un tema transversal a distintas profesiones
 :::
 
 ## ¿Qué hace rOpenSci?
 
-- rOpenScie fomenta una cultura que valora la investigación **abierta** y reproducible utilizando **datos compartidos** y **software reutilizable**
+-   rOpenScie fomenta una cultura que valora la investigación **abierta** y reproducible utilizando **datos compartidos** y **software reutilizable**
 
 ![](images/ropensci.png){fig-align="center"}
 
 ## ¿Cómo lo hace?
 
 ::: {style="font-size: .8em"}
-- Creando una infraestructura técnica de herramientas de software R cuidadosamente revisadas que reduzcan las barreras para trabajar con fuentes de datos científicos en la web.
-- Haciendo que los datos, las herramientas y las mejores prácticas sean más accesibles y fáciles de encontrar.
-- Creando una infraestructura social a través de una comunidad amigable y diversa.
-- Promoviendo una cultura de intercambio de datos y software reutilizable.
-- Desarrollando la capacidad de las personas que usan y desarrollan software y fomentando un sentimiento de orgullo por su trabajo
+-   Creando una infraestructura técnica de herramientas de software R cuidadosamente revisadas que reduzcan las barreras para trabajar con fuentes de datos científicos en la web.
+-   Haciendo que los datos, las herramientas y las mejores prácticas sean más accesibles y fáciles de encontrar.
+-   Creando una infraestructura social a través de una comunidad amigable y diversa.
+-   Promoviendo una cultura de intercambio de datos y software reutilizable.
+-   Desarrollando la capacidad de las personas que usan y desarrollan software y fomentando un sentimiento de orgullo por su trabajo
 :::
 
 ## Suite de paquetes propios
 
-[https://ropensci.org/packages/all/](https://ropensci.org/packages/all/)
+<https://ropensci.org/packages/all/>
 
 ![](images/paquetes.png){fig-align="center"}
 
 ## Revisión de software por pares
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="70%"}
-- Proceso de revisión de paquetes R transparente, constructivo, no conflictivo, estandarizado y abierto 
-- Materiales para favorecer el uso de buenas prácticas y estándares
-- [Revisión de pares para software](https://ropensci.org/software-review/)
-- [Revisión de pares para software estadístico](https://ropensci.org/stat-software-review/)
+-   Proceso de revisión de paquetes R transparente, constructivo, no conflictivo, estandarizado y abierto
+-   Materiales para favorecer el uso de buenas prácticas y estándares
+-   [Revisión de pares para software](https://ropensci.org/software-review/)
+-   [Revisión de pares para software estadístico](https://ropensci.org/stat-software-review/)
 :::
 
 ::: {.column width="30%"}
 ![](images/libro.png){fig-align="center"}
 :::
-
-::::
+:::
 
 ## Otros proyectos
 
-- [**Sistema R-Universe**](https://r-universe.dev/search/): Proyecto paraguas para mejorar la publicación y el descubrimiento de software de investigación en R.
-- [**Publicaciones multilingües**](https://ropensci.org/multilingual-publishing/)
-- [Programa Champions](https://ropensci.org/champions/): (¡enseguida les cuento más!)
-- Visitar [https://contributing.ropensci.org/](https://contributing.ropensci.org/) para ver más formas de participación.
+-   [**Sistema R-Universe**](https://r-universe.dev/search/): Proyecto paraguas para mejorar la publicación y el descubrimiento de software de investigación en R.
+-   [**Publicaciones multilingües**](https://ropensci.org/multilingual-publishing/)
+-   [Programa Champions](https://ropensci.org/champions/): (¡enseguida les cuento más!)
+-   Visitar <https://contributing.ropensci.org/> para ver más formas de participación.
 
 # Programa Champions
 
 ## Motivación
 
-- Existe una consternadora falta de diversidad en el ecosistema de las comunidades de software de investigación y de código abierto.
-- Las personas que realizan el desarrollo de software son en general blancas, hombres y de un puñado de países.
-- Esta decepcionante falta de diversidad es potencialmente perjudicial para la sostenibilidad, la utilidad y la productividad de los proyectos.
+-   Existe una consternadora falta de diversidad en el ecosistema de las comunidades de software de investigación y de código abierto.
+-   Las personas que realizan el desarrollo de software son en general blancas, hombres y de un puñado de países.
+-   Esta decepcionante falta de diversidad es potencialmente perjudicial para la sostenibilidad, la utilidad y la productividad de los proyectos.
 
 ## Objetivo
 
-- El programa busca apoyar a una cohorte:
+-   El programa busca apoyar a una cohorte:
 
-  - diversa de personas, 
-  - que colaboren en aspectos de la creación de software de investigación y 
-  - que sean "líderes" de la comunidad, 
-  - y que se esfuercen por transformar el ecosistema para mejor.
+    -   diversa de personas,
+    -   que colaboren en aspectos de la creación de software de investigación y
+    -   que sean "líderes" de la comunidad,
+    -   y que se esfuercen por transformar el ecosistema para mejor.
 
 ## Participantes
 
-- Está pensando para que participen personas que pertenecen a grupos histórica y sistemáticamente excluidos
-- Y que están interesadas en contribuir a rOpenSci y al ecosistema más amplio de comunidades de software de código abierto y de investigación.
+-   Está pensando para que participen personas que pertenecen a grupos histórica y sistemáticamente excluidos
+-   Y que están interesadas en contribuir a rOpenSci y al ecosistema más amplio de comunidades de software de código abierto y de investigación.
 
 ## Proyectos
 
-- Quienes participan desarrollan uno de estos proyectos:
+-   Quienes participan desarrollan uno de estos proyectos:
 
-  - crear un nuevo paquete,
-  - pasar por el proceso de revisión con un paquete de R que ya hayan desarrollado,
-  - o ser un/a revisor/a del sistema de revisión por pares.
+    -   crear un nuevo paquete,
+    -   pasar por el proceso de revisión con un paquete de R que ya hayan desarrollado,
+    -   o ser un/a revisor/a del sistema de revisión por pares.
 
-- al mismo tiempo que reciben capacitación... y un estipendio (USD 1000).
+-   al mismo tiempo que reciben capacitación... y un estipendio (USD 1000).
 
 ## Metas
 
 ::: {style="font-size: .7em"}
-- Se busca que quienes participen puedan:
+-   Se busca que quienes participen puedan:
 
-  - Aprender y practicar la organización de talleres;
-  - Aprender y practicar habilidades de revisión y desarrollo;
-  - Obtener información de expertes y ampliar su red profesional;
-  - Ganar visibilidad a través de la formación, la tutoría y la creación de contenidos;
-  - Obtener reconocimiento y mención por su trabajo;
-  - Co-desarrollar este programa y otros proyectos de rOpenSci compartiendo comentarios;
-  - Convertirse en un/a participante activa de la comunidad rOpenSci;
-  - Crear contenidos en el idioma de su comunidad;
-  - Capacitar su comunidad compartiendo lo que aprendieron;
-  - Convertirse en mentor de otras personas de su comunidad.
+    -   Aprender y practicar la organización de talleres;
+    -   Aprender y practicar habilidades de revisión y desarrollo;
+    -   Obtener información de expertes y ampliar su red profesional;
+    -   Ganar visibilidad a través de la formación, la tutoría y la creación de contenidos;
+    -   Obtener reconocimiento y mención por su trabajo;
+    -   Co-desarrollar este programa y otros proyectos de rOpenSci compartiendo comentarios;
+    -   Convertirse en un/a participante activa de la comunidad rOpenSci;
+    -   Crear contenidos en el idioma de su comunidad;
+    -   Capacitar su comunidad compartiendo lo que aprendieron;
+    -   Convertirse en mentor de otras personas de su comunidad.
 :::
 
 ## Convocatoria 2023 abierta
