@@ -5,7 +5,7 @@ author: "Marcos Prunello"
 lang: es
 ---
 
-::: {.callout-note  icon="false"}
+::: {.callout-note icon="false"}
 *Esta guía cubre de forma más extensa los pasos de la creación de un paquete. Podés ver los materiales consultados al final de la página.*
 :::
 
@@ -1066,3 +1066,5 @@ https://forwards.github.io/edu/workshops/full_day_pkg_dev/6_share/index.html#33
     -   [Link 7](https://forwards.github.io/edu/workshops/full_day_pkg_dev/)
 
 -   Las imágenes fueron tomadas de esas fuentes o son de elaboración propia.
+
+-   Gracias a mi compa [Diego Marfetán Molina](https://github.com/diegonob) que me ayudó a revisar este apunte, usado en algunas de las capacitaciones que a veces ofrecemos juntos.

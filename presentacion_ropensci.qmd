@@ -16,19 +16,19 @@ lang: es
 -   [**rOpenSci**](https://ropensci.org/) = Ciencia abierta + software abierto + comunidades de práctica
 -   **Ciencia abierta**. La ciencia abierta invita a quienes investigan a compartir abiertamente sus trabajos, datos y componentes de investigación para que otros puedan leerlos, reutilizarlos, reproducirlos, basarse en ellos y compartirlos.
 -   **Software de código abierto**. El software de código abierto es código diseñado para ser accesible al público: cualquiera puede ver, modificar y distribuir el código como mejor le parezca.
--   **Comunidades de práctica**: Grupo amplio de personas que comparten saberes y aprendizajes de un tema transversal a distintas profesiones
+-   **Comunidades de práctica**. Grupo amplio de personas que comparten saberes y aprendizajes de un tema transversal a distintas profesiones.
 :::
 
 ## ¿Qué hace rOpenSci?
 
--   rOpenScie fomenta una cultura que valora la investigación **abierta** y reproducible utilizando **datos compartidos** y **software reutilizable**
+-   rOpenScie fomenta una cultura que valora la investigación **abierta** y **reproducible** utilizando **datos compartidos** y **software reutilizable**
 
 ![](images/ropensci.png){fig-align="center"}
 
 ## ¿Cómo lo hace?
 
 ::: {style="font-size: .8em"}
--   Creando una infraestructura técnica de herramientas de software R cuidadosamente revisadas que reduzcan las barreras para trabajar con fuentes de datos científicos en la web.
+-   Creando una infraestructura técnica de herramientas de software en R cuidadosamente revisadas, que reduzcan las barreras para trabajar con fuentes de datos científicos.
 -   Haciendo que los datos, las herramientas y las mejores prácticas sean más accesibles y fáciles de encontrar.
 -   Creando una infraestructura social a través de una comunidad amigable y diversa.
 -   Promoviendo una cultura de intercambio de datos y software reutilizable.
@@ -45,8 +45,8 @@ lang: es
 
 ::: columns
 ::: {.column width="70%"}
--   Proceso de revisión de paquetes R transparente, constructivo, no conflictivo, estandarizado y abierto
--   Materiales para favorecer el uso de buenas prácticas y estándares
+-   Proceso de revisión de paquetes de R transparente, constructivo, no conflictivo, estandarizado y abierto.
+-   Materiales para favorecer el uso de buenas prácticas y estándares.
 -   [Revisión de pares para software](https://ropensci.org/software-review/)
 -   [Revisión de pares para software estadístico](https://ropensci.org/stat-software-review/)
 :::
@@ -58,7 +58,7 @@ lang: es
 
 ## Otros proyectos
 
--   [**Sistema R-Universe**](https://r-universe.dev/search/): Proyecto paraguas para mejorar la publicación y el descubrimiento de software de investigación en R.
+-   [**Sistema R-Universe**](https://r-universe.dev/search/): proyecto para mejorar la publicación y el descubrimiento de software de investigación en R.
 -   [**Publicaciones multilingües**](https://ropensci.org/multilingual-publishing/)
 -   [Programa Champions](https://ropensci.org/champions/): (¡enseguida les cuento más!)
 -   Visitar <https://contributing.ropensci.org/> para ver más formas de participación.
@@ -73,17 +73,19 @@ lang: es
 
 ## Objetivo
 
--   El programa busca apoyar a una cohorte:
+El programa busca apoyar a una cohorte:
 
-    -   diversa de personas,
-    -   que colaboren en aspectos de la creación de software de investigación y
-    -   que sean "líderes" de la comunidad,
-    -   y que se esfuercen por transformar el ecosistema para mejor.
+-   diversa de personas,
+-   que colaboren en aspectos de la creación de software de investigación,
+-   que sean "líderes" de la comunidad,
+-   y que se esfuercen por transformar el ecosistema para mejor.
 
 ## Participantes
 
--   Está pensando para que participen personas que pertenecen a grupos histórica y sistemáticamente excluidos
--   Y que están interesadas en contribuir a rOpenSci y al ecosistema más amplio de comunidades de software de código abierto y de investigación.
+Está pensando para que participen personas:
+
+  - que pertenecen a grupos histórica y sistemáticamente excluidos.
+  - interesadas en contribuir a rOpenSci y al ecosistema más amplio de comunidades de software de código abierto y de investigación.
 
 ## Proyectos
 
@@ -93,7 +95,7 @@ lang: es
     -   pasar por el proceso de revisión con un paquete de R que ya hayan desarrollado,
     -   o ser un/a revisor/a del sistema de revisión por pares.
 
--   al mismo tiempo que reciben capacitación... y un estipendio (USD 1000).
+-   al mismo tiempo que reciben capacitación y un estipendio (USD 1000).
 
 ## Metas
 

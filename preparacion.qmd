@@ -4,17 +4,17 @@ author: "Marcos Prunello"
 lang: es
 ---
 
-- Para poder seguir este taller, necesitás tener instalados los siguientes paquetes:
+-   Para poder seguir este taller, necesitás tener instalados los siguientes paquetes:
 
 ```{r, eval=F}
 install.packages(c("devtools", "usethis", "roxygen2"))
 ```
 
-- Además, si usás Windows necesitás descargar el programa Rtools desde [este link](https://cran.r-project.org/bin/windows/Rtools/) e instalarlo en tu computadora.
+-   Además, si usás Windows necesitás descargar el programa Rtools desde [este link](https://cran.r-project.org/bin/windows/Rtools/) e instalarlo en tu computadora.
 
-- En el taller crearemos dos versiones de un paquete, una básica y otra con características multilingües. Podés seguir el paso a paso para la creación, o descargar los paquetes ya creados y explorarlos por tu cuenta:
+-   En el taller crearemos dos versiones de un paquete, una básica y otra con características multilingües. Podés seguir el paso a paso para la creación, o descargar los paquetes ya creados y explorarlos por tu cuenta:
 
-  - [Versión básica](https://drive.google.com/file/d/1cnKdypPgOjTfI_6U8VKmispE2Ef5htE5/view?usp=sharing)
-  - [Versión multilingües](https://drive.google.com/file/d/1YhHE0Y6t3FlAvB4meJwv7-ZluQgpp2ng/view?usp=sharing)
-  
-- El repo de GitHub con estos recursos es [https://github.com/mpru/charla_renrosario_2023](https://github.com/mpru/charla_renrosario_2023).
+    -   [Versión básica](https://drive.google.com/file/d/1cnKdypPgOjTfI_6U8VKmispE2Ef5htE5/view?usp=sharing)
+    -   [Versión multilingüe](https://drive.google.com/file/d/1YhHE0Y6t3FlAvB4meJwv7-ZluQgpp2ng/view?usp=sharing)
+
+-   El repo de GitHub con estos recursos es <https://github.com/mpru/charla_renrosario_2023>.

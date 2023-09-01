@@ -181,6 +181,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#comencemos" id="toc-comencemos" class="nav-link active" data-scroll-target="#comencemos">Comencemos…</a>
   <ul class="collapse">
   <li><a href="#por-qué-podríamos-considerar-crear-un-paquete" id="toc-por-qué-podríamos-considerar-crear-un-paquete" class="nav-link" data-scroll-target="#por-qué-podríamos-considerar-crear-un-paquete">¿Por qué podríamos considerar crear un paquete?</a></li>
+  <li><a href="#por-qué-consideraríamos-crear-un-paquete-en-otro-idioma-que-no-sea-inglés" id="toc-por-qué-consideraríamos-crear-un-paquete-en-otro-idioma-que-no-sea-inglés" class="nav-link" data-scroll-target="#por-qué-consideraríamos-crear-un-paquete-en-otro-idioma-que-no-sea-inglés">¿Por qué consideraríamos crear un paquete en otro idioma que no sea inglés?</a></li>
   <li><a href="#la-estructura-de-un-paquete" id="toc-la-estructura-de-un-paquete" class="nav-link" data-scroll-target="#la-estructura-de-un-paquete">La estructura de un paquete</a></li>
   </ul></li>
   <li><a href="#nuestro-primer-paquete-bisiestos" id="toc-nuestro-primer-paquete-bisiestos" class="nav-link" data-scroll-target="#nuestro-primer-paquete-bisiestos">Nuestro primer paquete: <code>bisiestos</code></a>
@@ -276,9 +277,54 @@ Qué es un paquete
 <ul>
 <li><strong>Compartir</strong> de forma sencilla y rápida el trabajo que realizamos.</li>
 <li><strong>Organizar</strong> el trabajo dentro de los equipos de trabajo o de investigación.</li>
-<li><strong>Realizar nuevas publicaciones</strong>.</li>
-<li><strong>Darnos a conocer</strong>.</li>
+<li><strong>Publicar</strong> nuevos desarrollos o soluciones que pueden ser útiles para otras personas.</li>
+<li><strong>Darnos a conocer</strong> en comunidad.</li>
 </ul>
+</section>
+<section id="por-qué-consideraríamos-crear-un-paquete-en-otro-idioma-que-no-sea-inglés" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-consideraríamos-crear-un-paquete-en-otro-idioma-que-no-sea-inglés">¿Por qué consideraríamos crear un paquete en otro idioma que no sea inglés?<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></h2>
+<ul>
+<li>Según un <a href="https://www.linuxfoundation.org/research/the-2021-linux-foundation-report-on-diversity-equity-and-inclusion-in-open-source">informe reciente de The Linux Foundation</a>, el acceso al idioma es una de las barreras que atentan contra la equidad en el código abierto&gt;</li>
+</ul>
+<blockquote class="blockquote">
+<p>“El idioma predominante del código abierto es el inglés (en el código, el contenido y las interacciones comunitarias) y el dominio del inglés es una métrica mediante la cual se juzga el desempeño y la personalidad.”</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paquetes/modern.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Escena de Modern Family</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p>Al publicar recursos multilingües, podemos reducir estas barreras aumentando el acceso al conocimiento y democratizando el acceso a recursos de calidad, aumentando así el potencial de las personas para contribuir a proyectos de software y ciencia abierta.</p></li>
+<li><p>Cuando el desarrollo de software recae en entornos minoritarios, poco representativos o hegemónicos pueden presentarse desventajas, limitaciones y/o posibles sesgos:</p>
+<ul>
+<li>Sesgo cultural, lingüístico, étnico o de género</li>
+<li>Falta de diversidad de ideas</li>
+<li>Limitación de la representación</li>
+<li>Falta de conciencia de problemas éticos</li>
+</ul></li>
+<li><p>En este taller vamos a jugar a aportar un granito de arena, pensando cómo podríamos armar un paquete de R multilingüe.</p></li>
+<li><p>Empecemos por repasar cómo es un paquete en general.</p></li>
+</ul>
+<!-- Desarrollar software en entornos en los que los grupos que lo crean sean minoritarios, poco representativos o hegemónicos puede presentar desventajas, limitaciones y posibles sesgos.
+
+1. **Sesgo Cultural y Lingüístico:** Si un grupo minoritario o hegemónico desarrolla software sin tener en cuenta las necesidades y perspectivas de otros grupos culturales o lingüísticos, puede resultar en sesgos culturales y lingüísticos. Por ejemplo, un programa podría no ser adecuado para usuarios de diferentes idiomas o culturas, lo que limitaría su accesibilidad global.
+
+2. **Falta de Diversidad de Ideas:** Grupos homogéneos pueden tener una falta de diversidad de ideas y perspectivas. Esto puede limitar la innovación y llevar a la creación de software que no satisfaga las necesidades de una audiencia más amplia.
+
+3. **Sesgos de Género y Raza:** Si el equipo de desarrollo está dominado por un género o grupo racial, es posible que el software refleje sesgos involuntarios. Por ejemplo, un programa de reconocimiento facial desarrollado principalmente por hombres blancos podría tener dificultades para reconocer con precisión personas de otros géneros y razas.
+
+4. **Falta de Sensibilidad a la Diversidad:** Los grupos hegemónicos a veces pueden carecer de sensibilidad a las preocupaciones y desafíos que enfrentan otros grupos. Esto podría llevar a la falta de características importantes o la inclusión de características perjudiciales. Por ejemplo, la falta de consideración de la accesibilidad puede dejar fuera a personas con discapacidades.
+
+5. **Limitación de la Representación:** Si los grupos minoritarios o poco representativos no tienen acceso a la creación de software, pueden sentirse excluidos y marginados. Esto puede resultar en la creación de herramientas que solo benefician a ciertos grupos, excluyendo a otros.
+
+6. **Falta de Conciencia de Problemas Éticos:** Los equipos hegemónicos pueden no ser conscientes de los problemas éticos que afectan a grupos marginados. Esto puede llevar a la ignorancia o falta de consideración de cuestiones importantes, como la privacidad, la seguridad y la equidad.
+
+7. **Limitación de la Adopción Global:** Si el software se desarrolla solo en el idioma o la perspectiva cultural de un grupo hegemónico, puede limitar su adopción a nivel global, lo que desperdicia oportunidades de mercado y colaboración.
+
+Para abordar estas desventajas y limitaciones, es esencial promover la diversidad y la inclusión en los equipos de desarrollo de software. Esto implica la colaboración de personas con diversas perspectivas y experiencias, así como la consideración de las necesidades de una amplia gama de usuarios. La auditoría ética y las pruebas rigurosas también pueden ayudar a identificar y mitigar sesgos en el software.
+-->
 </section>
 <section id="la-estructura-de-un-paquete" class="level2">
 <h2 class="anchored" data-anchor-id="la-estructura-de-un-paquete">La estructura de un paquete</h2>
@@ -638,23 +684,26 @@ Descargá esta versión del paquete
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># definir nuevos idiomas</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>mensajes <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' Definición de la función interna (queda propuesto: documentarla)</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @keywords internal</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' Definición de la función interna (queda propuesto: documentarla, pero no es </span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' obligatorio para las funciones internas)</span></span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>.bisiesto <span class="ot">&lt;-</span> <span class="cf">function</span>(x, idioma) {</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Chequear argumento</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(mensajes[[idioma]]<span class="sc">$</span>x_no_numerico)</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(x)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Determinar si es bisiesto (TRUE/FALSE)</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> ((x <span class="sc">%%</span> <span class="dv">4</span> <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">&amp;</span> (x <span class="sc">%%</span> <span class="dv">100</span> <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">|</span> (x <span class="sc">%%</span> <span class="dv">400</span> <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  mensaje <span class="ot">&lt;-</span> <span class="fu">paste</span>(x, <span class="fu">ifelse</span>(res, mensajes[[idioma]]<span class="sc">$</span>es_bisiesto, mensajes[[idioma]]<span class="sc">$</span>no_es_bisiesto), <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(mensaje)</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' @keywords internal</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>.bisiesto <span class="ot">&lt;-</span> <span class="cf">function</span>(x, idioma) {</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Chequear argumento</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(mensajes[[idioma]]<span class="sc">$</span>x_no_numerico)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(x)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Determinar si es bisiesto (TRUE/FALSE)</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> ((x <span class="sc">%%</span> <span class="dv">4</span> <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">&amp;</span> (x <span class="sc">%%</span> <span class="dv">100</span> <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">|</span> (x <span class="sc">%%</span> <span class="dv">400</span> <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  mensaje <span class="ot">&lt;-</span> <span class="fu">paste</span>(x, <span class="fu">ifelse</span>(res, mensajes[[idioma]]<span class="sc">$</span>es_bisiesto, </span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>                             mensajes[[idioma]]<span class="sc">$</span>no_es_bisiesto), <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(mensaje)</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Notemos la incorporación del argumento <code>idioma</code> y que de él depende la escritura de mensajes.</li>
@@ -684,7 +733,7 @@ Descargá esta versión del paquete
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_r</span>(<span class="st">"mensajes_es.R"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li>A la lista global <code>mensajes</code> le agregamos una sublista llamada <code>"es"</code>, con los tres mensajes que emite nuestro paquete, escritos en español:</li>
+<li>Usamos este archivo para agregarle a la lista global <code>mensajes</code> una sublista llamada <code>"es"</code>, con los tres mensajes que emite nuestro paquete, escritos en español:</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mensajes[[<span class="st">"es"</span>]] <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
@@ -702,13 +751,13 @@ Descargá esta versión del paquete
 <section id="creamos-funciones_es.r" class="level3">
 <h3 class="anchored" data-anchor-id="creamos-funciones_es.r">Creamos <code>funciones_es.R</code></h3>
 <ul>
-<li>Creamos un archivo para guardar todos los <em>wrapers</em> en Español que llaman a las funciones internas:</li>
+<li>Creamos un archivo para guardar todos los <em>wrappers</em> en Español que llaman a las funciones internas:</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_r</span>(<span class="st">"funciones_es.R"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li>Implementamos el <em>wraper</em>, usando el argumento <code>idioma = "es"</code>.</li>
+<li>Implementamos el <em>wrapper</em>, usando el argumento <code>idioma = "es"</code>.</li>
 <li>Le agregamos acá una linda documentación escrita en español:</li>
 </ul>
 <div class="cell">
@@ -832,7 +881,7 @@ Descargá esta versión del paquete
 <h2 class="anchored" data-anchor-id="probar-cómo-funciona">Probar cómo funciona</h2>
 <ul>
 <li>Carguemos una vez más nuestro paquete multilingüe y comprobemos que efectivamente lo podemos usar en varios idiomas.</li>
-<li>Tanto los nombres de las funciones, como los mensajes emitidos y las páginas de ayuda están disponibles en los lenguajes implementados<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</li>
+<li>Tanto los nombres de las funciones, como los mensajes emitidos y las páginas de ayuda están disponibles en los lenguajes implementados<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load_all</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -864,7 +913,8 @@ Descargá la versión multilingüe del paquete
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Notas</h2>
 
 <ol>
-<li id="fn1"><p>Para ver las páginas de ayuda, tenemos que completar las documentaciones que dejamos pendiente y hacer una instalación de nuestro paquete en desarrollo con <code>install()</code><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Algunas ideas son tomadas de <a href="https://ropensci.org/blog/2023/01/12/multilingual-publishing-en/">acá</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Para ver las páginas de ayuda, tenemos que completar las documentaciones que dejamos pendiente y hacer una instalación de nuestro paquete en desarrollo con <code>install()</code><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -11,7 +11,7 @@
     "href": "preparacion.html",
     "title": "Preparativos para el taller",
     "section": "",
-    "text": "Para poder seguir este taller, necesitás tener instalados los siguientes paquetes:\n\n\ninstall.packages(c(\"devtools\", \"usethis\", \"roxygen2\"))\n\n\nAdemás, si usás Windows necesitás descargar el programa Rtools desde este link e instalarlo en tu computadora.\nEn el taller crearemos dos versiones de un paquete, una básica y otra con características multilingües. Podés seguir el paso a paso para la creación, o descargar los paquetes ya creados y explorarlos por tu cuenta:\n\nVersión básica\nVersión multilingües\n\nEl repo de GitHub con estos recursos es https://github.com/mpru/charla_renrosario_2023."
+    "text": "Para poder seguir este taller, necesitás tener instalados los siguientes paquetes:\n\n\ninstall.packages(c(\"devtools\", \"usethis\", \"roxygen2\"))\n\n\nAdemás, si usás Windows necesitás descargar el programa Rtools desde este link e instalarlo en tu computadora.\nEn el taller crearemos dos versiones de un paquete, una básica y otra con características multilingües. Podés seguir el paso a paso para la creación, o descargar los paquetes ya creados y explorarlos por tu cuenta:\n\nVersión básica\nVersión multilingüe\n\nEl repo de GitHub con estos recursos es https://github.com/mpru/charla_renrosario_2023."
   },
   {
     "objectID": "crear_paquetes.html",
@@ -200,7 +200,7 @@
     "href": "presentacion_ropensci.html#qué-es-ropensci",
     "title": "Qué es rOpenSci",
     "section": "¿Qué es rOpenSci?",
-    "text": "¿Qué es rOpenSci?\n\n\nrOpenSci = Ciencia abierta + software abierto + comunidades de práctica\nCiencia abierta. La ciencia abierta invita a quienes investigan a compartir abiertamente sus trabajos, datos y componentes de investigación para que otros puedan leerlos, reutilizarlos, reproducirlos, basarse en ellos y compartirlos.\nSoftware de código abierto. El software de código abierto es código diseñado para ser accesible al público: cualquiera puede ver, modificar y distribuir el código como mejor le parezca.\nComunidades de práctica: Grupo amplio de personas que comparten saberes y aprendizajes de un tema transversal a distintas profesiones"
+    "text": "¿Qué es rOpenSci?\n\n\nrOpenSci = Ciencia abierta + software abierto + comunidades de práctica\nCiencia abierta. La ciencia abierta invita a quienes investigan a compartir abiertamente sus trabajos, datos y componentes de investigación para que otros puedan leerlos, reutilizarlos, reproducirlos, basarse en ellos y compartirlos.\nSoftware de código abierto. El software de código abierto es código diseñado para ser accesible al público: cualquiera puede ver, modificar y distribuir el código como mejor le parezca.\nComunidades de práctica. Grupo amplio de personas que comparten saberes y aprendizajes de un tema transversal a distintas profesiones."
   },
   {
     "objectID": "presentacion_ropensci.html#qué-hace-ropensci",
@@ -214,7 +214,7 @@
     "href": "presentacion_ropensci.html#cómo-lo-hace",
     "title": "Qué es rOpenSci",
     "section": "¿Cómo lo hace?",
-    "text": "¿Cómo lo hace?\n\n\nCreando una infraestructura técnica de herramientas de software R cuidadosamente revisadas que reduzcan las barreras para trabajar con fuentes de datos científicos en la web.\nHaciendo que los datos, las herramientas y las mejores prácticas sean más accesibles y fáciles de encontrar.\nCreando una infraestructura social a través de una comunidad amigable y diversa.\nPromoviendo una cultura de intercambio de datos y software reutilizable.\nDesarrollando la capacidad de las personas que usan y desarrollan software y fomentando un sentimiento de orgullo por su trabajo"
+    "text": "¿Cómo lo hace?\n\n\nCreando una infraestructura técnica de herramientas de software en R cuidadosamente revisadas, que reduzcan las barreras para trabajar con fuentes de datos científicos.\nHaciendo que los datos, las herramientas y las mejores prácticas sean más accesibles y fáciles de encontrar.\nCreando una infraestructura social a través de una comunidad amigable y diversa.\nPromoviendo una cultura de intercambio de datos y software reutilizable.\nDesarrollando la capacidad de las personas que usan y desarrollan software y fomentando un sentimiento de orgullo por su trabajo"
   },
   {
     "objectID": "presentacion_ropensci.html#suite-de-paquetes-propios",
@@ -228,14 +228,14 @@
     "href": "presentacion_ropensci.html#revisión-de-software-por-pares",
     "title": "Qué es rOpenSci",
     "section": "Revisión de software por pares",
-    "text": "Revisión de software por pares\n\n\n\nProceso de revisión de paquetes R transparente, constructivo, no conflictivo, estandarizado y abierto\nMateriales para favorecer el uso de buenas prácticas y estándares\nRevisión de pares para software\nRevisión de pares para software estadístico"
+    "text": "Revisión de software por pares\n\n\n\nProceso de revisión de paquetes de R transparente, constructivo, no conflictivo, estandarizado y abierto.\nMateriales para favorecer el uso de buenas prácticas y estándares.\nRevisión de pares para software\nRevisión de pares para software estadístico"
   },
   {
     "objectID": "presentacion_ropensci.html#otros-proyectos",
     "href": "presentacion_ropensci.html#otros-proyectos",
     "title": "Qué es rOpenSci",
     "section": "Otros proyectos",
-    "text": "Otros proyectos\n\nSistema R-Universe: Proyecto paraguas para mejorar la publicación y el descubrimiento de software de investigación en R.\nPublicaciones multilingües\nPrograma Champions: (¡enseguida les cuento más!)\nVisitar https://contributing.ropensci.org/ para ver más formas de participación."
+    "text": "Otros proyectos\n\nSistema R-Universe: proyecto para mejorar la publicación y el descubrimiento de software de investigación en R.\nPublicaciones multilingües\nPrograma Champions: (¡enseguida les cuento más!)\nVisitar https://contributing.ropensci.org/ para ver más formas de participación."
   },
   {
     "objectID": "presentacion_ropensci.html#motivación",
@@ -249,21 +249,21 @@
     "href": "presentacion_ropensci.html#objetivo",
     "title": "Qué es rOpenSci",
     "section": "Objetivo",
-    "text": "Objetivo\n\nEl programa busca apoyar a una cohorte:\n\ndiversa de personas,\nque colaboren en aspectos de la creación de software de investigación y\nque sean “líderes” de la comunidad,\ny que se esfuercen por transformar el ecosistema para mejor."
+    "text": "Objetivo\nEl programa busca apoyar a una cohorte:\n\ndiversa de personas,\nque colaboren en aspectos de la creación de software de investigación,\nque sean “líderes” de la comunidad,\ny que se esfuercen por transformar el ecosistema para mejor."
   },
   {
     "objectID": "presentacion_ropensci.html#participantes",
     "href": "presentacion_ropensci.html#participantes",
     "title": "Qué es rOpenSci",
     "section": "Participantes",
-    "text": "Participantes\n\nEstá pensando para que participen personas que pertenecen a grupos histórica y sistemáticamente excluidos\nY que están interesadas en contribuir a rOpenSci y al ecosistema más amplio de comunidades de software de código abierto y de investigación."
+    "text": "Participantes\nEstá pensando para que participen personas:\n\nque pertenecen a grupos histórica y sistemáticamente excluidos.\ninteresadas en contribuir a rOpenSci y al ecosistema más amplio de comunidades de software de código abierto y de investigación."
   },
   {
     "objectID": "presentacion_ropensci.html#proyectos",
     "href": "presentacion_ropensci.html#proyectos",
     "title": "Qué es rOpenSci",
     "section": "Proyectos",
-    "text": "Proyectos\n\nQuienes participan desarrollan uno de estos proyectos:\n\ncrear un nuevo paquete,\npasar por el proceso de revisión con un paquete de R que ya hayan desarrollado,\no ser un/a revisor/a del sistema de revisión por pares.\n\nal mismo tiempo que reciben capacitación… y un estipendio (USD 1000)."
+    "text": "Proyectos\n\nQuienes participan desarrollan uno de estos proyectos:\n\ncrear un nuevo paquete,\npasar por el proceso de revisión con un paquete de R que ya hayan desarrollado,\no ser un/a revisor/a del sistema de revisión por pares.\n\nal mismo tiempo que reciben capacitación y un estipendio (USD 1000)."
   },
   {
     "objectID": "presentacion_ropensci.html#metas",
@@ -291,7 +291,14 @@
     "href": "crear_paq_multiling.html#por-qué-podríamos-considerar-crear-un-paquete",
     "title": "Una idea para crear paquetes multilingües",
     "section": "¿Por qué podríamos considerar crear un paquete?",
-    "text": "¿Por qué podríamos considerar crear un paquete?\nNos da la oportunidad de:\n\nCompartir de forma sencilla y rápida el trabajo que realizamos.\nOrganizar el trabajo dentro de los equipos de trabajo o de investigación.\nRealizar nuevas publicaciones.\nDarnos a conocer."
+    "text": "¿Por qué podríamos considerar crear un paquete?\nNos da la oportunidad de:\n\nCompartir de forma sencilla y rápida el trabajo que realizamos.\nOrganizar el trabajo dentro de los equipos de trabajo o de investigación.\nPublicar nuevos desarrollos o soluciones que pueden ser útiles para otras personas.\nDarnos a conocer en comunidad."
+  },
+  {
+    "objectID": "crear_paq_multiling.html#por-qué-consideraríamos-crear-un-paquete-en-otro-idioma-que-no-sea-inglés",
+    "href": "crear_paq_multiling.html#por-qué-consideraríamos-crear-un-paquete-en-otro-idioma-que-no-sea-inglés",
+    "title": "Una idea para crear paquetes multilingües",
+    "section": "¿Por qué consideraríamos crear un paquete en otro idioma que no sea inglés?1",
+    "text": "¿Por qué consideraríamos crear un paquete en otro idioma que no sea inglés?1\n\nSegún un informe reciente de The Linux Foundation, el acceso al idioma es una de las barreras que atentan contra la equidad en el código abierto>\n\n\n“El idioma predominante del código abierto es el inglés (en el código, el contenido y las interacciones comunitarias) y el dominio del inglés es una métrica mediante la cual se juzga el desempeño y la personalidad.”\n\n\n\n\nEscena de Modern Family\n\n\n\nAl publicar recursos multilingües, podemos reducir estas barreras aumentando el acceso al conocimiento y democratizando el acceso a recursos de calidad, aumentando así el potencial de las personas para contribuir a proyectos de software y ciencia abierta.\nCuando el desarrollo de software recae en entornos minoritarios, poco representativos o hegemónicos pueden presentarse desventajas, limitaciones y/o posibles sesgos:\n\nSesgo cultural, lingüístico, étnico o de género\nFalta de diversidad de ideas\nLimitación de la representación\nFalta de conciencia de problemas éticos\n\nEn este taller vamos a jugar a aportar un granito de arena, pensando cómo podríamos armar un paquete de R multilingüe.\nEmpecemos por repasar cómo es un paquete en general."
   },
   {
     "objectID": "crear_paq_multiling.html#la-estructura-de-un-paquete",
@@ -340,14 +347,14 @@
     "href": "crear_paq_multiling.html#funciones-internas",
     "title": "Una idea para crear paquetes multilingües",
     "section": "Funciones internas",
-    "text": "Funciones internas\n\nBorremos todo el contenido de nuestro script funciones.R para poner allí la definición de la lista global de mensajes y la definición de la función interna que se encarga de ver si un año es o no bisiesto:\n\n\n# Variable global para guardar los mensajes, arranca vacía y se va llenando al \n# definir nuevos idiomas\nmensajes <- list()\n\n#' Definición de la función interna (queda propuesto: documentarla)\n#' @keywords internal\n#' \n.bisiesto <- function(x, idioma) {\n  \n  # Chequear argumento\n  if (!is.numeric(x)) {\n    stop(mensajes[[idioma]]$x_no_numerico)\n  }\n  x <- as.integer(x)\n  \n  # Determinar si es bisiesto (TRUE/FALSE)\n  res <- ((x %% 4 == 0) & (x %% 100 != 0)) | (x %% 400 == 0)\n  \n  mensaje <- paste(x, ifelse(res, mensajes[[idioma]]$es_bisiesto, mensajes[[idioma]]$no_es_bisiesto), collapse = \"\\n\")\n  cat(mensaje)\n}\n\n\nNotemos la incorporación del argumento idioma y que de él depende la escritura de mensajes.\nPor ejemplo, antes teníamos \"El valor provisto para x no es numerico.\" y ahora mensajes[[idioma]]$x_no_numerico.\nLa lista global de mensajes tendrá que tener una sublista llamada con idioma, la cual contiene un string bajo el nombre de x_no_numerico.\nEse string es el que estará escrito en distintos idiomas.\nOcurre lo mismo para los otros mensajes a emitir."
+    "text": "Funciones internas\n\nBorremos todo el contenido de nuestro script funciones.R para poner allí la definición de la lista global de mensajes y la definición de la función interna que se encarga de ver si un año es o no bisiesto:\n\n\n# Variable global para guardar los mensajes, arranca vacía y se va llenando al \n# definir nuevos idiomas\nmensajes <- list()\n\n#' Definición de la función interna (queda propuesto: documentarla, pero no es \n#' obligatorio para las funciones internas)\n#' \n#' @keywords internal\n#' \n.bisiesto <- function(x, idioma) {\n  \n  # Chequear argumento\n  if (!is.numeric(x)) {\n    stop(mensajes[[idioma]]$x_no_numerico)\n  }\n  x <- as.integer(x)\n  \n  # Determinar si es bisiesto (TRUE/FALSE)\n  res <- ((x %% 4 == 0) & (x %% 100 != 0)) | (x %% 400 == 0)\n  \n  mensaje <- paste(x, ifelse(res, mensajes[[idioma]]$es_bisiesto, \n                             mensajes[[idioma]]$no_es_bisiesto), collapse = \"\\n\")\n  cat(mensaje)\n}\n\n\nNotemos la incorporación del argumento idioma y que de él depende la escritura de mensajes.\nPor ejemplo, antes teníamos \"El valor provisto para x no es numerico.\" y ahora mensajes[[idioma]]$x_no_numerico.\nLa lista global de mensajes tendrá que tener una sublista llamada con idioma, la cual contiene un string bajo el nombre de x_no_numerico.\nEse string es el que estará escrito en distintos idiomas.\nOcurre lo mismo para los otros mensajes a emitir."
   },
   {
     "objectID": "crear_paq_multiling.html#agregar-un-idioma",
     "href": "crear_paq_multiling.html#agregar-un-idioma",
     "title": "Una idea para crear paquetes multilingües",
     "section": "Agregar un idioma",
-    "text": "Agregar un idioma\n\nAhora estamos en condiciones de agregar distintos idiomas con los que se pueda usar este paquete.\nEmpecemos agregando al Español.\n\n\nCreamos mensajes_es.R:\n\nCreamos un archivo con todos los mensajes en Español:\n\n\nuse_r(\"mensajes_es.R\")\n\n\nA la lista global mensajes le agregamos una sublista llamada \"es\", con los tres mensajes que emite nuestro paquete, escritos en español:\n\n\nmensajes[[\"es\"]] <- list(\n  x_no_numerico = \"El valor provisto para x no es numérico.\",\n  es_bisiesto = \"es un año bisiesto.\",\n  no_es_bisiesto = \"no es un año bisiesto.\"\n)\n\n\n\n\n\n\n\n\nCreamos funciones_es.R\n\nCreamos un archivo para guardar todos los wrapers en Español que llaman a las funciones internas:\n\n\nuse_r(\"funciones_es.R\")\n\n\nImplementamos el wraper, usando el argumento idioma = \"es\".\nLe agregamos acá una linda documentación escrita en español:\n\n\n#' La función bisiesto\n#'\n#' Esta función analiza si el año o los años provistos son bisiestos o no. Los\n#' años bisiestos ocurren cada 4 años, excepto los terminados en 00, los cuales\n#' son bisiestos sólo si son divisibles por 400. Es decir, los años como 1600,\n#' 1700, 1800 son bisiestos si son divisibles por 400. Por ejemplo, el año 1900\n#' no fue bisiesto a pesar de ser divisible por 4, pero el año 2000 sí lo fue\n#' por ser divisible por 400. Entonces, para que un año dado sea bisiesto, se\n#' debe cumplir una de las siguientes condiciones: el año es divisible por 4\n#' pero no divisible por 100, o el año es divisible por 400.\n#'\n#' @param x vector numérico de largo mayor o igual a 1 con los años a evaluar.\n#'   Por default, toma el año actual.\n#'\n#' @return la función imprime mensajes en la consola para indicar si los años\n#'   provistos son o no bisiestos. Devuelve un valor NULL invisible.\n#'\n#' @details Si `x` contiene valores no enteros, se toma su parte entera. Esta\n#'   función sirve para los años antes de Cristo, si se los considera bajo la\n#'   numeración astronómica de los años (incluye un año 0 y luego cuenta en\n#'   negativo, por ejemplo, el año 0 es 1 AC o el año -1 es 2 AC.).\n#'\n#' @seealso \\url{https://es.wikipedia.org/wiki/Año_bisiesto}\n#'\n#' @examples\n#' bisiesto(2019)\n#' bisiesto(2020)\n#' bisiesto(2020:2025)\n#'\n#' @export\n#' \nbisiesto <- function(x = as.integer(format(Sys.Date(), \"%Y\"))) {\n  .bisiesto(x, idioma = \"es\")\n}\n\n\n\n\n\n\n\n¡Listo!\nCarguemos la nueva versión de nuestro paquete y probemos cómo lo usamos en Español:\n\n\nload_all()"
+    "text": "Agregar un idioma\n\nAhora estamos en condiciones de agregar distintos idiomas con los que se pueda usar este paquete.\nEmpecemos agregando al Español.\n\n\nCreamos mensajes_es.R:\n\nCreamos un archivo con todos los mensajes en Español:\n\n\nuse_r(\"mensajes_es.R\")\n\n\nUsamos este archivo para agregarle a la lista global mensajes una sublista llamada \"es\", con los tres mensajes que emite nuestro paquete, escritos en español:\n\n\nmensajes[[\"es\"]] <- list(\n  x_no_numerico = \"El valor provisto para x no es numérico.\",\n  es_bisiesto = \"es un año bisiesto.\",\n  no_es_bisiesto = \"no es un año bisiesto.\"\n)\n\n\n\n\n\n\n\n\nCreamos funciones_es.R\n\nCreamos un archivo para guardar todos los wrappers en Español que llaman a las funciones internas:\n\n\nuse_r(\"funciones_es.R\")\n\n\nImplementamos el wrapper, usando el argumento idioma = \"es\".\nLe agregamos acá una linda documentación escrita en español:\n\n\n#' La función bisiesto\n#'\n#' Esta función analiza si el año o los años provistos son bisiestos o no. Los\n#' años bisiestos ocurren cada 4 años, excepto los terminados en 00, los cuales\n#' son bisiestos sólo si son divisibles por 400. Es decir, los años como 1600,\n#' 1700, 1800 son bisiestos si son divisibles por 400. Por ejemplo, el año 1900\n#' no fue bisiesto a pesar de ser divisible por 4, pero el año 2000 sí lo fue\n#' por ser divisible por 400. Entonces, para que un año dado sea bisiesto, se\n#' debe cumplir una de las siguientes condiciones: el año es divisible por 4\n#' pero no divisible por 100, o el año es divisible por 400.\n#'\n#' @param x vector numérico de largo mayor o igual a 1 con los años a evaluar.\n#'   Por default, toma el año actual.\n#'\n#' @return la función imprime mensajes en la consola para indicar si los años\n#'   provistos son o no bisiestos. Devuelve un valor NULL invisible.\n#'\n#' @details Si `x` contiene valores no enteros, se toma su parte entera. Esta\n#'   función sirve para los años antes de Cristo, si se los considera bajo la\n#'   numeración astronómica de los años (incluye un año 0 y luego cuenta en\n#'   negativo, por ejemplo, el año 0 es 1 AC o el año -1 es 2 AC.).\n#'\n#' @seealso \\url{https://es.wikipedia.org/wiki/Año_bisiesto}\n#'\n#' @examples\n#' bisiesto(2019)\n#' bisiesto(2020)\n#' bisiesto(2020:2025)\n#'\n#' @export\n#' \nbisiesto <- function(x = as.integer(format(Sys.Date(), \"%Y\"))) {\n  .bisiesto(x, idioma = \"es\")\n}\n\n\n\n\n\n\n\n¡Listo!\nCarguemos la nueva versión de nuestro paquete y probemos cómo lo usamos en Español:\n\n\nload_all()"
   },
   {
     "objectID": "crear_paq_multiling.html#y-ahora-agregar-cualquier-otro-idioma",
@@ -361,6 +368,6 @@
     "href": "crear_paq_multiling.html#probar-cómo-funciona",
     "title": "Una idea para crear paquetes multilingües",
     "section": "Probar cómo funciona",
-    "text": "Probar cómo funciona\n\nCarguemos una vez más nuestro paquete multilingüe y comprobemos que efectivamente lo podemos usar en varios idiomas.\nTanto los nombres de las funciones, como los mensajes emitidos y las páginas de ayuda están disponibles en los lenguajes implementados1.\n\n\nload_all()\n\n\n\n\n\n\n\n\n\n\n\n\nDescargá la versión multilingüe del paquete\n\n\n\nLa versión definitiva de este paquete de ejemplo está disponible acá."
+    "text": "Probar cómo funciona\n\nCarguemos una vez más nuestro paquete multilingüe y comprobemos que efectivamente lo podemos usar en varios idiomas.\nTanto los nombres de las funciones, como los mensajes emitidos y las páginas de ayuda están disponibles en los lenguajes implementados2.\n\n\nload_all()\n\n\n\n\n\n\n\n\n\n\n\n\nDescargá la versión multilingüe del paquete\n\n\n\nLa versión definitiva de este paquete de ejemplo está disponible acá."
   }
 ]

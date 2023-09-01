@@ -30,8 +30,48 @@ Nos da la oportunidad de:
 
 -   **Compartir** de forma sencilla y rápida el trabajo que realizamos.
 -   **Organizar** el trabajo dentro de los equipos de trabajo o de investigación.
--   **Realizar nuevas publicaciones**.
--   **Darnos a conocer**.
+-   **Publicar** nuevos desarrollos o soluciones que pueden ser útiles para otras personas.
+-   **Darnos a conocer** en comunidad.
+
+## ¿Por qué consideraríamos crear un paquete en otro idioma que no sea inglés?^[Algunas ideas son tomadas de [acá](https://ropensci.org/blog/2023/01/12/multilingual-publishing-en/)]
+
+- Según un [informe reciente de The Linux Foundation](https://www.linuxfoundation.org/research/the-2021-linux-foundation-report-on-diversity-equity-and-inclusion-in-open-source), el acceso al idioma es una de las barreras que atentan contra la equidad en el código abierto>
+
+> "El idioma predominante del código abierto es el inglés (en el código, el contenido y las interacciones comunitarias) y el dominio del inglés es una métrica mediante la cual se juzga el desempeño y la personalidad."
+
+![Escena de Modern Family](images/paquetes/modern.png){fig-align="center" width="80%"}
+
+- Al publicar recursos multilingües, podemos reducir estas barreras aumentando el acceso al conocimiento y democratizando el acceso a recursos de calidad, aumentando así el potencial de las personas para contribuir a proyectos de software y ciencia abierta.
+
+- Cuando el desarrollo de software recae en entornos minoritarios, poco representativos o hegemónicos pueden presentarse desventajas, limitaciones y/o posibles sesgos:
+
+  - Sesgo cultural, lingüístico, étnico o de género
+  - Falta de diversidad de ideas
+  - Limitación de la representación
+  - Falta de conciencia de problemas éticos
+
+- En este taller vamos a jugar a aportar un granito de arena, pensando cómo podríamos armar un paquete de R multilingüe.
+
+- Empecemos por repasar cómo es un paquete en general.
+
+<!-- Desarrollar software en entornos en los que los grupos que lo crean sean minoritarios, poco representativos o hegemónicos puede presentar desventajas, limitaciones y posibles sesgos.
+
+1. **Sesgo Cultural y Lingüístico:** Si un grupo minoritario o hegemónico desarrolla software sin tener en cuenta las necesidades y perspectivas de otros grupos culturales o lingüísticos, puede resultar en sesgos culturales y lingüísticos. Por ejemplo, un programa podría no ser adecuado para usuarios de diferentes idiomas o culturas, lo que limitaría su accesibilidad global.
+
+2. **Falta de Diversidad de Ideas:** Grupos homogéneos pueden tener una falta de diversidad de ideas y perspectivas. Esto puede limitar la innovación y llevar a la creación de software que no satisfaga las necesidades de una audiencia más amplia.
+
+3. **Sesgos de Género y Raza:** Si el equipo de desarrollo está dominado por un género o grupo racial, es posible que el software refleje sesgos involuntarios. Por ejemplo, un programa de reconocimiento facial desarrollado principalmente por hombres blancos podría tener dificultades para reconocer con precisión personas de otros géneros y razas.
+
+4. **Falta de Sensibilidad a la Diversidad:** Los grupos hegemónicos a veces pueden carecer de sensibilidad a las preocupaciones y desafíos que enfrentan otros grupos. Esto podría llevar a la falta de características importantes o la inclusión de características perjudiciales. Por ejemplo, la falta de consideración de la accesibilidad puede dejar fuera a personas con discapacidades.
+
+5. **Limitación de la Representación:** Si los grupos minoritarios o poco representativos no tienen acceso a la creación de software, pueden sentirse excluidos y marginados. Esto puede resultar en la creación de herramientas que solo benefician a ciertos grupos, excluyendo a otros.
+
+6. **Falta de Conciencia de Problemas Éticos:** Los equipos hegemónicos pueden no ser conscientes de los problemas éticos que afectan a grupos marginados. Esto puede llevar a la ignorancia o falta de consideración de cuestiones importantes, como la privacidad, la seguridad y la equidad.
+
+7. **Limitación de la Adopción Global:** Si el software se desarrolla solo en el idioma o la perspectiva cultural de un grupo hegemónico, puede limitar su adopción a nivel global, lo que desperdicia oportunidades de mercado y colaboración.
+
+Para abordar estas desventajas y limitaciones, es esencial promover la diversidad y la inclusión en los equipos de desarrollo de software. Esto implica la colaboración de personas con diversas perspectivas y experiencias, así como la consideración de las necesidades de una amplia gama de usuarios. La auditoría ética y las pruebas rigurosas también pueden ayudar a identificar y mitigar sesgos en el software.
+-->
 
 ## La estructura de un paquete
 
@@ -288,7 +328,6 @@ install()
 En lugar de hacer todos los pasos anteriores, podés descargar [esta carpeta](https://drive.google.com/file/d/1cnKdypPgOjTfI_6U8VKmispE2Ef5htE5/view?usp=sharing) con todos los archivos que conforman esta versión original del paquete y explorar desde allí.
 :::
 
-
 ## Otras cuestiones
 
 -   Con lo anterior ya tenemos un paquete andando. Para dejarlo más completito, tendríamos que presetarle atención a otras cuestiones como:
@@ -311,38 +350,41 @@ En lugar de hacer todos los pasos anteriores, podés descargar [esta carpeta](ht
 
 # Ahora... convertirlo en multilingüe
 
-- La función que escribimos recién está en español (su nombre, sus mensajes) y así como está sería difícil implementarla en otros idiomas.
-- Vamos a seguir la siguiente estrategia:
+-   La función que escribimos recién está en español (su nombre, sus mensajes) y así como está sería difícil implementarla en otros idiomas.
 
-  1. **Crear funciones internas que hagan el trabajo sucio**. 
-    
-    - Estas funciones implementarán todo el código necesario, no serán accesibles para los usuarios del paquete y tendrán un argumento extra para indicar con qué `idioma` se está usando el paquete (por ejemplo: `"en"`, `"es"`). 
-    - Dependiendo del `idioma`, se elegirían los mensajes para mostrar.
-    
-  2. **Crear una lista como objeto global para guardar todos los mensajes, independiente de la defición de las funciones internas**.
-  
-    - Llamaremos esta lista `mensajes`.
-    - Contiene, a su vez, otras listas, una por cada idioma a implementar, con los mensajes escritos en ese idioma.
-    - Inicialmente dejamos vacía a la lista `mensajes`. Cada vez que alguien agregue un idioma, le irá agregando un elemento más.
-    
-  3. **Por cada idioma a agregar, creamos dos nuevos scripts de R,** `funciones_*.R` **y** `mensajes_*.R`.
-  
-    - `funciones_*.R` (ejemplo: `funciones_es.R`, `funciones_en.R`): definimos las funciones a exportar, dándoles un nombre en el idioma en cuestion. Estas funciones sólo son un *wrapper* a las funciones internas definidas antes, que al llamarlas le pasan el argumento `idioma` con el valor adecuado según el idioma que se esté usando (`"en"`, `"es"`).
-    - `mensajes_*.R` (ejemplo: `mensajes_es.R`, `mensajes_en.R`): agregan a la lista global `mensajes` una sublista, cuyo nombre es el valor que usamos para el argumento `idioma` (`"en"`, `"es"`). Esta sublista tiene todos los mensajes que usaremos, escritos en el idioma correspondiente.
-    - Todo esto podría estar en un mismo script, pero si el paquete es grande, vamos a tener muchos *wrappers* a funciones internas, y muchos mensajes a escribir en cada idioma, por lo cual es más ordenado y conveniente mantener estas cosas por separado.
-  
-- Es más claro si lo hacemos...
+-   Vamos a seguir la siguiente estrategia:
+
+    1.  **Crear funciones internas que hagan el trabajo sucio**.
+
+    -   Estas funciones implementarán todo el código necesario, no serán accesibles para los usuarios del paquete y tendrán un argumento extra para indicar con qué `idioma` se está usando el paquete (por ejemplo: `"en"`, `"es"`).
+    -   Dependiendo del `idioma`, se elegirían los mensajes para mostrar.
+
+    2.  **Crear una lista como objeto global para guardar todos los mensajes, independiente de la defición de las funciones internas**.
+
+    -   Llamaremos esta lista `mensajes`.
+    -   Contiene, a su vez, otras listas, una por cada idioma a implementar, con los mensajes escritos en ese idioma.
+    -   Inicialmente dejamos vacía a la lista `mensajes`. Cada vez que alguien agregue un idioma, le irá agregando un elemento más.
+
+    3.  **Por cada idioma a agregar, creamos dos nuevos scripts de R,** `funciones_*.R` **y** `mensajes_*.R`.
+
+    -   `funciones_*.R` (ejemplo: `funciones_es.R`, `funciones_en.R`): definimos las funciones a exportar, dándoles un nombre en el idioma en cuestion. Estas funciones sólo son un *wrapper* a las funciones internas definidas antes, que al llamarlas le pasan el argumento `idioma` con el valor adecuado según el idioma que se esté usando (`"en"`, `"es"`).
+    -   `mensajes_*.R` (ejemplo: `mensajes_es.R`, `mensajes_en.R`): agregan a la lista global `mensajes` una sublista, cuyo nombre es el valor que usamos para el argumento `idioma` (`"en"`, `"es"`). Esta sublista tiene todos los mensajes que usaremos, escritos en el idioma correspondiente.
+    -   Todo esto podría estar en un mismo script, pero si el paquete es grande, vamos a tener muchos *wrappers* a funciones internas, y muchos mensajes a escribir en cada idioma, por lo cual es más ordenado y conveniente mantener estas cosas por separado.
+
+-   Es más claro si lo hacemos...
 
 ## Funciones internas
 
-- Borremos todo el contenido de nuestro script `funciones.R` para poner allí la definición de la lista global de `mensajes` y la definición de la función interna que se encarga de ver si un año es o no bisiesto:
+-   Borremos todo el contenido de nuestro script `funciones.R` para poner allí la definición de la lista global de `mensajes` y la definición de la función interna que se encarga de ver si un año es o no bisiesto:
 
 ```{r, eval=FALSE}
 # Variable global para guardar los mensajes, arranca vacía y se va llenando al 
 # definir nuevos idiomas
 mensajes <- list()
 
-#' Definición de la función interna (queda propuesto: documentarla)
+#' Definición de la función interna (queda propuesto: documentarla, pero no es 
+#' obligatorio para las funciones internas)
+#' 
 #' @keywords internal
 #' 
 .bisiesto <- function(x, idioma) {
@@ -356,33 +398,34 @@ mensajes <- list()
   # Determinar si es bisiesto (TRUE/FALSE)
   res <- ((x %% 4 == 0) & (x %% 100 != 0)) | (x %% 400 == 0)
   
-  mensaje <- paste(x, ifelse(res, mensajes[[idioma]]$es_bisiesto, mensajes[[idioma]]$no_es_bisiesto), collapse = "\n")
+  mensaje <- paste(x, ifelse(res, mensajes[[idioma]]$es_bisiesto, 
+                             mensajes[[idioma]]$no_es_bisiesto), collapse = "\n")
   cat(mensaje)
 }
 ```
 
-- Notemos la incorporación del argumento `idioma` y que de él depende la escritura de mensajes.
-- Por ejemplo, antes teníamos `"El valor provisto para x no es numerico."` y ahora `mensajes[[idioma]]$x_no_numerico`.
-- La lista global de `mensajes` tendrá que tener una sublista llamada con `idioma`, la cual contiene un *string* bajo el nombre de `x_no_numerico`.
-- Ese string es el que estará escrito en distintos idiomas.
-- Ocurre lo mismo para los otros mensajes a emitir.
+-   Notemos la incorporación del argumento `idioma` y que de él depende la escritura de mensajes.
+-   Por ejemplo, antes teníamos `"El valor provisto para x no es numerico."` y ahora `mensajes[[idioma]]$x_no_numerico`.
+-   La lista global de `mensajes` tendrá que tener una sublista llamada con `idioma`, la cual contiene un *string* bajo el nombre de `x_no_numerico`.
+-   Ese string es el que estará escrito en distintos idiomas.
+-   Ocurre lo mismo para los otros mensajes a emitir.
 
 ![](images/paquetes/multi1.png){fig-align="center" width="100%"}
 
 ## Agregar un idioma
 
-- Ahora estamos en condiciones de agregar distintos idiomas con los que se pueda usar este paquete.
-- Empecemos agregando al Español.
+-   Ahora estamos en condiciones de agregar distintos idiomas con los que se pueda usar este paquete.
+-   Empecemos agregando al Español.
 
 ### Creamos `mensajes_es.R`:
 
-- Creamos un archivo con todos los mensajes en Español:
+-   Creamos un archivo con todos los mensajes en Español:
 
 ```{r, eval=FALSE}
 use_r("mensajes_es.R")
 ```
 
-- A la lista global `mensajes` le agregamos una sublista llamada `"es"`, con los tres mensajes que emite nuestro paquete, escritos en español:
+-   Usamos este archivo para agregarle a la lista global `mensajes` una sublista llamada `"es"`, con los tres mensajes que emite nuestro paquete, escritos en español:
 
 ```{r, eval=FALSE}
 mensajes[["es"]] <- list(
@@ -396,14 +439,14 @@ mensajes[["es"]] <- list(
 
 ### Creamos `funciones_es.R`
 
-- Creamos un archivo para guardar todos los *wrapers* en Español que llaman a las funciones internas:
+-   Creamos un archivo para guardar todos los *wrappers* en Español que llaman a las funciones internas:
 
 ```{r, eval=FALSE}
 use_r("funciones_es.R")
 ```
 
-- Implementamos el *wraper*, usando el argumento `idioma = "es"`.
-- Le agregamos acá una linda documentación escrita en español:
+-   Implementamos el *wrapper*, usando el argumento `idioma = "es"`.
+-   Le agregamos acá una linda documentación escrita en español:
 
 ```{r, eval=FALSE}
 #' La función bisiesto
@@ -444,23 +487,22 @@ bisiesto <- function(x = as.integer(format(Sys.Date(), "%Y"))) {
 
 ![](images/paquetes/multi3.png){fig-align="center" width="100%"}
 
-- **¡Listo!**
-- Carguemos la nueva versión de nuestro paquete y probemos cómo lo usamos en Español:
+-   **¡Listo!**
+-   Carguemos la nueva versión de nuestro paquete y probemos cómo lo usamos en Español:
 
 ```{r, eval=FALSE}
 load_all()
 ```
 
-
 ![](images/paquetes/multi4.png){fig-align="center" width="100%"}
 
 ## Y ahora... ¡agregar cualquier otro idioma!
 
-- Podemos repetir esta estructura fácilmente con más idiomas.
+-   Podemos repetir esta estructura fácilmente con más idiomas.
 
 ### Agregamos inglés
 
-- Archivo `mensajes_en.R` y su contenido:
+-   Archivo `mensajes_en.R` y su contenido:
 
 ```{r, eval=FALSE}
 use_r("mensajes_en.R")
@@ -474,7 +516,7 @@ mensajes[["en"]] <- list(
 )
 ```
 
-- Archivo `funciones_en.R` y su contenido (¡falta la documentación!):
+-   Archivo `funciones_en.R` y su contenido (¡falta la documentación!):
 
 ```{r, eval=FALSE}
 use_r("funciones_en.R")
@@ -489,7 +531,7 @@ leap_year <- function(x = as.integer(format(Sys.Date(), "%Y"))) {
 
 ### Agregamos portugués
 
-- Archivo `mensajes_pt.R` y su contenido:
+-   Archivo `mensajes_pt.R` y su contenido:
 
 ```{r, eval=FALSE}
 use_r("mensajes_pt.R")
@@ -503,7 +545,7 @@ mensajes[["pt"]] <- list(
 )
 ```
 
-- Archivo `funciones_pt.R` y su contenido (¡falta la documentación!):
+-   Archivo `funciones_pt.R` y su contenido (¡falta la documentación!):
 
 ```{r, eval=FALSE}
 use_r("funciones_pt.R")
@@ -518,8 +560,10 @@ bissexto <- function(x = as.integer(format(Sys.Date(), "%Y"))) {
 
 ## Probar cómo funciona
 
-- Carguemos una vez más nuestro paquete multilingüe y comprobemos que efectivamente lo podemos usar en varios idiomas.
-- Tanto los nombres de las funciones, como los mensajes emitidos y las páginas de ayuda están disponibles en los lenguajes implementados^[Para ver las páginas de ayuda, tenemos que completar las documentaciones que dejamos pendiente y hacer una instalación de nuestro paquete en desarrollo con `install()`].
+-   Carguemos una vez más nuestro paquete multilingüe y comprobemos que efectivamente lo podemos usar en varios idiomas.
+-   Tanto los nombres de las funciones, como los mensajes emitidos y las páginas de ayuda están disponibles en los lenguajes implementados[^1].
+
+[^1]: Para ver las páginas de ayuda, tenemos que completar las documentaciones que dejamos pendiente y hacer una instalación de nuestro paquete en desarrollo con `install()`
 
 ```{r, eval=FALSE}
 load_all()
