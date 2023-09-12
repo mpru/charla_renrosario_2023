@@ -264,13 +264,25 @@ Nota
 </div>
 <section id="comencemos" class="level1">
 <h1>Comencemos…</h1>
+<section id="preparativos" class="level2">
+<h2 class="anchored" data-anchor-id="preparativos">Preparativos</h2>
+<ul>
+<li><p>Para poder seguir este tutorial, necesitás tener instalados los siguientes paquetes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"devtools"</span>, <span class="st">"dplyr"</span>, <span class="st">"available"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Además, si usás Windows necesitás descargar el programa Rtools desde <a href="https://cran.r-project.org/bin/windows/Rtools/">este link</a> e instalarlo en tu computadora.</p></li>
+</ul>
+</section>
+<section id="por-qué-podríamos-considerar-crear-un-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-podríamos-considerar-crear-un-paquete">¿Por qué podríamos considerar crear un paquete?</h2>
 <div class="callout callout-style-default callout-tip callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Qué es un paquete
+
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -282,20 +294,7 @@ Qué es un paquete
 <p><img src="images/paquetes/paquetes1.png" class="img-fluid figure-img" style="width:50.0%"></p>
 </figure>
 </div>
-<section id="preparativos" class="level2">
-<h2 class="anchored" data-anchor-id="preparativos">Preparativos</h2>
-<ul>
-<li><p>Para poder seguir este tutorial, necesitás tener instalados los siguientes paquetes:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"devtools"</span>, <span class="st">"usethis"</span>, <span class="st">"roxygen2"</span>, <span class="st">"dplyr"</span>,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"testthat"</span>, <span class="st">"knitr"</span>, <span class="st">"available"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></li>
-<li><p>Además, si usás Windows necesitás descargar el programa Rtools desde <a href="https://cran.r-project.org/bin/windows/Rtools/">este link</a> e instalarlo en tu computadora.</p></li>
-</ul>
-</section>
-<section id="por-qué-podríamos-considerar-crear-un-paquete" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-podríamos-considerar-crear-un-paquete">¿Por qué podríamos considerar crear un paquete?</h2>
-<p>Nos da la oportunidad de:</p>
+<p>Crear un paquete nos da la oportunidad de:</p>
 <ul>
 <li><p><strong>Compartir</strong> de forma sencilla y rápida el trabajo que realizamos y que muchas veces queda sin difusión, aportándole visibilidad. Esto incluye:</p>
 <ul>

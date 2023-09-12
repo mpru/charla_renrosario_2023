@@ -11,28 +11,28 @@ lang: es
 
 # Comencemos...
 
-::: callout-tip
-## Qué es un paquete
-
-**Un paquete de R es la unidad básica para la distribución de código de R, que reúne de forma estructurada funciones, datos, archivos con documentación y testeos.**
-:::
-
-![](images/paquetes/paquetes1.png){fig-align="center" width="50%"}
-
 ## Preparativos
 
 -   Para poder seguir este tutorial, necesitás tener instalados los siguientes paquetes:
 
     ```{r, eval=F}
-    install.packages(c("devtools", "usethis", "roxygen2", "dplyr",
-                       "testthat", "knitr", "available"))
+    install.packages(c("devtools", "dplyr", "available"))
     ```
 
 -   Además, si usás Windows necesitás descargar el programa Rtools desde [este link](https://cran.r-project.org/bin/windows/Rtools/) e instalarlo en tu computadora.
 
 ## ¿Por qué podríamos considerar crear un paquete?
 
-Nos da la oportunidad de:
+::: callout-tip
+## 
+
+**Un paquete de R es la unidad básica para la distribución de código de R, que reúne de forma estructurada funciones, datos, archivos con documentación y testeos.**
+:::
+
+![](images/paquetes/paquetes1.png){fig-align="center" width="50%"}
+
+
+Crear un paquete nos da la oportunidad de:
 
 -   **Compartir** de forma sencilla y rápida el trabajo que realizamos y que muchas veces queda sin difusión, aportándole visibilidad. Esto incluye:
 

@@ -33,27 +33,30 @@ Nos da la oportunidad de:
 -   **Publicar** nuevos desarrollos o soluciones que pueden ser útiles para otras personas.
 -   **Darnos a conocer** en comunidad.
 
-## ¿Por qué consideraríamos crear un paquete en otro idioma que no sea inglés?^[Algunas ideas son tomadas de [acá](https://ropensci.org/blog/2023/01/12/multilingual-publishing-en/)]
+## ¿Por qué consideraríamos crear un paquete en otro idioma que no sea inglés?[^1]
 
-- Según un [informe reciente de The Linux Foundation](https://www.linuxfoundation.org/research/the-2021-linux-foundation-report-on-diversity-equity-and-inclusion-in-open-source), el acceso al idioma es una de las barreras que atentan contra la equidad en el código abierto>
+[^1]: Algunas ideas son tomadas de [acá](https://ropensci.org/blog/2023/01/12/multilingual-publishing-en/)
+
+-   Según un [informe reciente de The Linux Foundation](https://www.linuxfoundation.org/research/the-2021-linux-foundation-report-on-diversity-equity-and-inclusion-in-open-source), el acceso al idioma es una de las barreras que atentan contra la equidad en el código abierto\>
 
 > "El idioma predominante del código abierto es el inglés (en el código, el contenido y las interacciones comunitarias) y el dominio del inglés es una métrica mediante la cual se juzga el desempeño y la personalidad."
 
 ![Escena de Modern Family](images/paquetes/modern.png){fig-align="center" width="80%"}
 
-- Al publicar recursos multilingües, podemos reducir estas barreras aumentando el acceso al conocimiento y democratizando el acceso a recursos de calidad, aumentando así el potencial de las personas para contribuir a proyectos de software y ciencia abierta.
+-   Al publicar recursos multilingües, podemos reducir estas barreras aumentando el acceso al conocimiento y democratizando el acceso a recursos de calidad, aumentando así el potencial de las personas para contribuir a proyectos de software y ciencia abierta.
 
-- Cuando el desarrollo de software recae en entornos minoritarios, poco representativos o hegemónicos pueden presentarse desventajas, limitaciones y/o posibles sesgos:
+-   Cuando el desarrollo de software recae en entornos minoritarios, poco representativos o hegemónicos pueden presentarse desventajas, limitaciones y/o posibles sesgos:
 
-  - Sesgo cultural, lingüístico, étnico o de género
-  - Falta de diversidad de ideas
-  - Limitación de la representación
-  - Falta de conciencia de problemas éticos
+    -   Sesgo cultural, lingüístico, étnico o de género
+    -   Falta de diversidad de ideas
+    -   Limitación de la representación
+    -   Falta de conciencia de problemas éticos
 
-- En este taller vamos a jugar a aportar un granito de arena, pensando cómo podríamos armar un paquete de R multilingüe.
+-   En este taller vamos a jugar a aportar un granito de arena, pensando cómo podríamos armar un paquete de R multilingüe.
 
-- Empecemos por repasar cómo es un paquete en general.
+-   Empecemos por repasar cómo es un paquete en general.
 
+```{=html}
 <!-- Desarrollar software en entornos en los que los grupos que lo crean sean minoritarios, poco representativos o hegemónicos puede presentar desventajas, limitaciones y posibles sesgos.
 
 1. **Sesgo Cultural y Lingüístico:** Si un grupo minoritario o hegemónico desarrolla software sin tener en cuenta las necesidades y perspectivas de otros grupos culturales o lingüísticos, puede resultar en sesgos culturales y lingüísticos. Por ejemplo, un programa podría no ser adecuado para usuarios de diferentes idiomas o culturas, lo que limitaría su accesibilidad global.
@@ -72,7 +75,7 @@ Nos da la oportunidad de:
 
 Para abordar estas desventajas y limitaciones, es esencial promover la diversidad y la inclusión en los equipos de desarrollo de software. Esto implica la colaboración de personas con diversas perspectivas y experiencias, así como la consideración de las necesidades de una amplia gama de usuarios. La auditoría ética y las pruebas rigurosas también pueden ayudar a identificar y mitigar sesgos en el software.
 -->
-
+```
 ## La estructura de un paquete
 
 -   Crear un paquete no es más que seguir ciertas convenciones para organizar un conjunto de carpetas y archivos.
@@ -561,9 +564,9 @@ bissexto <- function(x = as.integer(format(Sys.Date(), "%Y"))) {
 ## Probar cómo funciona
 
 -   Carguemos una vez más nuestro paquete multilingüe y comprobemos que efectivamente lo podemos usar en varios idiomas.
--   Tanto los nombres de las funciones, como los mensajes emitidos y las páginas de ayuda están disponibles en los lenguajes implementados[^1].
+-   Tanto los nombres de las funciones, como los mensajes emitidos y las páginas de ayuda están disponibles en los lenguajes implementados[^2].
 
-[^1]: Para ver las páginas de ayuda, tenemos que completar las documentaciones que dejamos pendiente y hacer una instalación de nuestro paquete en desarrollo con `install()`
+[^2]: Para ver las páginas de ayuda, tenemos que completar las documentaciones que dejamos pendiente y hacer una instalación de nuestro paquete en desarrollo con `install()`
 
 ```{r, eval=FALSE}
 load_all()

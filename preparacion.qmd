@@ -7,7 +7,7 @@ lang: es
 -   Para poder seguir este taller, necesitás tener instalados los siguientes paquetes:
 
 ```{r, eval=F}
-install.packages(c("devtools", "usethis", "roxygen2"))
+install.packages("devtools")
 ```
 
 -   Además, si usás Windows necesitás descargar el programa Rtools desde [este link](https://cran.r-project.org/bin/windows/Rtools/) e instalarlo en tu computadora.
